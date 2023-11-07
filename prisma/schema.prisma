@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
     provider = "prisma-client-js"
 }
@@ -12,18 +9,6 @@ datasource db {
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
     // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
     url      = env("DATABASE_URL")
-}
-
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
-
-    @@index([name])
 }
 
 // Necessary for Next auth
@@ -56,12 +41,15 @@ model Session {
 model User {
     id            String    @id @default(cuid())
     name          String?
-    email         String?   @unique
+    email         String    @unique
+    password_hash String // @db.Text
     emailVerified DateTime?
     image         String?
     accounts      Account[]
     sessions      Session[]
-    posts         Post[]
+    Org           Org?      @relation(fields: [orgId], references: [id])
+    orgId         String?
+    role          String    @default("USER")
 }
 
 model VerificationToken {
@@ -70,4 +58,119 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Org {
+    id          String        @id @default(cuid())
+    name        String
+    users       User[]
+    Customer    Customer[]
+    Order       Order[]
+    Appointment Appointment[]
+}
+
+model Customer {
+    id          String        @id @default(cuid())
+    name        String
+    createdAt   DateTime?     @default(now())
+    address     String?
+    inLine      Boolean?
+    age         Int?
+    Org         Org           @relation(fields: [orgId], references: [id])
+    orgId       String
+    Order       Order[]
+    Appointment Appointment[]
+    Phone       Phone[]
+}
+
+model Phone {
+    id         String   @id @default(cuid())
+    number     String
+    Customer   Customer @relation(fields: [customerId], references: [id])
+    customerId String
+}
+
+model Order {
+    id         String   @id @default(cuid())
+    createdAt  DateTime
+    customer   Customer @relation(fields: [customerId], references: [id])
+    customerId String
+    Org        Org      @relation(fields: [orgId], references: [id])
+    orgId      String
+    dnp_right  Float?
+    dnp_left   Float?
+
+    esf_right  String?
+    cil_right  String?
+    axle_right Int?
+    esf_left   String?
+    cil_left   String?
+    axle_left  Int?
+    add        String?
+
+    Frame         Frame[]
+    Lenses        Lenses[]
+    ContactLenses ContactLenses[]
+    Payments      Payments[]
+
+    service_order Int
+    total         Float
+    rest          Float
+    observation   String?
+    is_paid       Boolean
+}
+
+model Frame {
+    id      String  @id @default(cuid())
+    name    String
+    price   Float
+    height  Float
+    Order   Order?  @relation(fields: [orderId], references: [id])
+    orderId String?
+}
+
+model Lenses {
+    id      String  @id @default(cuid())
+    name    String
+    price   Float
+    Order   Order?  @relation(fields: [orderId], references: [id])
+    orderId String?
+}
+
+model ContactLenses {
+    id      String  @id @default(cuid())
+    name    String
+    price   Float
+    Order   Order?  @relation(fields: [orderId], references: [id])
+    orderId String?
+}
+
+model Payments {
+    id           String   @id @default(cuid())
+    amount       Float
+    type         String
+    installments Int
+    createdAt    DateTime @default(now())
+    Order        Order?   @relation(fields: [orderId], references: [id])
+    orderId      String?
+}
+
+model Appointment {
+    id String @id @default(cuid())
+
+    esf_right   String?
+    cil_right   String?
+    axle_right  Int?
+    esf_left    String?
+    cil_left    String?
+    axle_left   Int?
+    add         String?
+    anamnesis   String?
+    observation String?
+
+    createdAt  DateTime @default(now())
+    Customer   Customer @relation(fields: [customerId], references: [id])
+    customerId String
+    Org        Org      @relation(fields: [orgId], references: [id])
+    orgId      String
 }
