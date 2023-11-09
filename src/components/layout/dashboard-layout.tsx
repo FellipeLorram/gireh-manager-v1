@@ -11,7 +11,7 @@ export function DashboardLayout({
 		<main className='w-full h-screen overflow-hidden flex flex-row items-start justify-start'>
 			<Navbar />
 			<NavbarMobile />
-			<div className="w-full flex items-center justify-start flex-col flex-1 p-4 md:px-10">
+			<div className="w-full flex items-center justify-start flex-col flex-1 p-6 md:px-10">
 				<Topbar />
 				{children}
 			</div>
