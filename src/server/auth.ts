@@ -40,6 +40,18 @@ export const authOptions: NextAuthOptions = {
       }
       return token;
     },
+
+    session: ({ session, token }) => {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+          orgId: token.orgId,
+          role: token.role,
+        },
+      };
+    }
   },
   adapter: PrismaAdapter(db),
   pages: {
