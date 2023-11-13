@@ -29,7 +29,7 @@ export default function SigninPage() {
       email: data.email,
       password: data.password,
       callbackUrl: '/',
-    });    
+    });
 
     if (response?.error) {
       form.setError("email", {
@@ -78,7 +78,9 @@ export default function SigninPage() {
             )}
           />
 
-          <Button type="submit">
+          <Button
+            className="w-full md:w-auto"
+            type="submit">
             Entrar
           </Button>
         </form>
