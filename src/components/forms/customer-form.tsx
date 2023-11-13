@@ -11,7 +11,10 @@ import { cn } from "@/lib/utils";
 
 const customerFormSchema = z.object({
 	name: z.string().min(3, 'Nome inválido'),
-	phone: z.array(z.string()).optional(),
+	phone: z.array(z.object({
+		number: z.string().refine((value) => value.match(/\d+/g)?.join('')),
+		id: z.string().optional(),
+	})).optional(),
 	age: z.string().optional(),
 	address: z.string().optional(),
 	inLine: z.boolean().optional(),
@@ -36,7 +39,9 @@ export function CustomerForm({
 		resolver: zodResolver(customerFormSchema),
 		defaultValues: defaultValues ?? {
 			name: '',
-			phone: [''],
+			phone: [{
+				number: '',
+			}],
 			age: '0',
 			address: '',
 			inLine: false,
@@ -120,7 +125,9 @@ export function CustomerForm({
 					className="w-full md:w-auto"
 					disabled={isLoading}
 					type="submit">
-					{isLoading ? <CircleDashed className="animate-spin" /> : 'Cadastrar'}
+					{isLoading ? <CircleDashed className="animate-spin" /> : (<>
+						{defaultValues ? 'Atualizar' : 'Cadastrar'}
+					</>)}
 				</Button>
 			</form>
 		</Form>
@@ -136,7 +143,9 @@ function PhoneFields({ form }: PhoneFieldsProps) {
 	const phonesSliced = phones?.slice(1);
 
 	const addPhoneField = useCallback(() => {
-		form.setValue('phone', [...phones!, '']);
+		form.setValue('phone', [...phones!, {
+			number: '',
+		}]);
 	}, [form, phones]);
 
 	const removePhoneField = useCallback((index: number) => {
@@ -147,7 +156,7 @@ function PhoneFields({ form }: PhoneFieldsProps) {
 		<>
 			<FormField
 				control={form.control}
-				name={`phone.${0}`}
+				name={`phone.${0}.number`}
 				render={({ field }) => (
 					<FormItem className="w-full">
 						<FormLabel className="text-lg">Telefone</FormLabel>
@@ -174,7 +183,7 @@ function PhoneFields({ form }: PhoneFieldsProps) {
 				<FormField
 					key={index}
 					control={form.control}
-					name={`phone.${index + 1}`}
+					name={`phone.${index + 1}.number`}
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel className="text-lg">Telefone {index + 2}</FormLabel>
@@ -183,7 +192,7 @@ function PhoneFields({ form }: PhoneFieldsProps) {
 									<Input mask="(99) 99999-9999" placeholder="telefone" {...field} />
 									<Minus
 										className='cursor-pointer stroke-muted-foreground hover:stroke-foreground duration-200 ease-in-out w-10'
-										onClick={() => removePhoneField(index)}
+										onClick={() => removePhoneField(index+1)}
 									/>
 								</div>
 							</FormControl>
