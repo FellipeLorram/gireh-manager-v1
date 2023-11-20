@@ -9,14 +9,14 @@ export const CustomerRouter = createTRPCRouter({
 	create: protectedProcedure
 		.input(z.object({
 			name: z.string().min(3, 'Nome inválido'),
-			phone: z.array(z.string().optional().default("")).optional(),
+			phone: z.array(z.object({
+				number: z.string(),
+			})).optional(),
 			age: z.number().optional(),
 			address: z.string().optional(),
 			inLine: z.boolean().optional(),
 		}))
 		.mutation(({ ctx, input }) => {
-			const phones = input.phone?.map((phone) => ({ number: phone }));
-
 			const customer = ctx.db.customer.create({
 				data: {
 					name: input.name,
@@ -25,7 +25,9 @@ export const CustomerRouter = createTRPCRouter({
 					inLine: input.inLine,
 					orgId: ctx.session.user.orgId,
 					Phone: {
-						create: phones ?? [],
+						create: input.phone?.map((phone) => ({
+							number: phone.number,
+						})),
 					}
 				},
 			});
@@ -42,6 +44,9 @@ export const CustomerRouter = createTRPCRouter({
 				where: {
 					id: input.id,
 				},
+				include: {
+					Phone: true,
+				}
 			});
 
 			return customer;
@@ -65,13 +70,22 @@ export const CustomerRouter = createTRPCRouter({
 		.input(z.object({
 			id: z.string(),
 			name: z.string().optional(),
-			phone: z.array(z.string().optional().default("")).optional(),
+			phone: z.array(z.object({
+				number: z.string(),
+				id: z.string(),
+			})).optional(),
 			age: z.number().optional(),
 			address: z.string().optional(),
 			inLine: z.boolean().optional(),
 		}))
-		.mutation(({ ctx, input }) => {
-			const phones = input.phone?.map((phone) => ({ number: phone }));
+		.mutation(async ({ ctx, input }) => {
+			await ctx.db.phone.deleteMany({
+				where: {
+					id: {
+						notIn: input.phone?.map((phone) => phone.id),
+					},
+				},
+			});
 
 			const customer = ctx.db.customer.update({
 				where: {
@@ -83,13 +97,17 @@ export const CustomerRouter = createTRPCRouter({
 					age: input.age,
 					inLine: input.inLine,
 					Phone: {
-						upsert: phones?.map((phone) => ({
+						upsert: input.phone?.map((phone) => ({
 							where: {
+								id: phone.id,
+							},
+							create: {
 								number: phone.number,
 							},
-							create: phone,
-							update: phone,
-						})) ?? [],
+							update: {
+								number: phone.number,
+							},
+						})),
 					}
 				},
 			});

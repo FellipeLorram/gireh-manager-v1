@@ -175,9 +175,6 @@ function PhoneFields({ form }: PhoneFieldsProps) {
 				)}
 			/>
 
-
-
-
 			{phonesSliced?.map((_, index) => (
 
 				<FormField

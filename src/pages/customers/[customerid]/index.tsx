@@ -11,9 +11,9 @@ import { useRouter } from 'next/router'
 import React from 'react'
 
 export default function Page() {
-	const { id } = useRouter().query;
+	const { customerid } = useRouter().query;
 	const { data: orderList } = api.order.listCustomerOrders.useQuery({
-		customerId: id as string,
+		customerId: customerid as string,
 	})
 	const { data: appointmentList } = api.appointment.list.useQuery();
 
@@ -25,7 +25,7 @@ export default function Page() {
 				</Link>
 			</div>
 
-			<CustomerInfo />
+			<CustomerInfo id={customerid as string} />
 
 			<div className='w-full flex flex-row justify-between items-center mt-8 mb-2'>
 				<h1 className='text-lg font-semibold'>
@@ -36,7 +36,7 @@ export default function Page() {
 					className={buttonVariants({
 						variant: 'secondary',
 					})}
-					href={`/customers/${id as string}/new-order`}
+					href={`/customers/${customerid as string}/orders/new`}
 				>
 					Adicionar
 				</Link>
@@ -56,7 +56,7 @@ export default function Page() {
 					className={buttonVariants({
 						variant: 'secondary',
 					})}
-					href={`/customers/${id as string}/new-appointment`}
+					href={`/customers/${customerid as string}/new-appointment`}
 				>
 					Adicionar
 				</Link>

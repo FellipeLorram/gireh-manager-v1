@@ -11,8 +11,6 @@ interface Props {
 
 export function Frames({ form }: Props) {
 	const frames = form.watch('frame');
-
-
 	const columns = useMemo(() => MakeFrameColumnDef({ form }), [form]);
 
 	return (
@@ -20,7 +18,6 @@ export function Frames({ form }: Props) {
 			<h2 className="text-lg text-foreground mb-2">
 				Armações
 			</h2>
-
 
 			<div className='w-full mb-2'>
 				<DataTable

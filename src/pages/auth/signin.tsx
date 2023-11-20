@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { useRouter } from "next/router";
 
 const signinFormSchema = z.object({
   email: z.string().email(),
@@ -15,6 +16,7 @@ const signinFormSchema = z.object({
 type SigninFormValues = z.infer<typeof signinFormSchema>;
 
 export default function SigninPage() {
+  const { push } = useRouter();
   const form = useForm<SigninFormValues>({
     resolver: zodResolver(signinFormSchema),
     defaultValues: {
@@ -25,7 +27,7 @@ export default function SigninPage() {
 
   const onSubmit = async (data: SigninFormValues) => {
     const response = await signIn("credentials", {
-      redirect: true,
+      redirect: false,
       email: data.email,
       password: data.password,
       callbackUrl: '/',
@@ -39,6 +41,8 @@ export default function SigninPage() {
 
       return;
     }
+
+    await push("/");
   }
 
   return (

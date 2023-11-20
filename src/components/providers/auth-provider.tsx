@@ -9,10 +9,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const { status } = useSession();
 
 	useEffect(() => {
-		console.log(status);
 		if (status === 'unauthenticated') {
 			router.push('/auth/signin');
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [status]);
 
 	if (status === 'authenticated' || pathname === '/auth/signin') {

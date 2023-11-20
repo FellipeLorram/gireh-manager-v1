@@ -61,18 +61,19 @@ model VerificationToken {
 }
 
 model Org {
-    id          String        @id @default(cuid())
-    name        String
-    users       User[]
-    Customer    Customer[]
-    Order       Order[]
-    Appointment Appointment[]
+    id            String        @id @default(cuid())
+    name          String
+    service_order Int?
+    users         User[]
+    Customer      Customer[]
+    Order         Order[]
+    Appointment   Appointment[]
 }
 
 model Customer {
     id          String        @id @default(cuid())
     name        String
-    createdAt   DateTime?     @default(now())
+    createdAt   DateTime      @default(now())
     address     String?
     inLine      Boolean?
     age         Int?
@@ -81,6 +82,8 @@ model Customer {
     Order       Order[]
     Appointment Appointment[]
     Phone       Phone[]
+
+    @@unique([id, name])
 }
 
 model Phone {
@@ -91,53 +94,50 @@ model Phone {
 }
 
 model Order {
-    id         String   @id @default(cuid())
-    createdAt  DateTime
-    customer   Customer @relation(fields: [customerId], references: [id])
-    customerId String
-    Org        Org      @relation(fields: [orgId], references: [id])
-    orgId      String
-    dnp_right  Float?
-    dnp_left   Float?
+    id            String   @id @default(cuid())
+    createdAt     DateTime @default(now())
+    customer      Customer @relation(fields: [customerId, customer_name], references: [id, name])
+    customerId    String
+    customer_name String
+    Org           Org      @relation(fields: [orgId], references: [id])
+    orgId         String
+
+    dnp_right Float?
+    dnp_left  Float?
 
     esf_right  String?
     cil_right  String?
     axle_right Int?
-    esf_left   String?
-    cil_left   String?
-    axle_left  Int?
-    add        String?
 
-    Frame         Frame[]
-    Lenses        Lenses[]
-    ContactLenses ContactLenses[]
-    Payments      Payments[]
+    esf_left  String?
+    cil_left  String?
+    axle_left Int?
+    add       String?
+
+    Frame    Frame[]
+    Lenses   Lenses[]
+    Payments Payments[]
 
     service_order Int
     total         Float
     rest          Float
     observation   String?
-    is_paid       Boolean
+    status        Boolean
 }
 
 model Frame {
-    id      String  @id @default(cuid())
-    name    String
-    price   Float
-    height  Float
-    Order   Order?  @relation(fields: [orderId], references: [id])
-    orderId String?
+    id        String  @id @default(cuid())
+    name      String
+    price     Float
+    height    Float?
+    reference String?
+    image_url String?
+    supplier  String?
+    Order     Order?  @relation(fields: [orderId], references: [id])
+    orderId   String?
 }
 
 model Lenses {
-    id      String  @id @default(cuid())
-    name    String
-    price   Float
-    Order   Order?  @relation(fields: [orderId], references: [id])
-    orderId String?
-}
-
-model ContactLenses {
     id      String  @id @default(cuid())
     name    String
     price   Float

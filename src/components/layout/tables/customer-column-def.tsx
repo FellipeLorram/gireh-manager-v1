@@ -31,7 +31,7 @@ function DropdownCell({ row }: CellContext<Customer, unknown>) {
 			<DropdownMenuContent>
 				<DropdownMenuItem
 					asChild
-					className='text-sm p-2 px-3 text-white cursor-pointer'
+					className='text-sm p-2 px-3 cursor-pointer'
 				>
 					<Link href={`/customers/${id}/new-order`}>
 						Seguir para Venda
@@ -41,7 +41,7 @@ function DropdownCell({ row }: CellContext<Customer, unknown>) {
 					onClick={() => {
 						mutate({ id, inLine: !inLine });
 					}}
-					className='text-sm p-2 px-3 text-white cursor-pointer'
+					className='text-sm p-2 px-3 cursor-pointer'
 				>
 					{inLine ? 'Remover da fila' : 'Adicionar a fila'}
 				</DropdownMenuItem>

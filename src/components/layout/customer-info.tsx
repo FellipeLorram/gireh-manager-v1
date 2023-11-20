@@ -1,12 +1,13 @@
 import { api } from "@/utils/api";
-import { useRouter } from "next/router"
 import EditCustomerDialog from "./edit-customer-dialog";
 
+interface Props {
+	id: string;
+}
 
-export default function CustomerInfo() {
-	const { id } = useRouter().query;
+export default function CustomerInfo({ id }: Props) {
 	const { data } = api.customer.get.useQuery({
-		id: id as string,
+		id: id,
 	}, {
 		enabled: !!id,
 		refetchOnWindowFocus: true,
@@ -35,7 +36,9 @@ export default function CustomerInfo() {
 				</div>
 			))}
 			<div className="mt-2">
-				<EditCustomerDialog />
+				<EditCustomerDialog 
+					id={id}
+				/>
 			</div>
 		</div>
 	)
