@@ -1,13 +1,15 @@
 import { api } from "@/utils/api";
-import EditCustomerDialog from "./edit-customer-dialog";
+import { formatPhoneNumber } from "@/utils/format-phone-number";
 
 interface Props {
-	id: string;
+	id: string | undefined;
 }
+
+
 
 export default function CustomerInfo({ id }: Props) {
 	const { data } = api.customer.get.useQuery({
-		id: id,
+		id: id!,
 	}, {
 		enabled: !!id,
 		refetchOnWindowFocus: true,
@@ -23,23 +25,18 @@ export default function CustomerInfo({ id }: Props) {
 				<p className="text-muted-foreground">Idade:</p>
 				<p>{data?.age}</p>
 			</div>
-			<div className="w-full py-2 px-1 border-b flex flex-row justify-between items-center">
+			<div className="w-full py-2 px-1 border-b flex flex-row justify-between items-center last:border-none">
 				<p className="text-muted-foreground">Endereço:</p>
 				<p>{data?.address}</p>
 			</div>
 			{data?.Phone.map((phone, index) => (
 				<div
 					key={phone.number}
-					className="w-full py-2 px-1 border-b flex flex-row justify-between items-center">
+					className="w-full py-2 px-1 border-b flex flex-row justify-between items-center last:border-none">
 					<p className="text-muted-foreground">Telefone {index + 1}:</p>
-					<p>{phone.number}</p>
+					<p>{formatPhoneNumber(phone.number)}</p>
 				</div>
 			))}
-			<div className="mt-2">
-				<EditCustomerDialog 
-					id={id}
-				/>
-			</div>
 		</div>
 	)
 }

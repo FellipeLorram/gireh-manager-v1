@@ -11,14 +11,18 @@ import {
 import { api } from "@/utils/api";
 
 export function RemoveOrderDialog() {
-	const { orderid } = useRouter().query;
-	const { mutate } = api.order.delete.useMutation()
+	const { push, query } = useRouter();
+	const { mutate } = api.order.delete.useMutation({
+		onSuccess: async () => {
+			await push("/orders");
+		}
+	})
 
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
 				<Button className="w-full md:w-auto" variant="destructive">
-					Deletar 
+					Deletar
 				</Button>
 			</DialogTrigger>
 			<DialogContent>
@@ -31,7 +35,7 @@ export function RemoveOrderDialog() {
 					</DialogDescription>
 				</DialogHeader>
 				<Button
-					onClick={() => mutate({ id: orderid as string })}
+					onClick={() => mutate({ id: query.orderid as string })}
 					variant="outline"
 				>
 					Excluir

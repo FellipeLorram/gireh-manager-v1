@@ -54,7 +54,7 @@ export const CustomerReceipt = forwardRef<HTMLDivElement, Props>(({
 }, ref) => {
 	return (
 		<div ref={ref} className="w-1/2 border border-dashed bg-white text-gray-900">
-			<div className="w-full p-4 flex flex-row justify-between gap-4 bg-gradient-to-b from-gray-100 to-white">
+			<div className="w-full p-4 flex flex-row justify-between gap-4 bg-gradient-to-b from-gray-400 to-white">
 				<p className="text-xl font-semibold">
 					{org.name}
 				</p>
@@ -102,6 +102,7 @@ export const CustomerReceipt = forwardRef<HTMLDivElement, Props>(({
 				<p className="font-medium text-sm mb-1 mt-4">Pagamentos</p>
 				{order.Payments.map((payment) => (
 					<div key={payment.id} className="flex flex-row w-full p-1 border-b border-gray-100 justify-between gap-4">
+						<p className="text-xs">{payment.createdAt.toLocaleDateString()}</p>
 						<p className="text-xs">{paymentType[payment.type as keyof typeof paymentType]}</p>
 						<p className="text-xs">{payment.amount.toLocaleString('pt-BR', {
 							style: 'currency',

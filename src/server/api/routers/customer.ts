@@ -126,4 +126,19 @@ export const CustomerRouter = createTRPCRouter({
 				},
 			});
 		}),
+
+	listCustomersInLine: protectedProcedure
+		.query(({ ctx }) => {
+			const customers = ctx.db.customer.findMany({
+				where: {
+					orgId: ctx.session.user.orgId,
+					inLine: true,
+				},
+				orderBy: {
+					name: "asc",
+				},
+			});
+
+			return customers;
+		}),
 });

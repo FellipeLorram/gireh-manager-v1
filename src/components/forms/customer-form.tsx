@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 const customerFormSchema = z.object({
 	name: z.string().min(3, 'Nome inválido'),
 	phone: z.array(z.object({
-		number: z.string().refine((value) => value.match(/\d+/g)?.join('')),
+		number: z.string().transform((value) => value.match(/\d+/g)?.join('')),
 		id: z.string().optional(),
 	})).optional(),
 	age: z.string().optional(),

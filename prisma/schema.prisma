@@ -76,6 +76,7 @@ model Customer {
     createdAt   DateTime      @default(now())
     address     String?
     inLine      Boolean?
+    birthDate   DateTime?
     age         Int?
     Org         Org           @relation(fields: [orgId], references: [id])
     orgId       String
@@ -96,7 +97,7 @@ model Phone {
 model Order {
     id            String   @id @default(cuid())
     createdAt     DateTime @default(now())
-    customer      Customer @relation(fields: [customerId, customer_name], references: [id, name])
+    customer      Customer @relation(fields: [customerId], references: [id])
     customerId    String
     customer_name String
     Org           Org      @relation(fields: [orgId], references: [id])
@@ -121,6 +122,7 @@ model Order {
     service_order Int
     total         Float
     rest          Float
+    situation     String
     observation   String?
     status        Boolean
 }
@@ -168,9 +170,10 @@ model Appointment {
     anamnesis   String?
     observation String?
 
-    createdAt  DateTime @default(now())
-    Customer   Customer @relation(fields: [customerId], references: [id])
-    customerId String
-    Org        Org      @relation(fields: [orgId], references: [id])
-    orgId      String
+    createdAt    DateTime @default(now())
+    Customer     Customer @relation(fields: [customerId], references: [id])
+    customerId   String
+    customerName String
+    Org          Org      @relation(fields: [orgId], references: [id])
+    orgId        String
 }

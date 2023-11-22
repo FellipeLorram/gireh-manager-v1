@@ -18,7 +18,7 @@ export default function Page() {
 	return (
 		<div className="mx-auto w-11/12 max-w-3xl min-h-screen flex flex-col items-center justify-start py-4">
 			<div className="w-full flex flex-row">
-				<Link href={`/customers/${order?.customerId}/orders/${order?.id}`}>
+				<Link href={`/orders/${order?.id}`}>
 					<ArrowLeftCircle className="w-8 h-8 stroke-muted-foreground hover:stroke-foreground duration-200" />
 				</Link>
 

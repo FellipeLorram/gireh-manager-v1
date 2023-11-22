@@ -52,8 +52,8 @@ export const LaborCopy = forwardRef<HTMLDivElement, Props>(({
 	org
 }, ref) => {
 	return (
-		<div ref={ref} className="w-1/2 border border-dashed border-l-0 bg-white text-gray-900">
-			<div className="w-full p-4 flex flex-row justify-between gap-4 bg-gradient-to-b from-gray-200 to-white">
+		<div ref={ref} className="w-1/2 border border-dashed bg-white text-gray-900">
+			<div className="w-full p-4 flex flex-row justify-between gap-4 bg-gradient-to-b from-gray-400 to-white">
 				<p className="text-lg font-semibold">
 					{org.name}
 				</p>
@@ -140,6 +140,9 @@ export const LaborCopy = forwardRef<HTMLDivElement, Props>(({
 					</TableBody>
 				</Table>
 
+				<div className="w-full mt-2 p-2 border-b" />
+				<div className="w-full p-2 border-b" />
+				<div className="w-full p-2 border-b" />
 			</div>
 		</div>
 	);

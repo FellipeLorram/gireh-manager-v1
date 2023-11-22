@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { api } from "@/utils/api";
+import { type Frame, type Lenses, type Payments, type Order } from "@prisma/client";
 import { DataTable } from "./tables/table-raw";
 import { OrderPageFrameColumnDef } from "./tables/frame-column-def";
 import { OrderPageLensesColumnDef } from "./tables/lenses-column-def";
@@ -14,18 +14,18 @@ import {
 } from "../ui/table"
 import { Button } from "../ui/button";
 
-interface Props {
-  id: string
+type OrderWithItems = Order & {
+	Frame: Frame[];
+	Lenses: Lenses[];
+	Payments: Payments[];
 }
 
-export function OrderInfo({ id }: Props) {
+interface Props {
+  order: OrderWithItems | undefined | null;
+}
+
+export function OrderInfo({ order }: Props) {
   const { push } = useRouter();
-  const { data } = api.order.get.useQuery({
-    id
-  }, {
-    enabled: !!id,
-    refetchOnWindowFocus: true,
-  });
 
   return (
     <div className="w-full space-y-4">
@@ -44,22 +44,22 @@ export function OrderInfo({ id }: Props) {
           <TableBody>
             <TableRow>
               <TableCell>OD</TableCell>
-              <TableCell>{data?.esf_right}</TableCell>
-              <TableCell>{data?.cil_right}</TableCell>
-              <TableCell>{data?.axle_right}</TableCell>
-              <TableCell>{data?.dnp_right}</TableCell>
+              <TableCell>{order?.esf_right}</TableCell>
+              <TableCell>{order?.cil_right}</TableCell>
+              <TableCell>{order?.axle_right}</TableCell>
+              <TableCell>{order?.dnp_right}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>OD</TableCell>
-              <TableCell>{data?.esf_left}</TableCell>
-              <TableCell>{data?.cil_left}</TableCell>
-              <TableCell>{data?.axle_left}</TableCell>
-              <TableCell>{data?.dnp_left}</TableCell>
+              <TableCell>{order?.esf_left}</TableCell>
+              <TableCell>{order?.cil_left}</TableCell>
+              <TableCell>{order?.axle_left}</TableCell>
+              <TableCell>{order?.dnp_left}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>ADD</TableCell>
               <TableCell />
-              <TableCell>{data?.add}</TableCell>
+              <TableCell>{order?.add}</TableCell>
               <TableCell />
             </TableRow>
           </TableBody>
@@ -70,7 +70,7 @@ export function OrderInfo({ id }: Props) {
         <p className='font-semibold mb-2'>Armações</p>
         <DataTable
           columns={OrderPageFrameColumnDef}
-          data={data?.Frame ?? []}
+          data={order?.Frame ?? []}
         />
       </div>
 
@@ -78,19 +78,19 @@ export function OrderInfo({ id }: Props) {
         <p className='font-semibold mb-2'>Lentes</p>
         <DataTable
           columns={OrderPageLensesColumnDef}
-          data={data?.Lenses ?? []}
+          data={order?.Lenses ?? []}
         />
       </div>
 
       <div className="border rounded-md p-4">
         <p className='font-semibold'>Observações</p>
-        <p className='mt-2'>{data?.observation}</p>
+        <p className='mt-2'>{order?.observation}</p>
       </div>
 
       <div className="border rounded-md p-4 flex flex-row justify-between">
         <p className='font-semibold text-lg'>Total</p>
         <p className="text-lg">
-          {data?.total.toLocaleString('pt-BR', {
+          {order?.total.toLocaleString('pt-BR', {
             style: 'currency',
             currency: 'BRL',
           })}
@@ -99,7 +99,7 @@ export function OrderInfo({ id }: Props) {
       <div className="border rounded-md p-4 flex flex-row justify-between">
         <p className='font-semibold text-lg'>Restante</p>
         <p className="text-lg">
-          {data?.rest.toLocaleString('pt-BR', {
+          {order?.rest.toLocaleString('pt-BR', {
             style: 'currency',
             currency: 'BRL',
           })}
@@ -109,12 +109,12 @@ export function OrderInfo({ id }: Props) {
         <p className='font-semibold mb-2'>Pagamentos</p>
         <DataTable
           columns={PaymentColumnDef}
-          data={data?.Payments ?? []}
+          data={order?.Payments ?? []}
         />
         <Button
-          onClick={() => push(`/orders/${data?.id}/payments/new`)}
+          onClick={() => push(`/orders/${order?.id}/payments/new`)}
           className="w-full md:w-auto mt-4"
-          disabled={data?.status}
+          disabled={order?.status}
         >
           Adicionar Pagamento
         </Button>

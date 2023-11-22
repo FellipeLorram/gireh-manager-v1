@@ -102,6 +102,15 @@ export const OrderRouter = createTRPCRouter({
 				},
 			});
 
+			await ctx.db.org.update({
+				where: {
+					id: ctx.session.user.orgId,
+				},
+				data: {
+					service_order: service_order! + 1,
+				},
+			});
+
 			return order;
 		}),
 
@@ -264,5 +273,20 @@ export const OrderRouter = createTRPCRouter({
 			}));
 
 			return order;
+		}),
+
+	lastOrders: protectedProcedure
+		.query(({ ctx }) => {
+			const orders = ctx.db.order.findMany({
+				where: {
+					orgId: ctx.session.user.orgId,
+				},
+				orderBy: {
+					createdAt: 'desc',
+				},
+				take: 10,
+			});
+
+			return orders;
 		}),
 });

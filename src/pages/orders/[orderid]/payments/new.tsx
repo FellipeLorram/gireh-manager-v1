@@ -20,7 +20,7 @@ export default function Page() {
 				description: "O pagamento foi registrado com sucesso",
 			})
 		
-			await push(`/customers/${data?.customerId}/orders/${data?.id}`)
+			await push(`/orders/${data?.id}`)
 		},
 		onError: (error) => {
 			toast({
@@ -42,7 +42,7 @@ export default function Page() {
 	return (
 		<div className="mx-auto w-11/12 max-w-3xl min-h-screen flex flex-col items-center justify-start py-4">
 			<div className="w-full flex flex-row">
-				<Link href={`/customers/${data?.customerId}/orders/${data?.id}`}>
+				<Link href={`/orders/${data?.id}`}>
 					<ArrowLeftCircle className="w-8 h-8 stroke-muted-foreground hover:stroke-foreground duration-200" />
 				</Link>
 

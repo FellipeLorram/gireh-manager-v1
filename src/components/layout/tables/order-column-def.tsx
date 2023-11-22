@@ -1,6 +1,7 @@
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { type Order } from "@prisma/client";
 import { type ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown } from "lucide-react";
 import Link from "next/link";
 
 export const customerPageOrderColumnDef: ColumnDef<Order>[] = [
@@ -38,8 +39,8 @@ export const customerPageOrderColumnDef: ColumnDef<Order>[] = [
 		accessorKey: 'actions',
 		header: '',
 		cell: ({ row }) => <Link
-			href={`/customers/${row.original.customerId}/orders/${row.original.id}`} 
-			className={buttonVariants({	
+			href={`/orders/${row.original.id}`}
+			className={buttonVariants({
 				variant: 'ghost',
 			})}
 		>
@@ -51,7 +52,17 @@ export const customerPageOrderColumnDef: ColumnDef<Order>[] = [
 export const OrderColumnDef: ColumnDef<Order>[] = [
 	{
 		accessorKey: 'createdAt',
-		header: 'Data',
+		header: ({ column }) => {
+			return (
+				<Button
+					variant="ghost"
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+				>
+					Data
+					<ArrowUpDown className="ml-2 h-4 w-4" />
+				</Button>
+			)
+		},
 		cell: ({ row }) => {
 			const date = new Date(row.original.createdAt);
 			return date.toLocaleDateString();
@@ -59,16 +70,46 @@ export const OrderColumnDef: ColumnDef<Order>[] = [
 	},
 	{
 		accessorKey: 'service_order',
-		header: 'OS',
+		header: ({ column }) => {
+			return (
+				<Button
+					variant="ghost"
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+				>
+					OS
+					<ArrowUpDown className="ml-2 h-4 w-4" />
+				</Button>
+			)
+		},
 	},
 	{
 		accessorKey: 'customer_name',
-		header: 'Nome',
-		cell: ({ row }) => <Link href={`/customers/${row.original.customerId}/orders/${row.original.id}`}>{row.original.customer_name}</Link>,
+		header: ({ column }) => {
+			return (
+				<Button
+					variant="ghost"
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+				>
+					Nome
+					<ArrowUpDown className="ml-2 h-4 w-4" />
+				</Button>
+			)
+		},
+		cell: ({ row }) => <Link href={`/orders/${row.original.id}`}>{row.original.customer_name}</Link>,
 	},
 	{
 		accessorKey: 'is_paid',
-		header: 'Status',
+		header: ({ column }) => {
+			return (
+				<Button
+					variant="ghost"
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+				>
+					Status
+					<ArrowUpDown className="ml-2 h-4 w-4" />
+				</Button>
+			)
+		},
 		cell: ({ row }) => {
 			return row.original.status ? (
 				<p className="text-green-500">Pago</p>
@@ -79,7 +120,17 @@ export const OrderColumnDef: ColumnDef<Order>[] = [
 	},
 	{
 		accessorKey: 'total',
-		header: 'Total',
+		header: ({ column }) => {
+			return (
+				<Button
+					variant="ghost"
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+				>
+					Total
+					<ArrowUpDown className="ml-2 h-4 w-4" />
+				</Button>
+			)
+		},
 		cell: ({ row }) => {
 			return row.original.total.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
 		},

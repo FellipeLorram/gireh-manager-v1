@@ -7,17 +7,15 @@ import { MeasuresDetails } from "./measures-details";
 import { Frames } from "./frames";
 import { Lenses } from "./lenses";
 import { Total } from "./total";
-import { Button } from "@/components/ui/button";
 import { OthersFields } from "./others-fields";
-import { CircleDashed } from "lucide-react";
 
 interface Props {
   onSubmit: (data: OrderFormFields) => void;
   defaultValues?: OrderFormFields;
-  loading?: boolean;
+  SubmitButton: React.ReactNode;
 }
 
-export function OrderForm({ onSubmit, defaultValues, loading }: Props) {
+export function OrderForm({ onSubmit, defaultValues, SubmitButton }: Props) {
   const form = useForm<OrderFormFields>({
     resolver: zodResolver(OrderFormSchema),
     defaultValues: defaultValues ?? {
@@ -46,20 +44,7 @@ export function OrderForm({ onSubmit, defaultValues, loading }: Props) {
         <Lenses form={form} />
         <Total form={form} />
         <OthersFields form={form} />
-
-        <Button
-          disabled={loading}
-          className="w-full mt-4"
-          type="submit"
-        >
-          {loading ? (
-            <CircleDashed className="animate-spin" size={16} />
-          ) : (
-            <>
-              {defaultValues ? "Salvar Alterações" : "Finalizar e ir para o pagamento"}
-            </>
-          )}
-        </Button>
+        {SubmitButton}
       </form>
     </Form>
   )
