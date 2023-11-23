@@ -12,10 +12,10 @@ import { cn } from "@/lib/utils";
 const customerFormSchema = z.object({
 	name: z.string().min(3, 'Nome inválido'),
 	phone: z.array(z.object({
-		number: z.string().transform((value) => value.match(/\d+/g)?.join('')),
+		number: z.string().min(1).transform((value) => value.match(/\d+/g)?.join('') ?? ''),
 		id: z.string().optional(),
-	})).optional(),
-	age: z.string().optional(),
+	})),
+	birthDate: z.string().optional(),
 	address: z.string().optional(),
 	inLine: z.boolean().optional(),
 });
@@ -42,9 +42,9 @@ export function CustomerForm({
 			phone: [{
 				number: '',
 			}],
-			age: '0',
 			address: '',
 			inLine: false,
+			birthDate: new Date().toISOString().slice(0, 10),
 		}
 	});
 
@@ -68,23 +68,28 @@ export function CustomerForm({
 
 				<FormField
 					control={form.control}
-					name="age"
+					name="birthDate"
 					render={({ field }) => (
-						<FormItem>
-							<FormLabel className="text-lg">Idade</FormLabel>
+						<FormItem className="w-full">
+							<FormLabel>Data de Nascimento</FormLabel>
 							<FormControl>
 								<Input
-									placeholder="idade"
-									type="number"
-									min={0}
+									type="date"
+									placeholder="age"
 									{...field}
+									value={
+										typeof field.value === 'string'
+											? field.value
+											: new Date().toISOString().slice(0, 10)
+									}
 								/>
 							</FormControl>
-
 							<FormMessage />
 						</FormItem>
 					)}
 				/>
+
+				<Age birthDate={form.watch('birthDate')} />
 
 				<FormField
 					control={form.control}
@@ -134,6 +139,29 @@ export function CustomerForm({
 	)
 }
 
+type AgeProps = {
+	birthDate: string | undefined;
+}
+
+function Age({ birthDate }: AgeProps) {
+	const age = birthDate ? new Date().getFullYear() - new Date(birthDate).getFullYear() : 0;
+
+	return (
+		<FormItem className="w-full">
+			<FormLabel className="text-lg">Idade</FormLabel>
+			<FormControl>
+				<Input
+					type="number"
+					placeholder="age"
+					value={age}
+					readOnly
+				/>
+			</FormControl>
+			<FormMessage />
+		</FormItem>
+	)
+}
+
 type PhoneFieldsProps = {
 	form: UseFormReturn<CustomerFormSchema>;
 }
@@ -143,7 +171,7 @@ function PhoneFields({ form }: PhoneFieldsProps) {
 	const phonesSliced = phones?.slice(1);
 
 	const addPhoneField = useCallback(() => {
-		form.setValue('phone', [...phones!, {
+		form.setValue('phone', [...phones, {
 			number: '',
 		}]);
 	}, [form, phones]);
@@ -189,7 +217,7 @@ function PhoneFields({ form }: PhoneFieldsProps) {
 									<Input mask="(99) 99999-9999" placeholder="telefone" {...field} />
 									<Minus
 										className='cursor-pointer stroke-muted-foreground hover:stroke-foreground duration-200 ease-in-out w-10'
-										onClick={() => removePhoneField(index+1)}
+										onClick={() => removePhoneField(index + 1)}
 									/>
 								</div>
 							</FormControl>

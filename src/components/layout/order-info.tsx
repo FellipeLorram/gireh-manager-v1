@@ -3,7 +3,7 @@ import { type Frame, type Lenses, type Payments, type Order } from "@prisma/clie
 import { DataTable } from "./tables/table-raw";
 import { OrderPageFrameColumnDef } from "./tables/frame-column-def";
 import { OrderPageLensesColumnDef } from "./tables/lenses-column-def";
-import { PaymentColumnDef } from "./tables/payment-column-def";
+import { OrderPagePaymentColumnDef } from "./tables/payment-column-def";
 import {
   Table,
   TableBody,
@@ -108,7 +108,7 @@ export function OrderInfo({ order }: Props) {
       <div className="border rounded-md p-4">
         <p className='font-semibold mb-2'>Pagamentos</p>
         <DataTable
-          columns={PaymentColumnDef}
+          columns={OrderPagePaymentColumnDef}
           data={order?.Payments ?? []}
         />
         <Button

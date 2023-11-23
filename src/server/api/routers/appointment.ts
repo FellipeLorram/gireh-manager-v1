@@ -1,9 +1,5 @@
 import { z } from "zod";
-
-import {
-	createTRPCRouter,
-	protectedProcedure,
-} from "@/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 
 export const appointmentRouter = createTRPCRouter({
 	list: protectedProcedure
@@ -31,7 +27,24 @@ export const appointmentRouter = createTRPCRouter({
 			return appointments;
 		}),
 
-		
+	listAppointmentsByRange: protectedProcedure
+		.input(z.object({
+			startDate: z.string().or(z.date()),
+			endDate: z.string().or(z.date()),
+		})).query(async ({ ctx, input }) => {
+			const appointments = await ctx.db.appointment.findMany({
+				where: {
+					orgId: ctx.session.user.orgId,
+					createdAt: {
+						gte: new Date(input.startDate),
+						lte: new Date(input.endDate),
+					},
+				},
+			});
+
+			return appointments;
+		}),
+
 
 	create: protectedProcedure
 		.input(z.object({

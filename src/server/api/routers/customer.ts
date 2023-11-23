@@ -12,18 +12,20 @@ export const CustomerRouter = createTRPCRouter({
 			phone: z.array(z.object({
 				number: z.string(),
 			})).optional(),
-			age: z.number().optional(),
 			address: z.string().optional(),
 			inLine: z.boolean().optional(),
+			birthDate: z.string().optional(),
 		}))
 		.mutation(({ ctx, input }) => {
+			const age = input.birthDate ? new Date().getFullYear() - new Date(input.birthDate).getFullYear() : null;
 			const customer = ctx.db.customer.create({
 				data: {
 					name: input.name,
 					address: input.address,
-					age: input.age,
+					age: age,
 					inLine: input.inLine,
 					orgId: ctx.session.user.orgId,
+					birthDate: input.birthDate,
 					Phone: {
 						create: input.phone?.map((phone) => ({
 							number: phone.number,
@@ -74,9 +76,9 @@ export const CustomerRouter = createTRPCRouter({
 				number: z.string(),
 				id: z.string(),
 			})).optional(),
-			age: z.number().optional(),
 			address: z.string().optional(),
 			inLine: z.boolean().optional(),
+			birthDate: z.string().optional(),
 		}))
 		.mutation(async ({ ctx, input }) => {
 			await ctx.db.phone.deleteMany({
@@ -87,14 +89,18 @@ export const CustomerRouter = createTRPCRouter({
 				},
 			});
 
+			const birthDate = input.birthDate ? new Date(input.birthDate) : null;
+			const age = input.birthDate ? new Date().getFullYear() - new Date(input.birthDate).getFullYear() : null;
+			
 			const customer = ctx.db.customer.update({
 				where: {
 					id: input.id,
 				},
 				data: {
+					birthDate: birthDate,
 					name: input.name,
 					address: input.address,
-					age: input.age,
+					age: age,
 					inLine: input.inLine,
 					Phone: {
 						upsert: input.phone?.map((phone) => ({

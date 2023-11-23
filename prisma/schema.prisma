@@ -68,6 +68,7 @@ model Org {
     Customer      Customer[]
     Order         Order[]
     Appointment   Appointment[]
+    payment       Payments[]
 }
 
 model Customer {
@@ -119,12 +120,13 @@ model Order {
     Lenses   Lenses[]
     Payments Payments[]
 
-    service_order Int
-    total         Float
-    rest          Float
-    situation     String
-    observation   String?
-    status        Boolean
+    service_order  Int
+    total          Float
+    rest           Float
+    situation      String
+    observation    String?
+    status         Boolean
+    running_credit Boolean
 }
 
 model Frame {
@@ -155,6 +157,8 @@ model Payments {
     createdAt    DateTime @default(now())
     Order        Order?   @relation(fields: [orderId], references: [id])
     orderId      String?
+    Org          Org?     @relation(fields: [orgId], references: [id])
+    orgId        String?
 }
 
 model Appointment {

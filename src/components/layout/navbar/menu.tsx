@@ -4,8 +4,8 @@ import {
   Users,
   Wallet,
   Stethoscope,
-  PieChart,
-  CalendarSearch
+  CalendarSearch,
+  Banknote
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -24,8 +24,8 @@ const generalLinks: NavLinks[] = [
 ]
 
 const reportLinks: NavLinks[] = [
-  { href: "/reports", name: "Relatórios", Icon: PieChart },
   { href: "/daily", name: "Dia", Icon: CalendarSearch },
+  { href: "/payments", name: "Pagamentos", Icon: Banknote },
 ]
 
 export function Menu() {

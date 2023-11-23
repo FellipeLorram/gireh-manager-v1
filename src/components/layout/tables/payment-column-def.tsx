@@ -64,9 +64,7 @@ const Actions = ({ row }:
 	</DropdownMenu>
 }
 
-
-
-export const PaymentColumnDef: ColumnDef<Payments>[] = [
+export const OrderPagePaymentColumnDef: ColumnDef<Payments>[] = [
 	{
 		accessorKey: 'createdAt',
 		header: 'Data',
@@ -94,4 +92,30 @@ export const PaymentColumnDef: ColumnDef<Payments>[] = [
 		header: '',
 		cell: Actions
 	}
+]
+
+
+export const PaymentColumnDef: ColumnDef<Payments>[] = [
+	{
+		accessorKey: 'createdAt',
+		header: 'Data',
+		cell: ({ row }) => new Date(row.original.createdAt).toLocaleDateString('pt-BR'),
+	},
+	{
+		accessorKey: 'amount',
+		header: 'Valor',
+		cell: ({ row }) => Number(row.original.amount).toLocaleString('pt-BR', {
+			style: 'currency',
+			currency: 'BRL',
+		}),
+	},
+	{
+		accessorKey: 'type',
+		header: 'Método',
+		cell: ({ row }) => paymentType[row.original.type as keyof typeof paymentType],
+	},
+	{
+		accessorKey: 'installments',
+		header: 'Parcelas',
+	},
 ]

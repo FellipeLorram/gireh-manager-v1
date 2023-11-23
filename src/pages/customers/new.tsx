@@ -27,7 +27,10 @@ export default function Page() {
 	const onSubmit = (data: CustomerFormSchema) => {
 		mutate({
 			...data,
-			age: Number(data.age),
+			phone: data.phone?.map((phone) => ({
+				...phone,
+				number: phone.number,
+			})),
 		});
 	}
 

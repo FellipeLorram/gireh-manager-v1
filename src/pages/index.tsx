@@ -1,55 +1,33 @@
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { DashboardBirthdaysCustomers } from "@/components/layout/dashboard/dashboard-birthdays-month-customers";
+import { DashboardLastMonthsAverage } from "@/components/layout/dashboard/dashboard-last-months-average";
+import { DashboardOrderOverAnYear } from "@/components/layout/dashboard/dashboard-last-order-over-year-customers";
+import { DashboardLastPayments } from "@/components/layout/dashboard/dashboard-last-payments";
+import { DashboardLastWeekReport } from "@/components/layout/dashboard/dashboard-last-week-report";
+import { DashboardTotalCustomersOrders } from "@/components/layout/dashboard/dashboard-total-customers-orders";
 
-export default function Home() {
+export default function Page() {
   return (
     <DashboardLayout>
-      <div className="w-full mt-8 px-2 py-4 md:p-4 border rounded">
-        <p className="mb-4">
-          Dados da Semana
-        </p>
-        <div className="w-full flex flex-wrap md:flex-nowrap justify-center md:justify-start items-center flex-row md:gap-2">
-          <div className="p-4 rounded-tl md:rounded border w-1/2 md:w-full">
-            <p className="text-xs text-muted-foreground">
-              Novos clientes
-            </p>
-            <p className="md:text-xl text-lg mt-2">
-              0
-            </p>
-          </div>
+      <DashboardLastWeekReport />
 
-          <div className="p-4 md:rounded rounded-tr border w-1/2 md:w-full">
-            <p className="text-xs text-muted-foreground">
-              Vendas
-            </p>
-            <p className="md:text-xl text-lg mt-2">
-              0
-            </p>
-          </div>
-
-          <div className="p-4 md:rounded rounded-bl border w-1/2 md:w-full">
-            <p className="text-xs text-muted-foreground">
-              Entrada
-            </p>
-            <p className="md:text-xl text-lg mt-2">
-              {(0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-            </p>
-          </div>
-
-          <div className="p-4 md:rounded rounded-br border w-1/2 md:w-full">
-            <p className="text-xs text-muted-foreground">
-              Total de Vendas
-            </p>
-            <p className="md:text-xl text-lg mt-2">
-              {(0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-            </p>
-          </div>
-        </div>
+      <div className="w-full flex flex-col md:flex-row gap-8 md:gap-2 mt-8">
+        <DashboardLastPayments />
+        <DashboardBirthdaysCustomers />
+      </div>
+      
+      <div className="mt-8">
+        <DashboardTotalCustomersOrders />
       </div>
 
-      <div className="mt-4 border rounded p-4 w-full">
-        <p>Últimas Vendas</p>
-        
+      <div className="w-full flex flex-col md:flex-row gap-8 md:gap-2 mt-8">
+        <DashboardOrderOverAnYear />
       </div>
+
+      <div className="w-full flex flex-col md:flex-row gap-8 md:gap-2 mt-8">
+        <DashboardLastMonthsAverage />
+      </div>
+
     </DashboardLayout>
   );
 }

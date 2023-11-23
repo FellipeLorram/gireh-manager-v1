@@ -1,5 +1,5 @@
 import CustomerInfo from '@/components/layout/customer-info'
-import EditCustomerDialog from '@/components/layout/edit-customer-dialog'
+import EditCustomerDialog from '@/components/layout/edit-customer-sheet'
 import { RemoveCustomerDialog } from '@/components/layout/remove-customer-dialog'
 import { customerPageAppointmentColumnDef } from '@/components/layout/tables/appointment-column-def'
 import { customerPageOrderColumnDef } from '@/components/layout/tables/order-column-def'

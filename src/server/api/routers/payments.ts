@@ -44,6 +44,7 @@ export const paymentsRouter = createTRPCRouter({
 					type: input.type,
 					installments: input.installments,
 					orderId: input.orderId,
+					orgId: ctx.session.user.orgId,
 				}
 			});
 
@@ -115,7 +116,7 @@ export const paymentsRouter = createTRPCRouter({
 				}
 			});
 
-			if(!payment.orderId) {
+			if (!payment.orderId) {
 				throw new Error("Pagamento não encontrado");
 			}
 
@@ -133,7 +134,7 @@ export const paymentsRouter = createTRPCRouter({
 
 			const sum = payments.reduce((acc, curr) => acc + curr.amount, 0);
 
-			if(sum > total) {
+			if (sum > total) {
 				throw new Error("Valor da parcela maior que o valor total");
 			}
 
@@ -161,5 +162,37 @@ export const paymentsRouter = createTRPCRouter({
 			});
 
 			return payment;
+		}),
+
+	listAll: protectedProcedure
+		.input(z.object({
+			limit: z.number().optional().default(10),
+		})).query(async ({ ctx, input }) => {
+			const payments = await ctx.db.payments.findMany({
+				take: input.limit,
+				where: {
+					orgId: ctx.session.user.orgId,
+				},
+			});
+
+			return payments;
+		}),
+
+		listAllByRange: protectedProcedure
+		.input(z.object({
+			startDate: z.string().or(z.date()),
+			endDate: z.string().or(z.date()),
+		})).query(async ({ ctx, input }) => {
+			const payments = await ctx.db.payments.findMany({
+				where: {
+					orgId: ctx.session.user.orgId,
+					createdAt: {
+						gte: new Date(input.startDate),
+						lte: new Date(input.endDate),
+					},
+				},
+			});
+
+			return payments;
 		}),
 });

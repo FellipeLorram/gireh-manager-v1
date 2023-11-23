@@ -8,16 +8,15 @@ import { FrameSchema, LensesSchema } from "@/components/forms/order-form/form-sc
 import { type Frame } from "@prisma/client";
 
 export const OrderRouter = createTRPCRouter({
-	list: protectedProcedure
-		.query(({ ctx }) => {
-			const orders = ctx.db.order.findMany({
-				where: {
-					orgId: ctx.session.user.orgId,
-				},
-			});
+	list: protectedProcedure.query(({ ctx }) => {
+		const orders = ctx.db.order.findMany({
+			where: {
+				orgId: ctx.session.user.orgId,
+			},
+		});
 
-			return orders;
-		}),
+		return orders;
+	}),
 
 	listCustomerOrders: protectedProcedure
 		.input(z.object({
@@ -79,9 +78,11 @@ export const OrderRouter = createTRPCRouter({
 					total: input.total,
 					observation: input.observation,
 					rest: input.total,
-					status: false,
 					customer_name: name,
 					service_order: service_order!,
+					situation: 'SEPARATING',
+					status: false,
+					running_credit: false,
 					Frame: {
 						create: input.frame?.map((frame) => ({
 							name: frame.name,
@@ -139,6 +140,24 @@ export const OrderRouter = createTRPCRouter({
 			await ctx.db.order.delete({
 				where: {
 					id: input.id,
+				},
+			});
+
+			await ctx.db.frame.deleteMany({
+				where: {
+					orderId: input.id,
+				},
+			});
+
+			await ctx.db.lenses.deleteMany({
+				where: {
+					orderId: input.id,
+				},
+			});
+
+			await ctx.db.payments.deleteMany({
+				where: {
+					orderId: input.id,
 				},
 			});
 		}),
@@ -275,16 +294,42 @@ export const OrderRouter = createTRPCRouter({
 			return order;
 		}),
 
-	lastOrders: protectedProcedure
-		.query(({ ctx }) => {
+	listOrdersByDateRange: protectedProcedure
+		.input(z.object({
+			startDate: z.string().or(z.date()),
+			endDate: z.string().or(z.date()),
+		})).query(({ ctx, input }) => {
 			const orders = ctx.db.order.findMany({
 				where: {
 					orgId: ctx.session.user.orgId,
+					createdAt: {
+						gte: new Date(input.startDate),
+						lte: new Date(input.endDate),
+					},
 				},
-				orderBy: {
-					createdAt: 'desc',
+			});
+
+			return orders;
+		}),
+
+	listOrdersBySituation: protectedProcedure
+		.input(z.object({
+			situation: z.enum([
+				'SEPARATING',
+				'WAITING_LENSES',
+				'WAITING_FRAME',
+				'ASSEMBLING',
+				'READY',
+				'DELIVERED'
+			]),
+		})).query(({ ctx, input }) => {
+			const orders = ctx.db.order.findMany({
+				where: {
+					orgId: ctx.session.user.orgId,
+					situation: {
+						equals: input.situation,
+					},
 				},
-				take: 10,
 			});
 
 			return orders;

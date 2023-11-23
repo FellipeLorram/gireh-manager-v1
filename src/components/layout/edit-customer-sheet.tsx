@@ -1,11 +1,11 @@
 import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-	DialogClose
-} from "@/components/ui/dialog"
+	Sheet,
+	SheetContent,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
+	SheetClose
+} from "@/components/ui/sheet"
 import { Button } from "../ui/button"
 import { CustomerForm, type CustomerFormSchema } from "../forms/customer-form"
 import { api } from "@/utils/api";
@@ -18,8 +18,8 @@ interface Props {
 	id: string;
 }
 
-export default function EditCustomerDialog({ id }: Props) {
-	const dialogCloseRef = useRef<HTMLButtonElement>(null);
+export default function EditCustomerSheet({ id }: Props) {
+	const SheetCloseRef = useRef<HTMLButtonElement>(null);
 	const { reload } = useRouter();
 	const { toast } = useToast();
 	const { data } = api.customer.get.useQuery({
@@ -35,7 +35,7 @@ export default function EditCustomerDialog({ id }: Props) {
 				action: <ToastAction onClick={reload} altText="Atualizar Página">Atualizar Página</ToastAction>
 
 			});
-			dialogCloseRef.current?.click();
+			SheetCloseRef.current?.click();
 		},
 		onError: (error) => {
 			toast({
@@ -46,12 +46,9 @@ export default function EditCustomerDialog({ id }: Props) {
 	});
 
 	const onSubmit = (values: CustomerFormSchema) => {
-		console.log(values);
-
 		mutate({
 			id,
 			...values,
-			age: Number(values.age),
 			phone: values.phone?.map(phone => {
 				return {
 					id: phone.id ?? '',
@@ -62,22 +59,22 @@ export default function EditCustomerDialog({ id }: Props) {
 	}
 
 	return (
-		<Dialog>
-			<DialogTrigger asChild>
-				<Button variant="outline">
+		<Sheet>
+			<SheetTrigger asChild>
+				<Button className="w-full md:w-auto" variant="outline">
 					Editar
 				</Button>
-			</DialogTrigger>
-			<DialogContent>
-				<DialogHeader>
-					<DialogTitle>
+			</SheetTrigger>
+			<SheetContent className="overflow-y-auto">
+				<SheetHeader>
+					<SheetTitle>
 						Editar Cliente
-					</DialogTitle>
-				</DialogHeader>
+					</SheetTitle>
+				</SheetHeader>
 				<CustomerForm
 					defaultValues={{
+						birthDate: data?.birthDate?.toISOString().slice(0, 10) ?? '',
 						name: data?.name ?? '',
-						age: data?.age?.toString() ?? '',
 						address: data?.address ?? '',
 						phone: data?.Phone.map(phone => {
 							return {
@@ -90,9 +87,9 @@ export default function EditCustomerDialog({ id }: Props) {
 					}}
 					onSubmit={onSubmit}
 				/>
-				<DialogClose ref={dialogCloseRef}/>
-			</DialogContent>
-		</Dialog>
+				<SheetClose ref={SheetCloseRef}/>
+			</SheetContent>
+		</Sheet>
 
 	)
 }

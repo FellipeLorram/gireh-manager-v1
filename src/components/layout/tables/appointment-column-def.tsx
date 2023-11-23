@@ -68,6 +68,12 @@ export const AppointmentColumnDef: ColumnDef<Appointment>[] = [
 		header: 'Data',
 		cell: ({ row }) => {
 			const date = new Date(row.original.createdAt);
+			const today = new Date();
+			
+			if (date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear()) {
+				return 'Hoje';
+			}
+			
 			return date.toLocaleDateString();
 		},
 	},
