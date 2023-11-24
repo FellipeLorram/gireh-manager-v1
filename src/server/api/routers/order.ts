@@ -32,6 +32,30 @@ export const OrderRouter = createTRPCRouter({
 			return orders;
 		}),
 
+	updateOrderSituation: protectedProcedure
+		.input(z.object({
+			id: z.string(),
+			situation: z.enum([
+				'SEPARATING',
+				'WAITING_LENSES',
+				'WAITING_FRAME',
+				'ASSEMBLING',
+				'READY',
+				'DELIVERED'
+			]),
+		})).mutation(async ({ ctx, input }) => {
+			const order = await ctx.db.order.update({
+				where: {
+					id: input.id,
+				},
+				data: {
+					situation: input.situation,
+				},
+			});
+
+			return order;
+		}),
+
 	create: protectedProcedure
 		.input(z.object({
 			customerId: z.string(),
@@ -174,6 +198,14 @@ export const OrderRouter = createTRPCRouter({
 			add: z.string().optional(),
 			dnp_right: z.number().optional(),
 			dnp_left: z.number().optional(),
+			situation: z.enum([
+				'SEPARATING',
+				'WAITING_LENSES',
+				'WAITING_FRAME',
+				'ASSEMBLING',
+				'READY',
+				'DELIVERED'
+			]),
 			frame: z.array(FrameSchema.extend({
 				id: z.string(),
 				price: z.number(),
@@ -215,6 +247,7 @@ export const OrderRouter = createTRPCRouter({
 					dnp_left: input.dnp_left,
 					observation: input.observation,
 					total: input.total,
+					situation: input.situation,
 					rest: rest,
 				},
 			});

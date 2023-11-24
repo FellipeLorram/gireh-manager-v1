@@ -6,6 +6,7 @@ import { OrderInfo } from "@/components/layout/order-info";
 import { buttonVariants } from "@/components/ui/button";
 import { RemoveOrderDialog } from "@/components/layout/remove-order-dialog";
 import { api } from "@/utils/api";
+import { OrderTracking } from "@/components/layout/order-tracking";
 
 export default function Page() {
 	const { orderid } = useRouter().query;
@@ -28,6 +29,8 @@ export default function Page() {
 			<CustomerInfo id={data?.customerId} />
 
 			<OrderInfo order={data} />
+
+			<OrderTracking id={orderid as string} />
 
 			<div className="border rounded-md p-4 flex flex-wrap gap-4 w-full">
 				<Link
