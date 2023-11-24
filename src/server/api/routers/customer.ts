@@ -18,6 +18,7 @@ export const CustomerRouter = createTRPCRouter({
 		}))
 		.mutation(({ ctx, input }) => {
 			const age = input.birthDate ? new Date().getFullYear() - new Date(input.birthDate).getFullYear() : null;
+			const bd = input.birthDate ? new Date(input.birthDate) : null;
 			const customer = ctx.db.customer.create({
 				data: {
 					name: input.name,
@@ -25,7 +26,7 @@ export const CustomerRouter = createTRPCRouter({
 					age: age,
 					inLine: input.inLine,
 					orgId: ctx.session.user.orgId,
-					birthDate: input.birthDate,
+					birthDate: bd,
 					Phone: {
 						create: input.phone?.map((phone) => ({
 							number: phone.number,
