@@ -98,16 +98,6 @@ export const reportsRouter = createTRPCRouter({
 
 				const moneyToEntry = orders.reduce((acc, curr) => acc + curr.rest, 0);
 
-				const creditOrders = await ctx.db.order.findMany({
-					where: {
-						orgId: ctx.session.user.orgId,
-						createdAt: {
-							gte: startDate,
-							lte: endDate,
-						},
-						running_credit: true,
-					},
-				});
 
 				const payments = await ctx.db.payments.findMany({
 					where: {

@@ -10,7 +10,7 @@ export const OrderPageFrameColumnDef: ColumnDef<Frame>[] = [
 	{
 		accessorKey: 'image_url',
 		header: 'Imagem',
-		cell: ({ row }) => {
+		cell: () => {
 			return 'sem imagem'
 		},
 	},

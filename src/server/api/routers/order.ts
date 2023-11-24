@@ -198,19 +198,11 @@ export const OrderRouter = createTRPCRouter({
 			add: z.string().optional(),
 			dnp_right: z.number().optional(),
 			dnp_left: z.number().optional(),
-			situation: z.enum([
-				'SEPARATING',
-				'WAITING_LENSES',
-				'WAITING_FRAME',
-				'ASSEMBLING',
-				'READY',
-				'DELIVERED'
-			]),
 			frame: z.array(FrameSchema.extend({
 				id: z.string(),
 				price: z.number(),
 				height: z.number(),
-			})).optional(),
+			})),
 			lenses: z.array(LensesSchema.extend({
 				id: z.string(),
 				price: z.number(),
@@ -247,7 +239,6 @@ export const OrderRouter = createTRPCRouter({
 					dnp_left: input.dnp_left,
 					observation: input.observation,
 					total: input.total,
-					situation: input.situation,
 					rest: rest,
 				},
 			});

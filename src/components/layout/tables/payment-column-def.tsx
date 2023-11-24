@@ -16,16 +16,7 @@ const paymentType = {
 	money: 'Dinheiro',
 }
 
-const Actions = ({ row }:
-	CellContext<{
-		id: string;
-		amount: number;
-		type: string;
-		installments: number;
-		createdAt: Date;
-		orderId: string | null;
-	}, unknown>
-) => {
+const Actions = ({ row }: CellContext<Payments, unknown>) => {
 	const { toast } = useToast();
 	const { reload } = useRouter();
 	const { mutate } = api.payment.delete.useMutation({

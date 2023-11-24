@@ -62,7 +62,7 @@ export function OrderTracking({ id }: { id: string }) {
 
 	return (
 		<div className="w-full border rounded-md p-4">
-			<p className='font-semibold'>Observações</p>
+			<p className='font-semibold'>Status</p>
 			<div className="mt-2 flex flex-row justify-between items-center">
 				<p className={`${textColor}`}>
 					{situationMap[data?.situation as keyof typeof situationMap]}
