@@ -1,39 +1,43 @@
+import { api } from "@/utils/api";
 import {
-  type LucideIcon,
-  BarChart3,
-  Users,
-  Wallet,
-  Stethoscope,
-  CalendarSearch,
-  Banknote
+	type LucideIcon,
+	BarChart3,
+	Users,
+	Wallet,
+	Stethoscope,
+	CalendarSearch,
+	Banknote
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 type NavLinks = {
-  href: string;
-  name: string;
-  Icon: LucideIcon;
+	href: string;
+	name: string;
+	Icon: LucideIcon;
 }
 
 const generalLinks: NavLinks[] = [
-  { href: "/", name: "Dashboard", Icon: BarChart3 },
-  { href: "/customers", name: "Clientes", Icon: Users },
-  { href: "/orders", name: "Vendas", Icon: Wallet },
-  { href: "/appointments", name: "Exames", Icon: Stethoscope },
+	{ href: "/", name: "Dashboard", Icon: BarChart3 },
+	{ href: "/customers", name: "Clientes", Icon: Users },
+	{ href: "/orders", name: "Vendas", Icon: Wallet },
+	{ href: "/appointments", name: "Exames", Icon: Stethoscope },
 ]
 
 const reportLinks: NavLinks[] = [
-  { href: "/daily", name: "Dia", Icon: CalendarSearch },
-  { href: "/payments", name: "Pagamentos", Icon: Banknote },
+	{ href: "/daily", name: "Dia", Icon: CalendarSearch },
+	{ href: "/payments", name: "Pagamentos", Icon: Banknote },
 ]
 
 export function Menu() {
 	const pathname = usePathname();
+	const { data } = api.org.get.useQuery();
 
 	return (
 		<div>
-			<div>NAME</div>
+			<div>
+				{data?.name}
+			</div>
 			<div>
 				<h2 className="text-md text-muted-foreground mt-6">
 					Geral
