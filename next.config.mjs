@@ -21,4 +21,12 @@ const config = withPWA({
   },
 });
 
+// const config = {
+//   reactStrictMode: true,
+//   i18n: {
+//     locales: ["pt-BR"],
+//     defaultLocale: "pt-BR",
+//   },
+// };
+
 export default config;

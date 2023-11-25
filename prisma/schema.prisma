@@ -8,19 +8,18 @@ datasource db {
   relationMode = "prisma"
 }
 
-// Necessary for Next auth
 model Account {
   id                String  @id @default(cuid())
   userId            String
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? // @db.Text
-  access_token      String? // @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? // @db.Text
+  id_token          String?
   session_state     String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -42,14 +41,14 @@ model User {
   id            String    @id @default(cuid())
   name          String?
   email         String    @unique
-  password_hash String // @db.Text
+  password_hash String
   emailVerified DateTime?
   image         String?
+  orgId         String?
+  role          String    @default("USER")
   accounts      Account[]
   sessions      Session[]
   Org           Org?      @relation(fields: [orgId], references: [id])
-  orgId         String?
-  role          String    @default("USER")
 
   @@index([orgId])
 }
@@ -81,8 +80,8 @@ model Customer {
   inLine      Boolean?
   birthDate   DateTime?
   age         Int?
-  Org         Org           @relation(fields: [orgId], references: [id])
   orgId       String
+  Org         Org           @relation(fields: [orgId], references: [id])
   Order       Order[]
   Appointment Appointment[]
   Phone       Phone[]
@@ -94,37 +93,27 @@ model Customer {
 model Phone {
   id         String   @id @default(cuid())
   number     String
-  Customer   Customer @relation(fields: [customerId], references: [id])
   customerId String
+  Customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
 
   @@index([customerId])
 }
 
 model Order {
-  id            String   @id @default(cuid())
-  createdAt     DateTime @default(now())
-  customer      Customer @relation(fields: [customerId], references: [id])
-  customerId    String
-  customer_name String
-  Org           Org      @relation(fields: [orgId], references: [id])
-  orgId         String
-
-  dnp_right Float?
-  dnp_left  Float?
-
-  esf_right  String?
-  cil_right  String?
-  axle_right Int?
-
-  esf_left  String?
-  cil_left  String?
-  axle_left Int?
-  add       String?
-
-  Frame    Frame[]
-  Lenses   Lenses[]
-  Payments Payments[]
-
+  id             String     @id @default(cuid())
+  createdAt      DateTime   @default(now())
+  customerId     String
+  customer_name  String
+  orgId          String
+  dnp_right      Float?
+  dnp_left       Float?
+  esf_right      String?
+  cil_right      String?
+  axle_right     Int?
+  esf_left       String?
+  cil_left       String?
+  axle_left      Int?
+  add            String?
   service_order  Int
   total          Float
   rest           Float
@@ -132,6 +121,11 @@ model Order {
   observation    String?
   status         Boolean
   running_credit Boolean
+  customer       Customer   @relation(fields: [customerId], references: [id])
+  Org            Org        @relation(fields: [orgId], references: [id])
+  Frame          Frame[]
+  Lenses         Lenses[]
+  Payments       Payments[]
 
   @@index([customerId])
   @@index([orgId])
@@ -145,8 +139,8 @@ model Frame {
   reference String?
   image_url String?
   supplier  String?
-  Order     Order?  @relation(fields: [orderId], references: [id])
   orderId   String?
+  Order     Order?  @relation(fields: [orderId], references: [id])
 
   @@index([orderId])
 }
@@ -155,8 +149,8 @@ model Lenses {
   id      String  @id @default(cuid())
   name    String
   price   Float
-  Order   Order?  @relation(fields: [orderId], references: [id])
   orderId String?
+  Order   Order?  @relation(fields: [orderId], references: [id])
 
   @@index([orderId])
 }
@@ -167,34 +161,32 @@ model Payments {
   type         String
   installments Int
   createdAt    DateTime @default(now())
-  Order        Order?   @relation(fields: [orderId], references: [id])
   orderId      String?
-  Org          Org?     @relation(fields: [orgId], references: [id])
   orgId        String?
+  Order        Order?   @relation(fields: [orderId], references: [id])
+  Org          Org?     @relation(fields: [orgId], references: [id])
 
   @@index([orderId])
   @@index([orgId])
 }
 
 model Appointment {
-  id String @id @default(cuid())
-
-  esf_right   String?
-  cil_right   String?
-  axle_right  Int?
-  esf_left    String?
-  cil_left    String?
-  axle_left   Int?
-  add         String?
-  anamnesis   String?
-  observation String?
-
+  id           String   @id @default(cuid())
+  esf_right    String?
+  cil_right    String?
+  axle_right   Int?
+  esf_left     String?
+  cil_left     String?
+  axle_left    Int?
+  add          String?
+  anamnesis    String?
+  observation  String?
   createdAt    DateTime @default(now())
-  Customer     Customer @relation(fields: [customerId], references: [id])
   customerId   String
   customerName String
-  Org          Org      @relation(fields: [orgId], references: [id])
   orgId        String
+  Customer     Customer @relation(fields: [customerId], references: [id])
+  Org          Org      @relation(fields: [orgId], references: [id])
 
   @@index([customerId])
   @@index([orgId])

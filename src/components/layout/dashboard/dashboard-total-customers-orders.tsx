@@ -12,7 +12,7 @@ export function DashboardTotalCustomersOrders() {
 					Total de Clientes
 				</p>
 				<p className="md:text-xl text-lg mt-2">
-					{data?.numberOfOrders?? <Skeleton className="w-10 h-6 rounded" />}
+					{data?.numberOfCustomers?? <Skeleton className="w-10 h-6 rounded" />}
 				</p>
 			</div>
 			<div className="p-4 rounded border w-full">

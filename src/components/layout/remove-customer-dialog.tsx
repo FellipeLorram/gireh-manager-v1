@@ -9,10 +9,21 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog"
 import { api } from "@/utils/api";
+import { useToast } from "../ui/use-toast";
+import { CircleDashed } from "lucide-react";
 
 export function RemoveCustomerDialog() {
-	const { id } = useRouter().query;
-	const { mutate } = api.customer.delete.useMutation()
+	const { toast } = useToast();
+	const { query, push } = useRouter();
+	const { mutate, isLoading } = api.customer.delete.useMutation({
+		onSuccess: async () => {
+			toast({
+				title: 'Cliente removido com sucesso',
+			});
+
+			await push('/customers');
+		}
+	})
 
 	return (
 		<Dialog>
@@ -31,9 +42,10 @@ export function RemoveCustomerDialog() {
 					</DialogDescription>
 				</DialogHeader>
 				<Button
-					onClick={() => mutate({ id: id as string })}
+					onClick={() => mutate({ id: query.customerid as string })}
 					variant="outline"
 				>
+					{isLoading && <CircleDashed size={16} className="animate-spin mr-2" />}
 					Excluir
 				</Button>
 			</DialogContent>
