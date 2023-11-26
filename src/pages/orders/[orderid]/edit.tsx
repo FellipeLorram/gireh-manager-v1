@@ -12,12 +12,12 @@ export default function Page() {
 	const { toast } = useToast();
 	const { push, query } = useRouter();
 	const { mutate, isLoading } = api.order.update.useMutation({
-		onSuccess: async ({ id, customerId }) => {
+		onSuccess: async ({ id }) => {
 			toast({
 				description: 'Venda editada com sucesso!',
 			});
 
-			await push(`/customers/${customerId}/orders/${id}`);
+			await push(`/orders/${id}`);
 		},
 		onError: (error) => {
 			toast({

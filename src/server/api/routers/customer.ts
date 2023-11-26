@@ -42,8 +42,8 @@ export const CustomerRouter = createTRPCRouter({
 		.input(z.object({
 			id: z.string(),
 		}))
-		.query(({ ctx, input }) => {
-			const customer = ctx.db.customer.findUnique({
+		.query(async ({ ctx, input }) => {
+			const customer = await ctx.db.customer.findUnique({
 				where: {
 					id: input.id,
 				},
@@ -51,6 +51,7 @@ export const CustomerRouter = createTRPCRouter({
 					Phone: true,
 				}
 			});
+
 
 			return customer;
 		}),
@@ -87,6 +88,7 @@ export const CustomerRouter = createTRPCRouter({
 					id: {
 						notIn: input.phone?.map((phone) => phone.id),
 					},
+					customerId: input.id,
 				},
 			});
 

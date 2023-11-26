@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 export default function Page() {
 	const { toast } = useToast();
 	const { push } = useRouter();
-	const { mutate } = api.customer.create.useMutation({
+	const { mutate, isLoading } = api.customer.create.useMutation({
 		onSuccess: async ({inLine}) => {
 			toast({
 				description: 'Cliente cadastrado com sucesso',
@@ -46,6 +46,7 @@ export default function Page() {
 			<CustomerForm
 				className="my-auto"
 				onSubmit={onSubmit}
+				isLoading={isLoading}
 			/>
 		</div>
 	)

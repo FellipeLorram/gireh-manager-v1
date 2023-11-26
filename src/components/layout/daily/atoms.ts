@@ -13,14 +13,14 @@ const today: range = {
 }
 
 const yesterday: range = {
-	start: new Date(new Date().setDate(new Date().getDate() - 1)),
-	end: new Date(new Date().setDate(new Date().getDate() - 1)),
-	label: 'Ontem',
+    start: new Date(new Date(new Date().setDate(new Date().getDate() - 1)).setHours(0, 0, 0, 0)),
+    end: new Date(new Date(new Date().setDate(new Date().getDate() - 1)).setHours(23, 59, 59, 999)),
+    label: 'Ontem',
 }
 
 const thisWeek: range = {
-	start: new Date(new Date().setDate(new Date().getDate() - new Date().getDay())),
-	end: new Date(new Date().setDate(new Date().getDate() + (6 - new Date().getDay()))),
+    start: new Date(new Date(new Date().setDate(new Date().getDate() - 7)).setHours(0, 0, 0, 0)),
+	end: new Date(new Date(new Date().setDate(new Date().getDate() - 1)).setHours(23, 59, 59, 999)),
 	label: 'Semana',
 }
 

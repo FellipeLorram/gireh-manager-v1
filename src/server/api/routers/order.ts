@@ -3,6 +3,7 @@ import { z } from "zod";
 import {
 	createTRPCRouter,
 	protectedProcedure,
+	publicProcedure,
 } from "@/server/api/trpc";
 import { FrameSchema, LensesSchema } from "@/components/forms/order-form/form-schema";
 import { type Frame } from "@prisma/client";
@@ -357,5 +358,18 @@ export const OrderRouter = createTRPCRouter({
 			});
 
 			return orders;
+		}),
+
+	orderSituation: publicProcedure
+		.input(z.object({
+			id: z.string(),
+		})).query(async ({ ctx, input }) => {
+			const order = await ctx.db.order.findFirst({
+				where: {
+					id: input.id,
+				},
+			});
+
+			return order?.situation;
 		}),
 });

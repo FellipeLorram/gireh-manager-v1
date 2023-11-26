@@ -28,7 +28,7 @@ export default function EditCustomerSheet({ id }: Props) {
 		enabled: !!id,
 	});
 
-	const { mutate } = api.customer.update.useMutation({
+	const { mutate, isLoading } = api.customer.update.useMutation({
 		onSuccess: () => {
 			toast({
 				title: 'Cliente atualizado com sucesso!',
@@ -85,6 +85,7 @@ export default function EditCustomerSheet({ id }: Props) {
 							number: ''
 						}],
 					}}
+					isLoading={isLoading}
 					onSubmit={onSubmit}
 				/>
 				<SheetClose ref={SheetCloseRef}/>

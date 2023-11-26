@@ -40,8 +40,8 @@ export const OrderFormSchema = z.object({
 
 	add: z.string().regex(/^[+]?\d*[\.,]?(?:00|25|50|75)$/, "Grau inválido").optional(),
 
-	dnp_right: z.string().optional(),
-	dnp_left: z.string().optional(),
+	dnp_right: z.string().transform(v => v.replace(',', '.')).optional(),
+	dnp_left: z.string().transform(v => v.replace(',', '.')).optional(),
 
 	frame: z.array(FrameSchema).optional(),
 	lenses: z.array(LensesSchema).optional(),

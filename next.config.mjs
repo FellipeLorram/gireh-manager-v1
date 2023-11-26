@@ -13,20 +13,20 @@ const withPWA = pwa({
 });
 
 /** @type {import("next").NextConfig} */
-const config = withPWA({
-  reactStrictMode: true,
-  i18n: {
-    locales: ["pt-BR"],
-    defaultLocale: "pt-BR",
-  },
-});
-
-// const config = {
+// const config = withPWA({
 //   reactStrictMode: true,
 //   i18n: {
 //     locales: ["pt-BR"],
 //     defaultLocale: "pt-BR",
 //   },
-// };
+// });
+
+const config = {
+  reactStrictMode: true,
+  i18n: {
+    locales: ["pt-BR"],
+    defaultLocale: "pt-BR",
+  },
+};
 
 export default config;

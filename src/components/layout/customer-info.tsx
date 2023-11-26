@@ -5,8 +5,6 @@ interface Props {
 	id: string | undefined;
 }
 
-
-
 export default function CustomerInfo({ id }: Props) {
 	const { data } = api.customer.get.useQuery({
 		id: id!,

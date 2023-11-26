@@ -27,7 +27,7 @@ export function MeasuresDetails({ form }: Props) {
 						<FormItem className="w-full">
 							<FormLabel>Olho Direito</FormLabel>
 							<FormControl>
-								<Input placeholder="32" {...field} />
+								<Input placeholder="32" type="number" {...field} />
 							</FormControl>
 
 							<FormMessage />
@@ -41,7 +41,7 @@ export function MeasuresDetails({ form }: Props) {
 						<FormItem className="w-full">
 							<FormLabel>Olho Esquerdo</FormLabel>
 							<FormControl>
-								<Input placeholder="32" {...field} />
+								<Input placeholder="32" type="number" {...field} />
 							</FormControl>
 
 							<FormMessage />

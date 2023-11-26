@@ -9,13 +9,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const { status } = useSession();
 
 	useEffect(() => {
-		if (status === 'unauthenticated') {
+		if (
+			status === 'unauthenticated'
+			&& pathname !== '/auth/signin'
+			&& pathname !== '/status'
+		) {
 			router.push('/auth/signin');
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [status]);
 
-	if (status === 'authenticated' || pathname === '/auth/signin') {
+	if (
+		status === 'authenticated'
+		|| pathname === '/auth/signin'
+		|| pathname === '/status'
+	) {
 		return children;
 	}
 

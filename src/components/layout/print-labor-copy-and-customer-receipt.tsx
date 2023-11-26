@@ -10,6 +10,7 @@ import { useReactToPrint } from "react-to-print";
 import { Button } from "../ui/button";
 import { CustomerReceipt } from "./print-customer-receipt";
 import { LaborCopy } from "./print-labor-copy";
+import { api } from "@/utils/api";
 
 type OrderWithItems = Order & {
 	Frame: Frame[];
@@ -27,6 +28,12 @@ export function PrintLaborCopyAndCustomerReceipt({ order, org }: Props) {
 	const handlePrint = useReactToPrint({
 		content: () => componentRef.current,
 	});
+	const { data } = api.customer.get.useQuery({
+		id: order.customerId,
+	}, {
+		enabled: !!order.customerId,
+	});
+
 	return (
 		<>
 			<Button
@@ -36,20 +43,28 @@ export function PrintLaborCopyAndCustomerReceipt({ order, org }: Props) {
 				Ambas
 			</Button>
 			<div className="hidden">
-				<LaborCopyAndCustomerReceipt ref={componentRef} order={order} org={org} />
+				<LaborCopyAndCustomerReceipt
+					ref={componentRef}
+					order={order}
+					org={org}
+					phone={data?.Phone[0]?.number}
+				/>
 			</div>
 		</>
 	)
 }
 
-export const LaborCopyAndCustomerReceipt = forwardRef<HTMLDivElement, Props>(({
+export const LaborCopyAndCustomerReceipt = forwardRef<HTMLDivElement, Props & {
+	phone?: string;
+}>(({
 	order,
-	org
+	org,
+	phone,
 }, ref) => {
 	return (
 		<div ref={ref} className="w-full flex flex-row">
 			<CustomerReceipt order={order} org={org} />
-			<LaborCopy order={order} org={org} />
+			<LaborCopy phone={phone} order={order} org={org} />
 		</div>
 	);
 });

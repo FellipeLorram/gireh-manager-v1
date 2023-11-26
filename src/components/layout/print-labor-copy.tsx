@@ -14,6 +14,7 @@ import {
 	TableRow,
 	TableCell,
 } from "../ui/table";
+import { api } from "@/utils/api";
 
 type OrderWithItems = Order & {
 	Frame: Frame[];
@@ -31,6 +32,13 @@ export function PrintLaborCopy({ order, org }: Props) {
 	const handlePrint = useReactToPrint({
 		content: () => componentRef.current,
 	});
+
+	const { data } = api.customer.get.useQuery({
+		id: order.customerId,
+	}, {
+		enabled: !!order.customerId,
+	});
+
 	return (
 		<>
 			<Button
@@ -41,15 +49,23 @@ export function PrintLaborCopy({ order, org }: Props) {
 				Via Laboratório
 			</Button>
 			<div className="hidden">
-				<LaborCopy ref={componentRef} order={order} org={org} />
+				<LaborCopy
+					ref={componentRef}
+					order={order}
+					org={org}
+					phone={data?.Phone[0]?.number}
+				/>
 			</div>
 		</>
 	)
 }
 
-export const LaborCopy = forwardRef<HTMLDivElement, Props>(({
+export const LaborCopy = forwardRef<HTMLDivElement, Props & {
+	phone?: string;
+}>(({
 	order,
-	org
+	org,
+	phone,
 }, ref) => {
 	return (
 		<div ref={ref} className="w-1/2 border border-dashed bg-white text-gray-900">
@@ -66,6 +82,27 @@ export const LaborCopy = forwardRef<HTMLDivElement, Props>(({
 					</p>
 				</div>
 			</div>
+
+			<Table className="mt-2">
+				<TableBody>
+					<TableRow>
+						<TableCell className="p-1 text-xs">
+							Nome
+						</TableCell>
+						<TableCell className="p-1 text-xs">
+							Telefone
+						</TableCell>
+					</TableRow>
+					<TableRow>
+						<TableCell className="p-1 text-xs">
+							{order.customer_name}
+						</TableCell>
+						<TableCell className="p-1 text-xs">
+							{phone}
+						</TableCell>
+					</TableRow>
+				</TableBody>
+			</Table>
 
 			<div className="w-11/12 mx-auto py-4">
 				<Table>
