@@ -1,4 +1,3 @@
-import { api } from "@/utils/api";
 import {
 	type LucideIcon,
 	BarChart3,
@@ -31,13 +30,8 @@ const reportLinks: NavLinks[] = [
 
 export function Menu() {
 	const pathname = usePathname();
-	const { data } = api.org.get.useQuery();
 
 	return (
-		<div>
-			<div>
-				{data?.name}
-			</div>
 			<div>
 				<h2 className="text-md text-muted-foreground mt-6">
 					Geral
@@ -78,7 +72,5 @@ export function Menu() {
 					))}
 				</div>
 			</div>
-
-		</div>
 	)
 }

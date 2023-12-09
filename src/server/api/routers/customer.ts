@@ -150,4 +150,27 @@ export const CustomerRouter = createTRPCRouter({
 
 			return customers;
 		}),
+
+	searchByName: protectedProcedure
+		.input(z.object({
+			name: z.string(),
+		})).query(({ ctx, input }) => {
+			const customers = ctx.db.customer.findMany({
+				where: {
+					orgId: ctx.session.user.orgId,
+					name: {
+						startsWith: input.name,
+					},
+				},
+				take: 2,
+				orderBy: {
+					name: "asc",
+				},
+				include: {
+					Phone: true,
+				}
+			});
+
+			return customers;
+		}),
 });

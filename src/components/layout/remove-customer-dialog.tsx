@@ -42,6 +42,7 @@ export function RemoveCustomerDialog() {
 					</DialogDescription>
 				</DialogHeader>
 				<Button
+					disabled={isLoading}
 					onClick={() => mutate({ id: query.customerid as string })}
 					variant="outline"
 				>

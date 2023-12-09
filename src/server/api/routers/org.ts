@@ -14,4 +14,18 @@ export const orgRouter = createTRPCRouter({
 
 			return org;
 		}),
+
+	listUserOrgs: protectedProcedure
+		.query(async ({ ctx }) => {
+			const orgs = await ctx.db.userOrg.findMany({
+				where: {
+					userId: ctx.session.user.id,
+				},
+				include: {
+					org: true,
+				},
+			});
+
+			return orgs;
+		}),
 });

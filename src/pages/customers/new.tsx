@@ -1,4 +1,5 @@
-import { CustomerForm, type CustomerFormSchema } from "@/components/forms/customer-form";
+import { CustomerForm } from "@/components/forms/customer-form";
+import { type CustomerFormSchema } from "@/components/forms/customer-form/schema";
 import { useToast } from "@/components/ui/use-toast";
 import { api } from "@/utils/api";
 import { ArrowLeftCircle } from "lucide-react";

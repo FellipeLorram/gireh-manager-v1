@@ -7,12 +7,13 @@ import {
 	SheetClose
 } from "@/components/ui/sheet"
 import { Button } from "../ui/button"
-import { CustomerForm, type CustomerFormSchema } from "../forms/customer-form"
+import { CustomerForm } from "../forms/customer-form"
 import { api } from "@/utils/api";
 import { useToast } from "../ui/use-toast";
 import { useRef } from "react";
 import { ToastAction } from "../ui/toast";
 import { useRouter } from "next/router";
+import { type CustomerFormSchema } from "../forms/customer-form/schema";
 
 interface Props {
 	id: string;

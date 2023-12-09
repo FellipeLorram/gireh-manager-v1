@@ -49,6 +49,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Org           Org?      @relation(fields: [orgId], references: [id])
+  UserOrg       UserOrg[]
 
   @@index([orgId])
 }
@@ -70,6 +71,18 @@ model Org {
   Order         Order[]
   Appointment   Appointment[]
   payment       Payments[]
+  UserOrg       UserOrg[]
+}
+
+model UserOrg {
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+  orgId  String
+  org    Org    @relation(fields: [orgId], references: [id])
+
+  @@id([userId, orgId])
+  @@index([userId])
+  @@index([orgId])
 }
 
 model Customer {

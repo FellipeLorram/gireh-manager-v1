@@ -9,6 +9,7 @@ import {
 import { db } from "@/server/db";
 import Credentials from "next-auth/providers/credentials";
 import * as argon2 from "argon2";
+import { z } from "zod";
 
 type UserRole = "ADMIN" | "USER";
 
@@ -27,15 +28,31 @@ declare module "next-auth" {
   }
 }
 
+const updateSessionObject = z.object({
+  orgId: z.string(),
+});
+
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
   callbacks: {
-    jwt: ({ token, user }) => {
+    jwt: ({ token, user, trigger, session }) => {
+
+      if (trigger === "update") {
+        const { orgId } = updateSessionObject.parse(session);
+        
+        if (user) {
+          token.orgId = orgId;
+          token.id = user.id;
+          token.role = user.role;
+        }
+        return token;
+      }
+
       if (user) {
-        token.id = user.id;
         token.orgId = user.orgId;
+        token.id = user.id;
         token.role = user.role;
       }
       return token;
