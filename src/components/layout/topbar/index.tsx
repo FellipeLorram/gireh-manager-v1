@@ -37,7 +37,7 @@ export function Topbar() {
 								<UserCircle className="w-5 h-5 stroke-foreground" />
 							</div>
 						</DropdownMenuTrigger>
-						<DropdownMenuContent>
+						{/* <DropdownMenuContent>
 							<DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem>Perfil</DropdownMenuItem>
@@ -48,7 +48,7 @@ export function Topbar() {
 							</DropdownMenuItem>
 							<DropdownMenuItem>Time</DropdownMenuItem>
 							<DropdownMenuItem onClick={() => signOut()}>Sair</DropdownMenuItem>
-						</DropdownMenuContent>
+						</DropdownMenuContent> */}
 					</DropdownMenu>
 				</div>
 

@@ -15,12 +15,12 @@ export default function Page() {
 				<h1 className="text-xl text-center mx-auto">Óticas</h1>
 			</div>
 
-			<div className="w-full flex flex-wrap">
+			{/* <div className="w-full flex flex-wrap">
 				{data?.map((org) => (
 					<></>
 				))}
 
-			</div>
+			</div> */}
 		</div>
 	)
 }
