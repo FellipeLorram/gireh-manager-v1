@@ -17,15 +17,46 @@ export const orgRouter = createTRPCRouter({
 
 	listUserOrgs: protectedProcedure
 		.query(async ({ ctx }) => {
-			const orgs = await ctx.db.userOrg.findMany({
+			const orgsIds = await ctx.db.userOrg.findMany({
 				where: {
 					userId: ctx.session.user.id,
 				},
-				include: {
-					org: true,
+			});
+
+			const orgs = await ctx.db.org.findMany({
+				where: {
+					id: {
+						in: orgsIds.map((org) => org.orgId),
+					},
 				},
 			});
 
 			return orgs;
+		}),
+
+
+	listUserOrgsWithUsersCount: protectedProcedure
+		.query(async ({ ctx }) => {
+			const orgsIds = await ctx.db.userOrg.findMany({
+				where: {
+					userId: ctx.session.user.id,
+				},
+			});
+
+			const orgs = await ctx.db.org.findMany({
+				where: {
+					id: {
+						in: orgsIds.map((org) => org.orgId),
+					},
+				},
+				include: {
+					users: true,
+				},
+			});
+
+			return orgs.map((org) => ({
+				...org,
+				usersCount: org.users.length,
+			}));
 		}),
 });

@@ -17,13 +17,13 @@ export function Navbar() {
         <SelectContent>
           {orgs?.map((org) => (
             <SelectItem
-              value={org.org.name}
-              key={org.orgId}
+              value={org.name}
+              key={org.id}
               onClick={async () => {
-                await update({ orgId: org.orgId });
+                await update({ orgId: org.id });
               }}
             >
-              {org.org.name}
+              {org.name}
             </SelectItem>
           ))}
         </SelectContent>

@@ -8,7 +8,7 @@ export default function Page() {
 
 	return (
 		<DashboardLayout>
-			<div className="w-full mt-10">
+			<div className="w-full border rounded p-4">
 				<DataTable
 					columns={OrderColumnDef}
 					filterField="customer_name"

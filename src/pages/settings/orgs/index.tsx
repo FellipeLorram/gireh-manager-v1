@@ -1,6 +1,7 @@
-import { api } from "@/utils/api"
 import { ArrowLeftCircle } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { api } from "@/utils/api"
 
 export default function Page() {
 	const { data } = api.org.listUserOrgs.useQuery();
@@ -15,9 +16,19 @@ export default function Page() {
 				<h1 className="text-xl text-center mx-auto">Óticas</h1>
 			</div>
 
-			<div className="w-full flex flex-wrap">
+			<div className="w-full flex flex-col gap-2">
 				{data?.map((org) => (
-					<></>
+					<div
+						key={org.id}
+						className="w-full border rounded p-4 "
+					>
+						<p className="text-lg">{org.name}</p>
+						<div className="ml-auto flex flex-row">
+							<Button>
+								Mudar para
+							</Button>
+						</div>
+					</div>
 				))}
 
 			</div>

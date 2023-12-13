@@ -10,7 +10,7 @@ export default function Page() {
 
 	return (
 		<DashboardLayout>
-			<div className="w-full mt-10">
+			<div className="w-full">
 				<div className="w-full border rounded mb-4 p-4">
 					<p className="text-lg mb-4">
 						Fila de Exame

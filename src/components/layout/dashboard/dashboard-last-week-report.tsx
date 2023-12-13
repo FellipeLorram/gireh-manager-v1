@@ -5,7 +5,7 @@ export function DashboardLastWeekReport() {
   const { data } = api.reports.dashboardLastWeekReport.useQuery();
 
   return (
-    <div className="w-full mt-8 p-4 border rounded">
+    <div className="w-full p-4 border rounded">
       <p className="mb-2">
         Dados da Semana
       </p>

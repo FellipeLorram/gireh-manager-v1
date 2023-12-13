@@ -8,7 +8,7 @@ export default function Page() {
 
 	return (
 		<DashboardLayout>
-			<div className="w-full mt-10">
+			<div className="w-full rounded p-4 border">
 				<DataTable
 					columns={PaymentColumnDef}
 					data={data ?? []}

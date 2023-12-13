@@ -11,20 +11,20 @@ export default function Page() {
     <DashboardLayout>
       <DashboardLastWeekReport />
 
-      <div className="w-full flex flex-col md:flex-row gap-8 md:gap-2 mt-8">
+      <div className="w-full flex flex-col md:flex-row gap-4 md:gap-2 mt-4">
         <DashboardLastPayments />
         <DashboardBirthdaysCustomers />
       </div>
       
-      <div className="mt-8">
+      <div className="mt-4">
         <DashboardTotalCustomersOrders />
       </div>
 
-      <div className="w-full flex flex-col md:flex-row gap-8 md:gap-2 mt-8">
+      <div className="w-full flex flex-col md:flex-row gap-8 md:gap-2 mt-4">
         <DashboardOrderOverAnYear />
       </div>
 
-      <div className="w-full flex flex-col md:flex-row gap-8 md:gap-2 mt-8">
+      <div className="w-full flex flex-col md:flex-row gap-8 md:gap-2 mt-4">
         <DashboardLastMonthsAverage />
       </div>
 

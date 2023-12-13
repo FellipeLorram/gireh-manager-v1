@@ -18,7 +18,7 @@ export default function Page() {
 
 	return (
 		<DashboardLayout>
-			<div className='w-full flex flex-row flex-wrap gap-2 mt-8'>
+			<div className='w-full flex flex-row flex-wrap gap-2'>
 				<Button
 					size="sm"
 					onClick={setToday}
