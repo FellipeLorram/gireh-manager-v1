@@ -4,7 +4,6 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/comp
 import { Input } from "@/components/ui/input";
 import { api } from '@/utils/api'
 import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
 
 type Props = {
 	form: UseFormReturn<CustomerFormSchema>;
