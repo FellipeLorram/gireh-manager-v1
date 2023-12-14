@@ -26,7 +26,7 @@ export function TopBarNavigation() {
           key={href}
           href={href}
         >
-          <p className={`p-2 rounded group-hover:bg-secondary duration-200 ease-in-out ${pathname !== href && "text-muted-foreground group-hover:text-foreground"}`}>
+          <p className={`p-2 rounded md:group-hover:bg-secondary duration-200 ease-in-out ${pathname !== href && "text-muted-foreground group-hover:text-foreground"}`}>
             {name}
           </p>
         </Link>
@@ -37,7 +37,7 @@ export function TopBarNavigation() {
           key={href}
           href={href}
         >
-          <p className={`p-2 rounded group-hover:bg-secondary duration-200 ease-in-out ${pathname !== href && "text-muted-foreground group-hover:text-foreground"}`}>
+          <p className={`p-2 rounded md:group-hover:bg-secondary duration-200 ease-in-out ${pathname !== href && "text-muted-foreground group-hover:text-foreground"}`}>
             {name}
           </p>
         </Link>
