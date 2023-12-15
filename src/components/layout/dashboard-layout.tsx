@@ -1,10 +1,11 @@
-import Link from "next/link"
+import { cn } from "@/lib/utils"
 import { Topbar } from "./topbar"
-import { buttonVariants } from "../ui/button"
 
 export function DashboardLayout({
 	children,
+	className,
 }: {
+	className?: string
 	children: React.ReactNode
 }) {
 	return (
@@ -13,12 +14,7 @@ export function DashboardLayout({
 		// 	<NavbarMobile />
 		<main className="w-full min-h-screen">
 			<Topbar />
-			<div className="mx-auto w-11/12 max-w-7xl pt-4 md:pt-8">
-				<Link
-					className={buttonVariants({ className: 'w-full mb-4 md:hidden' })}
-					href="/customers/new">
-					Novo Cliente
-				</Link>
+			<div className={cn("mx-auto w-11/12 max-w-7xl pt-4 md:pt-8", className)}>
 				{children}
 			</div>
 			<div className="h-20"></div>

@@ -104,6 +104,9 @@ export const authOptions: NextAuthOptions = {
         }
 
         return {
+          email: user.email,
+          image: user.image,
+          name: user.name,
           id: user.id,
           orgId: user.orgId!,
           role: user.role as UserRole,

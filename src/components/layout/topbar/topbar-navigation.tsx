@@ -8,10 +8,12 @@ const Links = [
   { href: "/orders", name: "Vendas" },
   { href: "/appointments", name: "Exames" },
 ]
+
 const reportLinks = [
   { href: "/daily", name: "Dia" },
   { href: "/payments", name: "Pagamentos" },
 ]
+
 export function TopBarNavigation() {
   const pathname = usePathname();
   const { data } = useSession();
@@ -42,6 +44,15 @@ export function TopBarNavigation() {
           </p>
         </Link>
       ))}
+
+      <Link
+        className={`text-sm pb-2 duration-200 ease-in-out group ${pathname === "/settings" && "border-b-2 border-foreground"}`}
+        href="/settings"
+      >
+        <p className={`p-2 rounded md:group-hover:bg-secondary duration-200 ease-in-out ${pathname !== "/settings" && "text-muted-foreground group-hover:text-foreground"}`}>
+          Configurações
+        </p>
+      </Link>
     </div>
   )
 }
