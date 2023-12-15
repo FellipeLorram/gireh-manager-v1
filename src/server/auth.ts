@@ -40,12 +40,7 @@ export const authOptions: NextAuthOptions = {
     jwt: ({ token, user, trigger, session }) => {
       if (trigger === "update") {
         const { orgId } = updateSessionObject.parse(session);
-        
-        if (user) {
-          token.orgId = orgId;
-          token.id = user.id;
-          token.role = user.role;
-        }
+        token.orgId = orgId;
         return token;
       }
 

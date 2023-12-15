@@ -46,6 +46,7 @@ export const OrderFormSchema = z.object({
 	frame: z.array(FrameSchema).optional(),
 	lenses: z.array(LensesSchema).optional(),
 
+	discount: z.string().optional(),
 	total: z.number({
 		invalid_type_error: 'Valor total é obrigatório',
 		required_error: 'Valor total é obrigatório'
@@ -59,5 +60,7 @@ export const OrderFormSchema = z.object({
 	{ path: ['axle_right'], message: 'Cilindro OD requer eixo' })
 	.refine(({ cil_left, axle_left }) => !(cil_left && !axle_left),
 		{ path: ['axle_left'], message: 'Cilindro OE requer eixo' })
+	.refine(({ discount, total }) => !(Number(discount) > total), { path: ['discount'], message: 'Desconto maior que total' })
+	.refine(({ discount, total }) => !(Number(discount) === total), { path: ['discount'], message: 'Desconto inválido' })
 
 export type OrderFormFields = z.infer<typeof OrderFormSchema>;

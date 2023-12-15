@@ -11,7 +11,7 @@ export const orgRouter = createTRPCRouter({
 					id: ctx.session.user.orgId,
 				},
 			});
-
+			
 			return org;
 		}),
 

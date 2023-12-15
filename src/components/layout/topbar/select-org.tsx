@@ -56,7 +56,6 @@ export function SelectOrg() {
 									setOpen(false)
 									
 									if(_org.id === org?.id) return
-									
 									setValue(currentValue);
 									
 									await update({ orgId: _org.id });

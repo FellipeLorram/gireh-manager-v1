@@ -9,10 +9,11 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog"
 import { api } from "@/utils/api";
+import { CircleDashed } from "lucide-react";
 
 export function RemoveOrderDialog() {
 	const { push, query } = useRouter();
-	const { mutate } = api.order.delete.useMutation({
+	const { mutate, isLoading } = api.order.delete.useMutation({
 		onSuccess: async () => {
 			await push("/orders");
 		}
@@ -37,7 +38,9 @@ export function RemoveOrderDialog() {
 				<Button
 					onClick={() => mutate({ id: query.orderid as string })}
 					variant="outline"
+					disabled={isLoading}
 				>
+					{isLoading && <CircleDashed className="w-5 h-5 animate-spin mr-2" />}
 					Excluir
 				</Button>
 			</DialogContent>

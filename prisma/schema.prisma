@@ -128,6 +128,7 @@ model Order {
   axle_left      Int?
   add            String?
   service_order  Int
+  discount       Float?
   total          Float
   rest           Float
   situation      String

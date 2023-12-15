@@ -92,6 +92,14 @@ export const CustomerReceipt = forwardRef<HTMLDivElement, Props>(({
 				))}
 
 				<div className="flex flex-row w-full mt-2 justify-between gap-4">
+					<p className="font-medium text-sm" >Desconto</p>
+					<p className="font-medium text-sm" >{order.discount?.toLocaleString('pt-BR', {
+						style: 'currency',
+						currency: 'BRL',
+					})}</p>
+				</div>
+
+				<div className="flex flex-row w-full mt-2 justify-between gap-4">
 					<p className="font-medium text-sm" >Total</p>
 					<p className="font-medium text-sm" >{order.total.toLocaleString('pt-BR', {
 						style: 'currency',
