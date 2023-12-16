@@ -10,7 +10,7 @@ export default function Page() {
 	const { toast } = useToast();
 	const { push } = useRouter();
 	const { mutate, isLoading } = api.customer.create.useMutation({
-		onSuccess: async ({inLine}) => {
+		onSuccess: async ({ inLine }) => {
 			toast({
 				description: 'Cliente cadastrado com sucesso',
 			});
@@ -45,6 +45,7 @@ export default function Page() {
 				<h1 className="text-xl font-bold text-center mx-auto">Novo Cliente</h1>
 			</div>
 			<CustomerForm
+				searchEnabled
 				className="my-auto"
 				onSubmit={onSubmit}
 				isLoading={isLoading}

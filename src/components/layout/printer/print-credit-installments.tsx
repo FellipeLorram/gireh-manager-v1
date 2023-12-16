@@ -7,7 +7,7 @@ import {
 } from "@prisma/client";
 import { forwardRef, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
-import { type CreditFormValues, creditFormSchema, CreditForm } from "../forms/credit-form";
+import { type CreditFormValues, creditFormSchema, CreditForm } from "../../forms/credit-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from 'react-hook-form';
 

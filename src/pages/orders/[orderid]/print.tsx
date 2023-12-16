@@ -1,6 +1,6 @@
-import { PrintCustomerReceipt } from "@/components/layout/print-customer-receipt";
-import { PrintLaborCopy } from "@/components/layout/print-labor-copy";
-import { PrintLaborCopyAndCustomerReceipt } from "@/components/layout/print-labor-copy-and-customer-receipt";
+import { PrintCustomerReceipt } from "@/components/layout/printer/print-customer-receipt";
+import { PrintLaborCopy } from "@/components/layout/printer/print-labor-copy";
+import { PrintLaborCopyAndCustomerReceipt } from "@/components/layout/printer/print-labor-copy-and-customer-receipt";
 import { api } from "@/utils/api";
 import { ArrowLeftCircle, CircleDashed } from "lucide-react";
 import Link from "next/link";

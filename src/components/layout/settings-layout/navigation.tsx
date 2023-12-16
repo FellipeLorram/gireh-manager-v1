@@ -12,7 +12,7 @@ export function SettingsNavigation() {
 	const pathname = usePathname();
 
 	return (
-		<div className='md:flex flex-col gap-6 mt-8 hidden'>
+		<div className='md:flex flex-col gap-6 hidden w-52 mt-2'>
 			{Links.map(({ href, label }) => (
 				<Link
 					key={`${href}${label}`}

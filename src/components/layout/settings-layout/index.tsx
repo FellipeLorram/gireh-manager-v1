@@ -7,11 +7,9 @@ interface Props {
 
 export function SettingsLayout({ children }: Props) {
 	return (
-		<div className='flex flex-row'>
+		<div className='flex flex-row mt-8'>
 			<SettingsNavigation />
-			<div>
-				{children}
-			</div>
+			{children}
 		</div>
 	)
 }

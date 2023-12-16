@@ -7,7 +7,7 @@ import {
 } from "@prisma/client";
 import { forwardRef, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 
 type OrderWithItems = Order & {
 	Frame: Frame[];

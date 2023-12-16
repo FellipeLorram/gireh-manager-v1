@@ -16,6 +16,7 @@ interface Props {
 	onSubmit: (data: CustomerFormSchema) => void;
 	isLoading?: boolean;
 	defaultValues?: CustomerFormSchema;
+	searchEnabled?: boolean;
 }
 
 export function CustomerForm({
@@ -23,6 +24,7 @@ export function CustomerForm({
 	defaultValues,
 	isLoading,
 	className,
+	searchEnabled,
 }: Props) {
 	const form = useForm<CustomerFormSchema>({
 		resolver: zodResolver(customerFormSchema),
@@ -40,7 +42,10 @@ export function CustomerForm({
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className={cn("space-y-6 w-full", className)}>
-				<NameField form={form} />
+				<NameField
+					searchEnabled={searchEnabled}
+					form={form}
+				/>
 
 				<FormField
 					control={form.control}

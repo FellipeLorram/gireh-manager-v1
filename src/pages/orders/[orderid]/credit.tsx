@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ArrowLeftCircle } from "lucide-react";
 import { api } from "@/utils/api";
-import { PrintCreditInstallments } from "@/components/layout/print-credit-installments";
+import { PrintCreditInstallments } from "@/components/layout/printer/print-credit-installments";
 
 export default function Page() {
   const { query } = useRouter();

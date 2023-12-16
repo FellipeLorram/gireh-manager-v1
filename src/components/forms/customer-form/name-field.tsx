@@ -7,16 +7,16 @@ import Link from "next/link";
 
 type Props = {
 	form: UseFormReturn<CustomerFormSchema>;
+	searchEnabled?: boolean;
 }
 
-export default function NameField({ form }: Props) {
+export default function NameField({ form, searchEnabled }: Props) {
 	const name = form.watch('name');
 	const { data } = api.customer.searchByName.useQuery({
 		name,
 	}, {
-		enabled: !!name,
+		enabled: !!name && name.length > 2 && searchEnabled,
 	});
-
 
 	return (
 		<div className="w-full relative">

@@ -10,6 +10,7 @@ export default function Page() {
 
 	return (
 		<DashboardLayout>
+			
 			<div className="w-full">
 				<div className="w-full border rounded mb-4 p-4">
 					<p className="text-lg mb-4">
@@ -26,7 +27,7 @@ export default function Page() {
 					</p>
 					<DataTable
 						columns={AppointmentColumnDef}
-						filterField="customerMame"
+						filterField="customerName"
 						data={data ?? []}
 					/>
 				</div>
