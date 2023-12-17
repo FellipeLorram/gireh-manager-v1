@@ -9,7 +9,9 @@ export function SettingsLayout({ children }: Props) {
 	return (
 		<div className='flex flex-row mt-8'>
 			<SettingsNavigation />
-			{children}
+			<div className='w-full max-w-4xl'>
+				{children}
+			</div>
 		</div>
 	)
 }

@@ -2,6 +2,7 @@ import {
 	createTRPCRouter,
 	protectedProcedure,
 } from "@/server/api/trpc";
+import { z } from "zod";
 
 export const orgRouter = createTRPCRouter({
 	get: protectedProcedure
@@ -10,8 +11,9 @@ export const orgRouter = createTRPCRouter({
 				where: {
 					id: ctx.session.user.orgId,
 				},
+
 			});
-			
+
 			return org;
 		}),
 
@@ -29,34 +31,48 @@ export const orgRouter = createTRPCRouter({
 						in: orgsIds.map((org) => org.orgId),
 					},
 				},
+				include: {
+					users: true,
+					Customer: true,
+				},
 			});
 
 			return orgs;
 		}),
 
 
-	listUserOrgsWithUsersCount: protectedProcedure
-		.query(async ({ ctx }) => {
-			const orgsIds = await ctx.db.userOrg.findMany({
+	getOrgById: protectedProcedure
+		.input(z.object({
+			id: z.string(),
+		}))
+		.query(async ({ ctx, input }) => {
+			const org = await ctx.db.org.findFirst({
 				where: {
-					userId: ctx.session.user.id,
+					id: input.id,
 				},
 			});
 
-			const orgs = await ctx.db.org.findMany({
+			return org;
+		}),
+
+	update: protectedProcedure
+		.input(z.object({
+			id: z.string(),
+			name: z.string().min(3, 'Nome inválido'),
+			nickName: z.string().optional(),
+			printType: z.enum(['fullPage', 'middle', 'small']).optional(),
+		})).mutation(async ({ ctx, input }) => {
+			const org = await ctx.db.org.update({
 				where: {
-					id: {
-						in: orgsIds.map((org) => org.orgId),
-					},
+					id: input.id,
 				},
-				include: {
-					users: true,
+				data: {
+					name: input.name,
+					nickName: input.nickName,
+					printType: input.printType,
 				},
 			});
 
-			return orgs.map((org) => ({
-				...org,
-				usersCount: org.users.length,
-			}));
+			return org;
 		}),
 });

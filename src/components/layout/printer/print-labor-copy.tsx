@@ -71,7 +71,7 @@ export const LaborCopy = forwardRef<HTMLDivElement, Props & {
 		<div ref={ref} className="w-1/2 border border-dashed bg-white text-gray-900">
 			<div className="w-full p-4 flex flex-row justify-between gap-4 bg-gradient-to-b from-gray-400 to-white">
 				<p className="text-lg font-semibold">
-					{org.name}
+					{org.nickName}
 				</p>
 				<div className="text-right">
 					<p className="text-xs font-medium">

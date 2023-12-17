@@ -5,7 +5,9 @@ export default function Page() {
   return (
     <DashboardLayout>
       <SettingsLayout>
-        <></>
+        <div className="w-full flex flex-col gap-6">
+          
+        </div>
       </SettingsLayout>
     </DashboardLayout>
   )
