@@ -36,7 +36,7 @@ export function OrgPreferences() {
 				{isLoadingQuery ? (
 					<Skeleton className="w-[100px] h-[20px] rounded" />
 				) : (
-					<h1 className="text-lg">
+					<h1 className="text-lg font-medium">
 						{data?.name}
 					</h1>
 				)}
@@ -44,8 +44,8 @@ export function OrgPreferences() {
 
 			{isLoadingQuery ? (
 				<div className="w-full p-4 space-y-6">
-					<Skeleton className="w-full h-[60px] rounded" />
-					<Skeleton className="w-full h-[60px] rounded" />
+					<Skeleton className="w-full h-[50px] rounded" />
+					<Skeleton className="w-full h-[50px] rounded" />
 				</div>
 			) : (
 				<OrgForm
@@ -59,6 +59,5 @@ export function OrgPreferences() {
 				/>
 			)}
 		</div >
-
 	)
 }

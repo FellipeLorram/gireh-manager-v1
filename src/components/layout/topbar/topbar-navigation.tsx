@@ -24,8 +24,8 @@ export function TopBarNavigation() {
     <div className="w-full flex gap-4 md:gap-6 overflow-x-auto px-2 md:px-0 scrollbar-hide -mb-px">
       {Links.map(({ href, name }) => (
         <Link
-          className={`text-sm pb-2 duration-200 ease-in-out group ${pathname === href && "border-b-2 border-foreground"}`}
           key={href}
+          className={`text-sm pb-2 duration-200 ease-in-out group ${pathname === href && "border-b-2 border-foreground"}`}
           href={href}
         >
           <p className={`p-2 rounded md:group-hover:bg-secondary duration-200 ease-in-out ${pathname !== href && "text-muted-foreground group-hover:text-foreground"}`}>
@@ -35,8 +35,8 @@ export function TopBarNavigation() {
       ))}
       {isAdmin && reportLinks.map(({ href, name }) => (
         <Link
-          className={`text-sm pb-2 duration-200 ease-in-out group ${pathname === href && "border-b-2 border-foreground"}`}
           key={href}
+          className={`text-sm pb-2 duration-200 ease-in-out group ${pathname === href && "border-b-2 border-foreground"}`}
           href={href}
         >
           <p className={`p-2 rounded md:group-hover:bg-secondary duration-200 ease-in-out ${pathname !== href && "text-muted-foreground group-hover:text-foreground"}`}>

@@ -5,7 +5,6 @@ const Links = [
 	{ href: '/settings', label: 'Geral' },
 	{ href: '/settings/orgs', label: 'Óticas' },
 	{ href: '/settings/team', label: 'Time' },
-	{ href: '/settings/printing', label: 'Impressão' },
 ]
 
 export function SettingsNavigation() {

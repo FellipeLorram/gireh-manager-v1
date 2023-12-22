@@ -31,6 +31,7 @@ declare module "next-auth" {
 const updateSessionObject = z.object({
   orgId: z.string().optional(),
   name: z.string().optional(),
+  email: z.string().optional(),
 });
 
 export const authOptions: NextAuthOptions = {
@@ -40,10 +41,10 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     jwt: ({ token, user, trigger, session }) => {
       if (trigger === "update") {
-        const { orgId, name } = updateSessionObject.parse(session);
+        const { orgId, name, email } = updateSessionObject.parse(session);
         if(orgId) token.orgId = orgId; 
         if(name) token.orgId = orgId; 
-        
+        if(email) token.orgId = orgId;
         return token;
       }
 

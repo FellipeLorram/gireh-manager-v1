@@ -124,6 +124,7 @@ export function PaymentForm({ onSubmit, isLoading, defaultValues }: Props) {
 				<Button
 					className="w-full md:w-auto"
 					type="submit"
+					disabled={isLoading}
 				>
 					{isLoading && <CircleDashed className="animate-spin mr-2" />}
 					{defaultValues ? 'Salvar Alterações' : 'Adicionar Pagamento'}

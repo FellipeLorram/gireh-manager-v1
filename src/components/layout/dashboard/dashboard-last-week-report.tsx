@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/utils/api";
 
 export function DashboardLastWeekReport() {
-  const { data } = api.reports.dashboardLastWeekReport.useQuery();
+  const { data, isLoading } = api.reports.dashboardLastWeekReport.useQuery();
 
   return (
     <div className="w-full p-4 border rounded">
@@ -15,16 +15,20 @@ export function DashboardLastWeekReport() {
             <p className="text-xs text-muted-foreground">
               Novos clientes
             </p>
+            {isLoading && <Skeleton className="w-10 h-6 rounded  mt-2" />}
+
             <p className="md:text-xl text-lg mt-2">
-              {data?.newCustomers ?? <Skeleton className="w-10 h-6 rounded" />}
+              {data?.newCustomers}
             </p>
           </div>
           <div className="p-4 rounded border w-full">
             <p className="text-xs text-muted-foreground">
               Vendas
             </p>
+            {isLoading && <Skeleton className="w-10 h-6 rounded  mt-2" />}
+
             <p className="md:text-xl text-lg mt-2">
-              {data?.numberOfOrders ?? <Skeleton className="w-10 h-6 rounded" />}
+              {data?.numberOfOrders}
             </p>
 
           </div>
@@ -35,16 +39,18 @@ export function DashboardLastWeekReport() {
             <p className="text-xs text-muted-foreground">
               Entrada
             </p>
+            {isLoading && <Skeleton className="w-10 h-6 rounded  mt-2" />}
             <p className="md:text-xl text-lg mt-2">
-              {data?.moneyEntry.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) ?? <Skeleton className="w-10 h-6 rounded" />}
+              {data?.moneyEntry.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
             </p>
           </div>
           <div className="p-4 rounded border w-full">
             <p className="text-xs text-muted-foreground">
               Total de Vendas
             </p>
+            {isLoading && <Skeleton className="w-10 h-6 rounded  mt-2" />}
             <p className="md:text-xl text-lg mt-2">
-              {data?.orderTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) ?? <Skeleton className="w-10 h-6 rounded" />}
+              {data?.orderTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
             </p>
           </div>
         </div>

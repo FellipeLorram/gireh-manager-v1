@@ -31,10 +31,6 @@ export const orgRouter = createTRPCRouter({
 						in: orgsIds.map((org) => org.orgId),
 					},
 				},
-				include: {
-					users: true,
-					Customer: true,
-				},
 			});
 
 			return orgs;
@@ -88,6 +84,31 @@ export const orgRouter = createTRPCRouter({
 			},
 		});
 
-		return org?.users;
+		return org?.users.filter(user => user.id !== ctx.session.user.id);
 	}),
+
+	create: protectedProcedure
+		.input(z.object({
+			name: z.string().min(3, 'Nome inválido'),
+			nickName: z.string().optional(),
+			printType: z.enum(['fullPage', 'middle', 'small']).optional(),
+		}))
+		.mutation(async ({ ctx, input }) => {
+			const org = await ctx.db.org.create({
+				data: {
+					name: input.name,
+					nickName: input.nickName,
+					printType: input.printType,
+				},
+			});
+
+			await ctx.db.userOrg.create({
+				data: {
+					orgId: org.id,
+					userId: ctx.session.user.id,
+				},
+			});
+
+			return org;
+		})
 });

@@ -3,7 +3,7 @@ import { api } from '@/utils/api'
 import React from 'react'
 
 export function DashboardTotalCustomersOrders() {
-	const { data } = api.reports.numberOfOrdersAndCustomers.useQuery()
+	const { data, isLoading } = api.reports.numberOfOrdersAndCustomers.useQuery()
 
 	return (
 		<div className='w-full flex flex-row gap-2'>
@@ -11,16 +11,19 @@ export function DashboardTotalCustomersOrders() {
 				<p className="text-xs text-muted-foreground">
 					Total de Clientes
 				</p>
+
+				{isLoading && <Skeleton className="w-10 h-6 rounded  mt-2" />}
 				<p className="md:text-xl text-lg mt-2">
-					{data?.numberOfCustomers?? <Skeleton className="w-10 h-6 rounded" />}
+					{data?.numberOfCustomers}
 				</p>
 			</div>
 			<div className="p-4 rounded border w-full">
 				<p className="text-xs text-muted-foreground">
 					Total de Vendas
 				</p>
+				{isLoading && <Skeleton className="w-10 h-6 rounded  mt-2" />}
 				<p className="md:text-xl text-lg mt-2">
-					{data?.numberOfOrders?? <Skeleton className="w-10 h-6 rounded" />}
+					{data?.numberOfOrders}
 				</p>
 			</div>
 		</div>

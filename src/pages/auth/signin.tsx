@@ -47,7 +47,7 @@ export default function SigninPage() {
 
   return (
     <div className="mx-auto w-11/12 max-w-xl p-4 flex items-center flex-col gap-10 justify-center h-screen">
-      <h1 className="text-2xl">
+      <h1 className="text-5xl font-medium">
         GIRÊH
       </h1>
 

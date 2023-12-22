@@ -4,7 +4,6 @@ import { OrgPreferences } from "@/components/layout/settings-layout/org-preferen
 import { OrgUsers } from "@/components/layout/settings-layout/org-users";
 
 export default function Page() {
-
 	return (
 		<DashboardLayout>
 			<SettingsLayout>
