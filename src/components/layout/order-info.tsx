@@ -149,7 +149,7 @@ export function OrderInfo({ order }: Props) {
           <Button
             variant="secondary"
             className="w-full md:w-auto"
-            disabled={order?.running_credit}
+            disabled={!order?.running_credit}
             onClick={() => push(`/orders/${order?.id}/print`)}
           >
             Imprimir Crediário

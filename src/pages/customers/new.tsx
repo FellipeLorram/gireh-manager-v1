@@ -44,12 +44,14 @@ export default function Page() {
 
 				<h1 className="text-xl font-bold text-center mx-auto">Novo Cliente</h1>
 			</div>
-			<CustomerForm
-				searchEnabled
-				className="my-auto"
-				onSubmit={onSubmit}
-				isLoading={isLoading}
-			/>
+			<div className="w-full p-4 border rounded">
+				<CustomerForm
+					searchEnabled
+					className="my-auto"
+					onSubmit={onSubmit}
+					isLoading={isLoading}
+				/>
+			</div>
 		</div>
 	)
 }
