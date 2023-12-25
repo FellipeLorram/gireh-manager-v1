@@ -1,9 +1,11 @@
 import { z } from "zod";
-import { type UseFormReturn } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Checkbox } from "../ui/checkbox";
 import { Button } from "../ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CircleDashed } from "lucide-react";
 
 export const creditFormSchema = z.object({
 	include_already_payed_bills: z.boolean(),
@@ -16,14 +18,24 @@ export type CreditFormValues = z.infer<typeof creditFormSchema>;
 interface Props {
 	onSubmit: (data: CreditFormValues) => void;
 	rest: number;
-	form: UseFormReturn<CreditFormValues>
+	isLoading?: boolean;
 }
 
-export function CreditForm({ form, onSubmit, rest }: Props) {
+export function CreditForm({ onSubmit, rest, isLoading }: Props) {
+	const form = useForm<CreditFormValues>({
+		resolver: zodResolver(creditFormSchema),
+		defaultValues: {
+			include_already_payed_bills: false,
+			payment_day: '1',
+			installments: '1',
+		}
+	});
+
+	const disabled = rest === 0 || isLoading;
+
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
-
 				<FormField
 					control={form.control}
 					name="payment_day"
@@ -96,7 +108,10 @@ export function CreditForm({ form, onSubmit, rest }: Props) {
 					)}
 				/>
 
-				<Button className="w-full md:w-auto">
+				<Button
+					disabled={disabled}
+					className="w-full md:w-auto">
+					{isLoading && <CircleDashed className="w-5 h-5 mr-2 animate-spin" />}
 					Gerar
 				</Button>
 			</form>

@@ -15,9 +15,9 @@ import {
 import { Button } from "../ui/button";
 
 type OrderWithItems = Order & {
-	Frame: Frame[];
-	Lenses: Lenses[];
-	Payments: Payments[];
+  Frame: Frame[];
+  Lenses: Lenses[];
+  Payments: Payments[];
 }
 
 interface Props {
@@ -26,7 +26,7 @@ interface Props {
 
 export function OrderInfo({ order }: Props) {
   const { push } = useRouter();
-
+  console.log(order)
   return (
     <div className="w-full space-y-4">
       <div className="border rounded-md p-4 w-full">
@@ -105,6 +105,58 @@ export function OrderInfo({ order }: Props) {
           })}
         </p>
       </div>
+      <div className="w-full rounded p-4 border">
+        <p className='font-semibold mb-2'>Crediário</p>
+        {!order?.status ? (
+          <>
+            {!order?.running_credit ? (
+              <p className="text-muted-foreground mb-2">
+                Essa venda não possui um crediário.
+              </p>
+            ) : (
+              <Table className="mb-2">
+                <TableHeader>
+                  <TableRow className="hover:bg-transparent">
+                    <TableHead>Inicio</TableHead>
+                    <TableHead>Vencimento</TableHead>
+                    <TableHead>Parcelado Em</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>{order?.credit_start_date?.toLocaleDateString('pt-BR')}</TableCell>
+                    <TableCell>Dia {order?.credit_payment_days}</TableCell>
+                    <TableCell>{order?.credit_installments}x</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            )}
+          </>
+        ) : (
+          <p className="text-muted-foreground mb-2">
+            Essa venda já foi paga.
+          </p>
+        )}
+        <div className="flex flex-wrap gap-4 w-full">
+          <Button
+            variant="secondary"
+            className="w-full md:w-auto"
+            disabled={order?.status}
+            onClick={() => push(`/orders/${order?.id}/credit`)}
+          >
+            {order?.running_credit ? 'Editar' : 'Iniciar'}
+          </Button>
+          <Button
+            variant="secondary"
+            className="w-full md:w-auto"
+            disabled={order?.status}
+            onClick={() => push(`/orders/${order?.id}/print`)}
+          >
+            Imprimir Crediário
+          </Button>
+        </div>
+      </div>
+
       <div className="border rounded-md p-4">
         <p className='font-semibold mb-2'>Pagamentos</p>
         <DataTable

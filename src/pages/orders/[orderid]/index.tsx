@@ -32,7 +32,7 @@ export default function Page() {
 
 			<OrderTracking id={orderid as string} />
 
-			<div className="border rounded-md p-4 flex flex-wrap gap-4 w-full">
+			<div className="border rounded p-4 flex flex-wrap gap-4 w-full">
 				<Link
 					className={buttonVariants({
 						variant: 'outline',
@@ -40,17 +40,7 @@ export default function Page() {
 					})}
 					href={`/orders/${orderid as string}/print`}
 				>
-					Imprimir
-				</Link>
-
-				<Link
-					className={buttonVariants({
-						variant: 'outline',
-						className: 'w-full md:w-auto',
-					})}
-					href={`/orders/${orderid as string}/credit`}
-				>
-					Gerar Crediário
+					Imprimir Venda
 				</Link>
 
 				<Link

@@ -18,7 +18,7 @@ export const paymentsRouter = createTRPCRouter({
 			installments: z.number().min(1),
 			orderId: z.string(),
 		})).mutation(async ({ ctx, input }) => {
-			const { rest } = await ctx.db.order.findUniqueOrThrow({
+			const { rest, running_credit } = await ctx.db.order.findUniqueOrThrow({
 				where: {
 					id: input.orderId,
 				},
@@ -28,13 +28,17 @@ export const paymentsRouter = createTRPCRouter({
 				throw new Error("Valor da parcela maior que o valor restante");
 			}
 
+			const statusIsPaid = rest - input.amount === 0;
+			const continueRunningCredit = statusIsPaid ? false : running_credit;
+
 			await ctx.db.order.update({
 				where: {
 					id: input.orderId,
 				},
 				data: {
 					rest: rest - input.amount,
-					status: rest - input.amount === 0,
+					status: statusIsPaid,
+					running_credit: continueRunningCredit,					
 				},
 			});
 
@@ -178,7 +182,7 @@ export const paymentsRouter = createTRPCRouter({
 			return payments;
 		}),
 
-		listAllByRange: protectedProcedure
+	listAllByRange: protectedProcedure
 		.input(z.object({
 			startDate: z.string().or(z.date()),
 			endDate: z.string().or(z.date()),

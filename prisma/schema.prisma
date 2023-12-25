@@ -63,18 +63,18 @@ model VerificationToken {
 }
 
 model Org {
-  id            String        @id @default(cuid())
+  id            String  @id @default(cuid())
   name          String
   service_order Int?
   printType     String?
   nickName      String?
-  
-  users         User[]
-  Customer      Customer[]
-  Order         Order[]
-  Appointment   Appointment[]
-  payment       Payments[]
-  UserOrg       UserOrg[]
+
+  users       User[]
+  Customer    Customer[]
+  Order       Order[]
+  Appointment Appointment[]
+  payment     Payments[]
+  UserOrg     UserOrg[]
 }
 
 model UserOrg {
@@ -116,33 +116,36 @@ model Phone {
 }
 
 model Order {
-  id             String     @id @default(cuid())
-  createdAt      DateTime   @default(now())
-  customerId     String
-  customer_name  String
-  orgId          String
-  dnp_right      Float?
-  dnp_left       Float?
-  esf_right      String?
-  cil_right      String?
-  axle_right     Int?
-  esf_left       String?
-  cil_left       String?
-  axle_left      Int?
-  add            String?
-  service_order  Int
-  discount       Float?
-  total          Float
-  rest           Float
-  situation      String
-  observation    String?
-  status         Boolean
-  running_credit Boolean
-  customer       Customer   @relation(fields: [customerId], references: [id])
-  Org            Org        @relation(fields: [orgId], references: [id])
-  Frame          Frame[]
-  Lenses         Lenses[]
-  Payments       Payments[]
+  id                  String     @id @default(cuid())
+  createdAt           DateTime   @default(now())
+  customerId          String
+  customer_name       String
+  orgId               String
+  dnp_right           Float?
+  dnp_left            Float?
+  esf_right           String?
+  cil_right           String?
+  axle_right          Int?
+  esf_left            String?
+  cil_left            String?
+  axle_left           Int?
+  add                 String?
+  service_order       Int
+  discount            Float?
+  total               Float
+  rest                Float
+  situation           String
+  observation         String?
+  status              Boolean
+  running_credit      Boolean
+  credit_payment_days Int?
+  credit_installments Int?
+  credit_start_date   DateTime?
+  customer            Customer   @relation(fields: [customerId], references: [id])
+  Org                 Org        @relation(fields: [orgId], references: [id])
+  Frame               Frame[]
+  Lenses              Lenses[]
+  Payments            Payments[]
 
   @@index([customerId])
   @@index([orgId])

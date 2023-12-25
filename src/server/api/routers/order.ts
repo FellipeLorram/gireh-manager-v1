@@ -241,6 +241,7 @@ export const OrderRouter = createTRPCRouter({
 					observation: input.observation,
 					total: input.total,
 					rest: rest,
+					status: rest === 0,
 				},
 			});
 
@@ -372,4 +373,30 @@ export const OrderRouter = createTRPCRouter({
 
 			return order?.situation;
 		}),
+
+	startCredit: protectedProcedure
+		.input(z.object({
+			id: z.string(),
+			payment_day: z.number(),
+			installments: z.number(),
+		})).mutation(async ({ ctx, input }) => {
+			const order = await ctx.db.order.update({
+				where: {
+					id: input.id,
+					rest: {
+						not: 0,
+					},
+				},
+				data: {
+					credit_payment_days: input.payment_day,
+					credit_installments: input.installments,
+					running_credit: true,
+					credit_start_date: new Date(),
+				},
+			});
+
+			return order;
+		}),
+
+	
 });

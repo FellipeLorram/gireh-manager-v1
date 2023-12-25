@@ -2,16 +2,35 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ArrowLeftCircle } from "lucide-react";
 import { api } from "@/utils/api";
-import { PrintCreditInstallments } from "@/components/layout/printer/print-credit-installments";
+import { CreditForm, type CreditFormValues } from "@/components/forms/credit-form";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function Page() {
-  const { query } = useRouter();
+  const { query, push } = useRouter();
+  const { toast } = useToast();
+  const orderid = query.orderid as string;
   const { data: order } = api.order.get.useQuery({
-    id: query.orderid as string,
+    id: orderid,
   }, {
     enabled: !!query.orderid,
   });
-  const { data: org, isLoading } = api.org.get.useQuery();
+
+  const { mutate, isLoading } = api.order.startCredit.useMutation({
+    onSuccess: async () => {
+      toast({
+        description: "Crediário iniciado com sucesso!",
+      });
+      await push(`/orders/${orderid}`);
+    }
+  });
+
+  const onSubmit = (data: CreditFormValues) => {
+    mutate({
+      id: orderid,
+      installments: parseInt(data.installments),
+      payment_day: parseInt(data.payment_day),
+    });
+  }
 
   return (
     <div className="mx-auto w-11/12 max-w-3xl min-h-screen flex flex-col items-center justify-start py-4">
@@ -22,7 +41,7 @@ export default function Page() {
 
         <h1 className="text-xl font-bold text-center mx-auto">OS: {order?.service_order}</h1>
       </div>
-      <div className="w-full flex justify-between flex-row p-4 border rounded mt-8">
+      <div className="w-full flex justify-between flex-row p-4 border rounded mt-4">
         <p>
           Total
         </p>
@@ -33,7 +52,8 @@ export default function Page() {
           })}
         </p>
       </div>
-      <div className="w-full flex justify-between flex-row p-4 border rounded mt-4 mb-8">
+
+      <div className="w-full flex justify-between flex-row p-4 border rounded mt-4 mb-4">
         <p>
           Valor faltante
         </p>
@@ -45,12 +65,13 @@ export default function Page() {
         </p>
       </div>
 
-      {!isLoading && (
-        <PrintCreditInstallments
-          order={order!}
-          org={org!}
+      <div className="border rounded p-4 w-full">
+        <CreditForm
+          isLoading={isLoading}
+          onSubmit={onSubmit}
+          rest={order?.rest ?? 0}
         />
-      )}
+      </div>
 
     </div>
   )
