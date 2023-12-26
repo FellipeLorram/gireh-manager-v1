@@ -25,6 +25,13 @@ export default function Page() {
 								<Skeleton className="w-full h-[50px] rounded" />
 							</>
 						)}
+
+						{data?.length === 0 && (
+							<p className="text-center text-muted-foreground">
+								Nenhum usuário encontrado.
+							</p>
+						)}
+
 						{data?.map((user) => (
 							<div key={user.id} className="w-full border rounded py-2 px-4 flex flex-row items-center justify-between">
 								<div className="flex flex-row items-center justify-center gap-2">
