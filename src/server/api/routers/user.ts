@@ -148,6 +148,17 @@ export const userRouter = createTRPCRouter({
 				},
 			});
 
+			if(!input.orgs.includes(user.orgId!)) {
+				await ctx.db.user.update({
+					where: {
+						id: input.id,
+					},
+					data: {
+						orgId: input.orgs[0],
+					},
+				});
+			}
+
 			return user;
 		}),
 
@@ -171,6 +182,7 @@ export const userRouter = createTRPCRouter({
 					name: input.name,
 					role: input.role,
 					password_hash: passwordHash,
+					orgId: input.orgs[0],
 				},
 			});
 

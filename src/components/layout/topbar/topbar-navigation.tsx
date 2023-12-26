@@ -19,6 +19,7 @@ export function TopBarNavigation() {
   const { data } = useSession();
 
   const isAdmin = data?.user?.role === "ADMIN";
+  const isOwner = data?.user?.role === "OWNER";
 
   return (
     <div className="w-full flex gap-4 md:gap-6 overflow-x-auto px-2 md:px-0 scrollbar-hide -mb-px">
@@ -33,7 +34,7 @@ export function TopBarNavigation() {
           </p>
         </Link>
       ))}
-      {isAdmin && reportLinks.map(({ href, name }) => (
+      {isAdmin || isOwner && reportLinks.map(({ href, name }) => (
         <Link
           key={href}
           className={`text-sm pb-2 duration-200 ease-in-out group ${pathname === href && "border-b-2 border-foreground"}`}
@@ -44,15 +45,17 @@ export function TopBarNavigation() {
           </p>
         </Link>
       ))}
+      {isOwner && (
+        <Link
+          className={`text-sm pb-2 duration-200 ease-in-out group ${pathname === "/settings" && "border-b-2 border-foreground"}`}
+          href="/settings"
+        >
+          <p className={`p-2 rounded md:group-hover:bg-secondary duration-200 ease-in-out ${pathname !== "/settings" && "text-muted-foreground group-hover:text-foreground"}`}>
+            Configurações
+          </p>
+        </Link>
+      )}
 
-      <Link
-        className={`text-sm pb-2 duration-200 ease-in-out group ${pathname === "/settings" && "border-b-2 border-foreground"}`}
-        href="/settings"
-      >
-        <p className={`p-2 rounded md:group-hover:bg-secondary duration-200 ease-in-out ${pathname !== "/settings" && "text-muted-foreground group-hover:text-foreground"}`}>
-          Configurações
-        </p>
-      </Link>
     </div>
   )
 }
