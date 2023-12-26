@@ -9,9 +9,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select"
-import { useRouter } from "next/router";
 import { useToast } from "../ui/use-toast";
-import { ToastAction } from "../ui/toast";
 
 type Situation = 'SEPARATING' | 'WAITING_LENSES' | 'WAITING_FRAME' | 'ASSEMBLING' | 'READY' | 'DELIVERED';
 
