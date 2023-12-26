@@ -11,8 +11,6 @@ import { CustomerForm } from "../forms/customer-form"
 import { api } from "@/utils/api";
 import { useToast } from "../ui/use-toast";
 import { useRef } from "react";
-import { ToastAction } from "../ui/toast";
-import { useRouter } from "next/router";
 import { type CustomerFormSchema } from "../forms/customer-form/schema";
 
 interface Props {
@@ -21,20 +19,18 @@ interface Props {
 
 export default function EditCustomerSheet({ id }: Props) {
 	const SheetCloseRef = useRef<HTMLButtonElement>(null);
-	const { reload } = useRouter();
 	const { toast } = useToast();
-	const { data } = api.customer.get.useQuery({
+	const { data, refetch } = api.customer.get.useQuery({
 		id,
 	}, {
 		enabled: !!id,
 	});
 
 	const { mutate, isLoading } = api.customer.update.useMutation({
-		onSuccess: () => {
+		onSuccess: async () => {
+			await refetch();
 			toast({
 				title: 'Cliente atualizado com sucesso!',
-				action: <ToastAction onClick={reload} altText="Atualizar Página">Atualizar Página</ToastAction>
-
 			});
 			SheetCloseRef.current?.click();
 		},
@@ -88,6 +84,7 @@ export default function EditCustomerSheet({ id }: Props) {
 					}}
 					isLoading={isLoading}
 					onSubmit={onSubmit}
+					searchEnabled={false}
 				/>
 				<SheetClose ref={SheetCloseRef}/>
 			</SheetContent>

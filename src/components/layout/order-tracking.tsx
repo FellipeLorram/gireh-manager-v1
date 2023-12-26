@@ -33,10 +33,9 @@ const colorMap = {
 
 export function OrderTracking({ id }: { id: string }) {
 	const dialogRef = useRef<HTMLButtonElement>(null);
-	const { reload } = useRouter();
 	const { toast } = useToast();
 	const [situation, setSituation] = useState('SEPARATING');
-	const { data } = api.order.get.useQuery({
+	const { data, refetch } = api.order.get.useQuery({
 		id,
 	}, {
 		enabled: !!id,
@@ -47,12 +46,11 @@ export function OrderTracking({ id }: { id: string }) {
 	});
 
 	const { mutate } = api.order.updateOrderSituation.useMutation({
-		onSuccess: () => {
+		onSuccess: async () => {
 			toast({
 				title: 'Andamento atualizado com sucesso!',
-				action: <ToastAction onClick={reload} altText="Atualizar Página">Atualizar Página</ToastAction>
-
 			});
+			await refetch();
 			dialogRef.current?.click();
 		},
 	});

@@ -15,7 +15,7 @@ export default function NameField({ form, searchEnabled }: Props) {
 	const { data } = api.customer.searchByName.useQuery({
 		name,
 	}, {
-		enabled: !!name && name.length > 2 && searchEnabled,
+		enabled: searchEnabled,
 	});
 
 	return (
