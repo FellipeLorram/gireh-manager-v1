@@ -26,7 +26,7 @@ interface Props {
 
 export function OrderInfo({ order }: Props) {
   const { push } = useRouter();
-  console.log(order)
+
   return (
     <div className="w-full space-y-4">
       <div className="border rounded-md p-4 w-full">

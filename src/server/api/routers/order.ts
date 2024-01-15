@@ -1,12 +1,14 @@
 import { z } from "zod";
-
 import {
 	createTRPCRouter,
 	protectedProcedure,
 	publicProcedure,
 } from "@/server/api/trpc";
+
 import { FrameSchema, LensesSchema } from "@/components/forms/order-form/form-schema";
 import { type Frame } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
+import { listCustomerOrdersInput, listCustomerOrdersUseCase } from "@/server/use-cases/customer/list-customer-orders";
 
 export const OrderRouter = createTRPCRouter({
 	list: protectedProcedure.query(({ ctx }) => {
@@ -20,17 +22,16 @@ export const OrderRouter = createTRPCRouter({
 	}),
 
 	listCustomerOrders: protectedProcedure
-		.input(z.object({
-			customerId: z.string(),
-		})).query(({ ctx, input }) => {
-			const orders = ctx.db.order.findMany({
-				where: {
-					orgId: ctx.session.user.orgId,
-					customerId: input.customerId,
-				},
-			});
+		.input(listCustomerOrdersInput.omit({ orgId: true })).query(({ ctx, input }) => {
+			if (!ctx.session) throw new TRPCError({ code: 'UNAUTHORIZED' });
 
-			return orders;
+			return listCustomerOrdersUseCase({
+				prisma: ctx.db,
+				input: {
+					...input,
+					orgId: ctx.session.user.orgId,
+				},
+			})
 		}),
 
 	updateOrderSituation: protectedProcedure
@@ -398,5 +399,5 @@ export const OrderRouter = createTRPCRouter({
 			return order;
 		}),
 
-	
+
 });
