@@ -31,12 +31,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
       </style>
       <SessionProvider session={session}>
         <main className={`${montserrat.variable} font-sans`} >
-          <ThemeProvider attribute="class" enableSystem defaultTheme="system">
-            <AuthProvider>
-              <Component {...pageProps} />
-              <Toaster />
-            </AuthProvider>
-          </ThemeProvider>
+          <AuthProvider>
+            <Component {...pageProps} />
+            <Toaster />
+          </AuthProvider>
         </main>
       </SessionProvider>
     </>
