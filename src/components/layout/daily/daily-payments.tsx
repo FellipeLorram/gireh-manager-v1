@@ -13,7 +13,7 @@ export function DailyPayments() {
 	});
 
 	return (
-		<Card>
+		<Card className="w-full">
 			<CardHeader>
 				<CardTitle>Pagamentos</CardTitle>
 			</CardHeader>

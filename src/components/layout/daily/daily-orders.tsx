@@ -13,7 +13,7 @@ export function DailyOrders() {
 	});
 
 	return (
-		<Card>
+		<Card className="w-full">
 			<CardHeader>
 				<CardTitle>Vendas</CardTitle>
 			</CardHeader>

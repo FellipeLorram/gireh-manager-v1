@@ -11,7 +11,6 @@ export function DailyEarnsOrders() {
 
 	return (
 		<div className='w-full flex flex-wrap gap-1 md:gap-2 mt-4'>
-
 			<div className="p-4 rounded border w-[49%] md:max-w-[14rem]">
 				<p className="text-xs text-muted-foreground">
 					Total de Vendas
