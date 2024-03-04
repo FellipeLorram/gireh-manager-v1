@@ -2,6 +2,8 @@ import { api } from "@/utils/api";
 import { DataTable } from "../tables/table-raw";
 import { useRange } from "./atoms";
 import { dailyOrderColumnDef } from "../tables/order-column-def";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function DailyOrders() {
 	const { range } = useRange();
@@ -11,14 +13,16 @@ export function DailyOrders() {
 	});
 
 	return (
-		<div className="border rounded p-4 w-full">
-			<p className="mb-4">
-				Vendas
-			</p>
-			<DataTable
-				data={data ?? []}
-				columns={dailyOrderColumnDef}
-			/>
-		</div>
+		<Card>
+			<CardHeader>
+				<CardTitle>Vendas</CardTitle>
+			</CardHeader>
+			<CardContent>
+				{data ? <DataTable
+					data={data ?? []}
+					columns={dailyOrderColumnDef}
+				/> : <Skeleton className="w-full h-[150px]" />}
+			</CardContent>
+		</Card>
 	)
 }
