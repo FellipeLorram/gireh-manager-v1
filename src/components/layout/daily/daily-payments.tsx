@@ -2,6 +2,8 @@ import { api } from "@/utils/api";
 import { DataTable } from "../tables/table-raw";
 import { useRange } from "./atoms";
 import { PaymentColumnDef } from "../tables/payment-column-def";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function DailyPayments() {
 	const { range } = useRange();
@@ -11,14 +13,16 @@ export function DailyPayments() {
 	});
 
 	return (
-		<div className="border rounded p-4 w-full">
-			<p className="mb-4">
-				Pagamentos
-			</p>
-			<DataTable
-				data={data ?? []}
-				columns={PaymentColumnDef}
-			/>
-		</div>
+		<Card>
+			<CardHeader>
+				<CardTitle>Pagamentos</CardTitle>
+			</CardHeader>
+			<CardContent>
+				{data ? <DataTable
+					data={data}
+					columns={PaymentColumnDef}
+				/> : <Skeleton className="w-full h-[150px]" />}
+			</CardContent>
+		</Card>
 	)
 }
