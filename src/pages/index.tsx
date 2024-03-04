@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import { useRange } from '@/components/layout/daily/atoms';
-import { DailyAppointments } from '@/components/layout/daily/daily-appointments';
-import { DatePickerWithRange } from '@/components/layout/daily/daily-custom-date-range';
-import { DailyEarnsOrders } from '@/components/layout/daily/daily-earns-orders';
-import { DailyOrders } from '@/components/layout/daily/daily-orders';
-import { DailyPayments } from '@/components/layout/daily/daily-payments';
+import { useRange } from '@/components/layout/dashboard/atoms';
+import { DailyAppointments } from '@/components/layout/dashboard/daily-appointments';
+import { DatePickerWithRange } from '@/components/layout/dashboard/daily-custom-date-range';
+import { DailyEarnsOrders } from '@/components/layout/dashboard/daily-earns-orders';
+import { DailyOrders } from '@/components/layout/dashboard/daily-orders';
+import { DailyPayments } from '@/components/layout/dashboard/daily-payments';
 import { DashboardLayout } from '@/components/layout/dashboard-layout'
 import { Button, buttonVariants } from '@/components/ui/button';
 
