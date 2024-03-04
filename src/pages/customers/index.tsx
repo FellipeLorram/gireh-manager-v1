@@ -1,9 +1,11 @@
+import Link from "next/link";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { customerColumnDef } from "@/components/layout/tables/customer-column-def";
 import { DataTable } from "@/components/layout/tables/table-raw";
 import { buttonVariants } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/utils/api";
-import Link from "next/link";
 
 export default function Page() {
 	const { data } = api.customer.list.useQuery();
@@ -15,13 +17,18 @@ export default function Page() {
 				href="/customers/new">
 				Novo Cliente
 			</Link>
-			<div className="w-full p-4 border rounded">
-				<DataTable
-					columns={customerColumnDef}
-					filterField="name"
-					data={data ?? []}
-				/>
-			</div>
+			<Card className="w-full">
+				<CardHeader>
+					<CardTitle>Clientes</CardTitle>
+				</CardHeader>
+				<CardContent>
+					{data ? <DataTable
+						data={data}
+						filterField="name"
+						columns={customerColumnDef}
+					/> : <Skeleton className="w-full h-[150px]" />}
+				</CardContent>
+			</Card>
 		</DashboardLayout>
 	)
 }
