@@ -1,12 +1,19 @@
-import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useRouter } from "next/router";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 
 const signinFormSchema = z.object({
   email: z.string().email(),
@@ -47,48 +54,52 @@ export default function SigninPage() {
 
   return (
     <div className="mx-auto w-11/12 max-w-xl p-4 flex items-center flex-col gap-10 justify-center h-screen">
-      <h1 className="text-5xl font-medium">
-        GIRÊH
-      </h1>
+      <Card className="w-full">
+        <CardHeader>
+          <CardTitle>Girêh</CardTitle>
+          <CardDescription>Entre com suas credenciais</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>E-mail</FormLabel>
+                    <FormControl>
+                      <Input placeholder="seu@email.com" type="email" {...field} />
+                    </FormControl>
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-lg">E-mail</FormLabel>
-                <FormControl>
-                  <Input placeholder="seu@email.com" type="email" {...field} />
-                </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Senha</FormLabel>
+                    <FormControl>
+                      <Input placeholder="******" type="password" {...field} />
+                    </FormControl>
 
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-lg">Senha</FormLabel>
-                <FormControl>
-                  <Input placeholder="******" type="password" {...field} />
-                </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <Button
-            className="w-full md:w-auto"
-            type="submit">
-            Entrar
-          </Button>
-        </form>
-      </Form>
+              <Button
+                className="w-full md:w-auto"
+                type="submit">
+                Entrar
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
     </div>
   )
 }
