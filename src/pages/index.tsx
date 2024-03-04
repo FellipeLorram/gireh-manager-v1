@@ -1,41 +1,70 @@
-import { DashboardLayout } from "@/components/layout/dashboard-layout";
-import { DashboardBirthdaysCustomers } from "@/components/layout/dashboard/dashboard-birthdays-month-customers";
-import { DashboardLastMonthsAverage } from "@/components/layout/dashboard/dashboard-last-months-average";
-import { DashboardOrderOverAnYear } from "@/components/layout/dashboard/dashboard-last-order-over-year-customers";
-import { DashboardLastPayments } from "@/components/layout/dashboard/dashboard-last-payments";
-import { DashboardLastWeekReport } from "@/components/layout/dashboard/dashboard-last-week-report";
-import { DashboardTotalCustomersOrders } from "@/components/layout/dashboard/dashboard-total-customers-orders";
-import { buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
+import Link from 'next/link';
+import { useRange } from '@/components/layout/daily/atoms';
+import { DailyAppointments } from '@/components/layout/daily/daily-appointments';
+import { DatePickerWithRange } from '@/components/layout/daily/daily-custom-date-range';
+import { DailyEarnsOrders } from '@/components/layout/daily/daily-earns-orders';
+import { DailyOrders } from '@/components/layout/daily/daily-orders';
+import { DailyPayments } from '@/components/layout/daily/daily-payments';
+import { DashboardLayout } from '@/components/layout/dashboard-layout'
+import { Button, buttonVariants } from '@/components/ui/button';
 
 export default function Page() {
-  return (
-    <DashboardLayout>
-      <Link
-        className={buttonVariants({ className: 'w-full mb-4 md:hidden' })}
-        href="/customers/new">
-        Novo Cliente
-      </Link>
-      <DashboardLastWeekReport />
-      
+	const {
+		range,
+		setToday,
+		setYesterday,
+		setThisMonth,
+		setThisWeek,
+	} = useRange();
 
-      <div className="w-full flex flex-col md:flex-row gap-4 md:gap-2 mt-4">
-        <DashboardLastPayments />
-        <DashboardBirthdaysCustomers />
-      </div>
+	return (
+		<DashboardLayout>
+			<Link
+				className={buttonVariants({ className: 'w-full mb-4 md:hidden' })}
+				href="/customers/new">
+				Novo Cliente
+			</Link>
+			<div className='w-full flex flex-row flex-wrap gap-2'>
+				<Button
+					size="sm"
+					onClick={setToday}
+					variant={range.label === 'Hoje' ? 'secondary' : 'outline'}
+				>
+					Hoje
+				</Button>
+				<Button
+					size="sm"
+					onClick={setYesterday}
+					variant={range.label === 'Ontem' ? 'secondary' : 'outline'}
+				>
+					Ontem
+				</Button>
+				<Button
+					size="sm"
+					onClick={setThisWeek}
+					variant={range.label === 'Semana' ? 'secondary' : 'outline'}
+				>
+					Semana
+				</Button>
+				<Button
+					size="sm"
+					onClick={setThisMonth}
+					variant={range.label === 'Mês' ? 'secondary' : 'outline'}
+				>
+					Mês
+				</Button>
+				<DatePickerWithRange />
+			</div>
+			<DailyEarnsOrders />
 
-      <div className="mt-4">
-        <DashboardTotalCustomersOrders />
-      </div>
+			<div className="w-full flex flex-col md:flex-row gap-8 md:gap-2 mt-8">
+				<DailyOrders />
+				<DailyAppointments />
+			</div>
 
-      <div className="w-full flex flex-col md:flex-row gap-8 md:gap-2 mt-4">
-        <DashboardOrderOverAnYear />
-      </div>
-
-      <div className="w-full flex flex-col md:flex-row gap-8 md:gap-2 mt-4">
-        <DashboardLastMonthsAverage />
-      </div>
-
-    </DashboardLayout>
-  );
+			<div className='mt-8'>
+				<DailyPayments />
+			</div>
+		</DashboardLayout>
+	)
 }
