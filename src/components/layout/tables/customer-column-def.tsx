@@ -101,14 +101,14 @@ export const customerColumnDef: ColumnDef<Customer>[] = [
 
 
 function CustomerInLineColumnDefActionCell({ row }: CellContext<Customer, unknown>) {
-	const { reload } = useRouter();
+	const { customer } = api.useUtils();
 	const { toast } = useToast();
 	const { mutate } = api.customer.update.useMutation({
-		onSuccess: () => {
+		onSuccess: async () => {
 			toast({
 				title: 'Cliente removido da fila de exame',
-				action: <ToastAction onClick={reload} altText="Atualizar Página">Atualizar Página</ToastAction>
-			})
+			});
+			await customer.listCustomersInLine.invalidate();
 		}
 	});
 

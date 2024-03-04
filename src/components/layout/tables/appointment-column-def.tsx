@@ -64,18 +64,22 @@ function DropdownCell({ row }: CellContext<Appointment, unknown>) {
 
 export const AppointmentColumnDef: ColumnDef<Appointment>[] = [
 	{
-		accessorKey: 'createdAt',
-		header: 'Data',
+		accessorKey: "createdAt",
+		header: ({ column }) => {
+			return (
+				<Button
+					variant="ghost"
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+				>
+					Data
+					<ArrowUpDown className="ml-2 h-4 w-4" />
+				</Button>
+			)
+		},
 		cell: ({ row }) => {
 			const date = new Date(row.original.createdAt);
-			const today = new Date();
-			
-			if (date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear()) {
-				return 'Hoje';
-			}
-			
 			return date.toLocaleDateString();
-		},
+		}
 	},
 	{
 		accessorKey: 'customerName',

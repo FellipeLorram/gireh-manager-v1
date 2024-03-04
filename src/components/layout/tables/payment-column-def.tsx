@@ -6,8 +6,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { api } from "@/utils/api";
 import { type Payments } from "@prisma/client";
 import { type CellContext, type ColumnDef } from "@tanstack/react-table";
-import { ToastAction } from "@/components/ui/toast";
-import { useRouter } from "next/router";
 
 const paymentType = {
 	debit_card: 'Cartão de Débito',
@@ -18,13 +16,13 @@ const paymentType = {
 
 const Actions = ({ row }: CellContext<Payments, unknown>) => {
 	const { toast } = useToast();
-	const { reload } = useRouter();
+	const { payment } = api.useUtils();
 	const { mutate } = api.payment.delete.useMutation({
-		onSuccess: () => {
+		onSuccess: async () => {
 			toast({
 				title: 'Pagamento removido',
-				action: <ToastAction onClick={reload} altText="Atualizar Página">Atualizar Página</ToastAction>
-			})
+			});
+			await payment.list.invalidate();
 		}
 	});
 
