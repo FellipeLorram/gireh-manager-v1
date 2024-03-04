@@ -21,6 +21,7 @@ export default function Page() {
 	const { data: appointmentList } = api.appointment.listCustomerAppointments.useQuery({
 		customerId: customerid as string,
 	});
+
 	const { mutate } = api.customer.update.useMutation({
 		onSuccess: () => {
 			toast({
