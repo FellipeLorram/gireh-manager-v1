@@ -10,7 +10,6 @@ const Links = [
 ]
 
 const reportLinks = [
-  { href: "/daily", name: "Dia" },
   { href: "/payments", name: "Pagamentos" },
 ]
 
