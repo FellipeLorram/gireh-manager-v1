@@ -4,13 +4,13 @@ import { api } from '@/utils/api'
 import { CentralizedLayout } from '@/components/layout/centralized-layout'
 import { DataTable } from '@/components/layout/tables/table-raw'
 import CustomerInfo from '@/components/layout/customer-info'
-import { RemoveCustomerDialog } from '@/components/layout/remove-customer-dialog'
 import { customerPageAppointmentColumnDef } from '@/components/layout/tables/appointment-column-def'
 import { customerPageOrderColumnDef } from '@/components/layout/tables/order-column-def'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
 import { CircleDashed } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { RemoveCustomerDrawer } from '@/components/layout/customer/remove-customer-drawer'
 
 export default function Page() {
 	const { toast } = useToast();
@@ -109,10 +109,8 @@ export default function Page() {
 				</CardContent>
 			</Card>
 
-
-
 			<div className='w-full bg-red-100/10 dark:bg-red-900/10 border dark:border-red-950 border-red-200 flex items-center justify-end p-4 mt-10 rounded'>
-				<RemoveCustomerDialog />
+				<RemoveCustomerDrawer />
 			</div>
 		</CentralizedLayout>
 	)

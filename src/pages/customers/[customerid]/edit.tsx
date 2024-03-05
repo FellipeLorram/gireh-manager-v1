@@ -15,7 +15,7 @@ export default function Page() {
 		enabled: !!query.customerid,
 	});
 
-	const { mutate, isLoading } = api.customer.create.useMutation({
+	const { mutate, isLoading } = api.customer.update.useMutation({
 		onSuccess: async ({ id }) => {
 			toast({
 				description: 'Cliente atualizado com sucesso',
@@ -30,13 +30,16 @@ export default function Page() {
 	});
 
 
-	const onSubmit = (data: CustomerFormSchema) => {
+	const onSubmit = (values: CustomerFormSchema) => {
 		mutate({
-			...data,
-			phone: data.phone?.map((phone) => ({
-				...phone,
-				number: phone.number,
-			})),
+			id: query.customerid as string,
+			...values,
+			phone: values.phone?.map(phone => {
+				return {
+					id: phone.id ?? '',
+					number: phone.number ?? ''
+				}
+			})
 		});
 	}
 
