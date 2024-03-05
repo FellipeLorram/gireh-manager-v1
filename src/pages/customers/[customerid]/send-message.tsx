@@ -1,9 +1,10 @@
-import { buttonVariants } from "@/components/ui/button";
+import { CentralizedLayout } from "@/components/layout/centralized-layout";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { api } from "@/utils/api";
 import { formatPhoneNumber } from "@/utils/format-phone-number";
-import { ArrowLeftCircle } from "lucide-react";
+import { CircleDashedIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -22,15 +23,7 @@ export default function Page() {
 	});
 
 	return (
-		<div className="mx-auto w-11/12 max-w-3xl min-h-screen flex flex-col items-start justify-start py-4">
-			<div className="w-full flex flex-row">
-				<Link href={`/customers/${customer?.id}`}>
-					<ArrowLeftCircle className="w-8 h-8 stroke-muted-foreground hover:stroke-foreground duration-200" />
-				</Link>
-
-				<h1 className="text-xl font-bold text-center mx-auto">{customer?.name}</h1>
-
-			</div>
+		<CentralizedLayout>
 			<Label className="mt-8 w-full text-lg">
 				Mensagem
 				<Textarea
@@ -41,6 +34,14 @@ export default function Page() {
 			</Label>
 
 			<div className="w-full flex flex-wrap gap-4 mt-4">
+				{!customer && <Button
+					variant="secondary"
+					disabled
+					className="w-full md:w-60"
+				>
+					<CircleDashedIcon className="animate-spin h-4 w-4" />
+				</Button>}
+
 				{customer?.Phone.map((phone) => (
 					<Link
 						className={buttonVariants({
@@ -62,6 +63,6 @@ export default function Page() {
 					</p>
 				)}
 			</div>
-		</div>
+ 		</CentralizedLayout>
 	)
 }

@@ -1,16 +1,16 @@
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { api } from '@/utils/api'
+import { CentralizedLayout } from '@/components/layout/centralized-layout'
+import { DataTable } from '@/components/layout/tables/table-raw'
 import CustomerInfo from '@/components/layout/customer-info'
-import EditCustomerDialog from '@/components/layout/edit-customer-sheet'
 import { RemoveCustomerDialog } from '@/components/layout/remove-customer-dialog'
 import { customerPageAppointmentColumnDef } from '@/components/layout/tables/appointment-column-def'
 import { customerPageOrderColumnDef } from '@/components/layout/tables/order-column-def'
-import { DataTable } from '@/components/layout/tables/table-raw'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
-import { api } from '@/utils/api'
-import { ArrowLeftCircle } from 'lucide-react'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import React from 'react'
+import { CircleDashed } from 'lucide-react'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 
 export default function Page() {
 	const { toast } = useToast();
@@ -22,22 +22,16 @@ export default function Page() {
 		customerId: customerid as string,
 	});
 
-	const { mutate } = api.customer.update.useMutation({
+	const { mutate, isLoading } = api.customer.update.useMutation({
 		onSuccess: () => {
 			toast({
 				title: 'Cliente adicionado a fila de exame',
-			})
+			});
 		}
 	});
 
 	return (
-		<div className="mx-auto w-11/12 max-w-3xl min-h-screen flex flex-col items-center justify-start py-4">
-			<div className="w-full flex flex-row mb-8">
-				<Link href="/">
-					<ArrowLeftCircle className="w-8 h-8 stroke-muted-foreground hover:stroke-foreground duration-200" />
-				</Link>
-			</div>
-
+		<CentralizedLayout>
 			<CustomerInfo id={customerid as string} />
 
 			<div className="border rounded-md p-4 flex flex-wrap gap-4 w-full mt-4">
@@ -52,24 +46,31 @@ export default function Page() {
 				</Link>
 
 				<Button
+					disabled={isLoading}
 					variant='outline'
 					className='w-full md:w-auto'
 					onClick={() => mutate({ id: customerid as string, inLine: true })}
 				>
+					{isLoading && <CircleDashed className='animate-spin' size={24} />}
 					Adicionar na Fila de Exame
 				</Button>
 
-				<EditCustomerDialog
-					id={customerid as string}
-				/>
+				<Link
+					className={buttonVariants({
+						variant: 'outline',
+						className: 'w-full md:w-auto',
+					})}
+					href={`/customers/${customerid as string}/edit`}
+				>
+					Editar
+				</Link>
 			</div>
 
-			<div className='w-full mt-4 p-4 border rounded'>
-				<div className='w-full flex flex-row justify-between items-center mb-2'>
-					<h1 className='text-lg font-semibold'>
+			<Card className='mt-4'>
+				<CardHeader className='flex justify-between items-center flex-row'>
+					<CardTitle>
 						Compras
-					</h1>
-
+					</CardTitle>
 					<Link
 						className={buttonVariants({
 							variant: 'secondary',
@@ -78,20 +79,19 @@ export default function Page() {
 					>
 						Adicionar
 					</Link>
-				</div>
-
-				<DataTable
-					data={orderList ?? []}
-					columns={customerPageOrderColumnDef}
-				/>
-			</div>
-			<div className='w-full mt-4 p-4 border rounded'>
-
-				<div className='w-full flex flex-row justify-between items-center mb-2'>
-					<h1 className='text-lg font-semibold'>
+				</CardHeader>
+				<CardContent>
+					<DataTable
+						data={orderList ?? []}
+						columns={customerPageOrderColumnDef}
+					/>
+				</CardContent>
+			</Card>
+			<Card className='mt-4'>
+				<CardHeader className='flex justify-between items-center flex-row'>
+					<CardTitle>
 						Consultas
-					</h1>
-
+					</CardTitle>
 					<Link
 						className={buttonVariants({
 							variant: 'secondary',
@@ -100,16 +100,20 @@ export default function Page() {
 					>
 						Adicionar
 					</Link>
-				</div>
-				<DataTable
-					data={appointmentList ?? []}
-					columns={customerPageAppointmentColumnDef}
-				/>
-			</div>
+				</CardHeader>
+				<CardContent>
+					<DataTable
+						data={appointmentList ?? []}
+						columns={customerPageAppointmentColumnDef}
+					/>
+				</CardContent>
+			</Card>
+
+
 
 			<div className='w-full bg-red-100/10 dark:bg-red-900/10 border dark:border-red-950 border-red-200 flex items-center justify-end p-4 mt-10 rounded'>
 				<RemoveCustomerDialog />
 			</div>
-		</div>
+		</CentralizedLayout>
 	)
 }

@@ -1,9 +1,9 @@
 import { CustomerForm } from "@/components/forms/customer-form";
 import { type CustomerFormSchema } from "@/components/forms/customer-form/schema";
+import { CentralizedLayout } from "@/components/layout/centralized-layout";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { api } from "@/utils/api";
-import { ArrowLeftCircle } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 export default function Page() {
@@ -36,22 +36,22 @@ export default function Page() {
 	}
 
 	return (
-		<div className="mx-auto w-11/12 max-w-3xl min-h-screen flex flex-col items-center justify-start py-4 gap-8">
-			<div className="w-full flex flex-row">
-				<Link href="/">
-					<ArrowLeftCircle className="w-8 h-8 stroke-muted-foreground hover:stroke-foreground duration-200" />
-				</Link>
-
-				<h1 className="text-xl font-bold text-center mx-auto">Novo Cliente</h1>
-			</div>
-			<div className="w-full p-4 border rounded">
-				<CustomerForm
-					searchEnabled
-					className="my-auto"
-					onSubmit={onSubmit}
-					isLoading={isLoading}
-				/>
-			</div>
-		</div>
+		<CentralizedLayout>
+			<Card>
+				<CardHeader>
+					<CardTitle>
+						Cadastrar Cliente
+					</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<CustomerForm
+						searchEnabled
+						className="my-auto"
+						onSubmit={onSubmit}
+						isLoading={isLoading}
+					/>
+				</CardContent>
+			</Card>
+		</CentralizedLayout>
 	)
 }

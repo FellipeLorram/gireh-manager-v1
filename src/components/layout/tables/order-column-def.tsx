@@ -52,7 +52,7 @@ export const customerPageOrderColumnDef: ColumnDef<Order>[] = [
 		cell: ({ row }) => <Link
 			href={`/orders/${row.original.id}`}
 			className={buttonVariants({
-				variant: 'ghost',
+				variant: 'outline',
 			})}
 		>
 			Ver venda

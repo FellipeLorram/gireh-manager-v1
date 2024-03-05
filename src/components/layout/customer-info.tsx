@@ -1,5 +1,7 @@
 import { api } from "@/utils/api";
 import { formatPhoneNumber } from "@/utils/format-phone-number";
+import { Skeleton } from "../ui/skeleton";
+
 
 interface Props {
 	id: string | undefined;
@@ -10,8 +12,9 @@ export default function CustomerInfo({ id }: Props) {
 		id: id!,
 	}, {
 		enabled: !!id,
-		refetchOnWindowFocus: true,
 	});
+
+	if (!data) return <Skeleton className="w-full h-[150px]" />	
 
 	return (
 		<div className='w-full p-2 border rounded-md'>
@@ -38,3 +41,5 @@ export default function CustomerInfo({ id }: Props) {
 		</div>
 	)
 }
+
+
