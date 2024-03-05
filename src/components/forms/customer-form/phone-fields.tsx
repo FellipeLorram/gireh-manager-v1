@@ -14,7 +14,7 @@ export function PhoneFields({ form }: Props) {
 	const phonesSliced = phones?.slice(1);
 
 	const addPhoneField = useCallback(() => {
-		form.setValue('phone', [...phones, {
+		form.setValue('phone', [...(phones ?? []), {
 			number: '',
 		}]);
 	}, [form, phones]);
