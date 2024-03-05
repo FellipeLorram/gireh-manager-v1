@@ -1,5 +1,5 @@
 import Link from "next/link";
-import CustomerInfo from "@/components/layout/customer-info";
+import CustomerInfo from "@/components/layout/customer/customer-info";
 import { useRouter } from "next/router";
 import { api } from "@/utils/api";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -62,7 +62,7 @@ export default function Page() {
 					<p className='mt-2'>{data?.observation}</p>
 				</div>
 			</div>
-			
+
 			<div className="border rounded-md p-4 flex flex-wrap gap-4 w-full">
 				<Link
 					className={buttonVariants({

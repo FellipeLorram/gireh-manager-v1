@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ThemeSwitcher } from "../theme-switcher";
+import { ThemeSwitcher } from "./theme-switcher";
 import { SelectOrg } from "./select-org";
 import { TopBarNavigation } from "./topbar-navigation";
 import { buttonVariants } from "@/components/ui/button";

@@ -1,7 +1,7 @@
 import { OrderForm } from "@/components/forms/order-form";
 import { type OrderFormFields } from "@/components/forms/order-form/form-schema";
 import { CentralizedLayout } from "@/components/layout/centralized-layout";
-import CustomerInfo from "@/components/layout/customer-info";
+import CustomerInfo from "@/components/layout/customer/customer-info";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { api } from "@/utils/api";

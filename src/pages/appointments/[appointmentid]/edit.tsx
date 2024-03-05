@@ -1,6 +1,6 @@
 import { AppointmentForm, type appointmentFormValues } from "@/components/forms/appointment-form";
 import { CentralizedLayout } from "@/components/layout/centralized-layout";
-import CustomerInfo from "@/components/layout/customer-info";
+import CustomerInfo from "@/components/layout/customer/customer-info";
 import { useToast } from "@/components/ui/use-toast";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";

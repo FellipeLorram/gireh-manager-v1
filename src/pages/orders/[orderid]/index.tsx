@@ -1,5 +1,5 @@
 import Link from "next/link";
-import CustomerInfo from "@/components/layout/customer-info";
+import CustomerInfo from "@/components/layout/customer/customer-info";
 import { useRouter } from "next/router";
 import { OrderInfo } from "@/components/layout/order/order-info";
 import { buttonVariants } from "@/components/ui/button";
@@ -13,7 +13,6 @@ export default function Page() {
 		id: orderid as string,
 	}, {
 		enabled: !!orderid,
-		refetchOnWindowFocus: true,
 	});
 
 	return (

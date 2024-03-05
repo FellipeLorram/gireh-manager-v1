@@ -1,15 +1,9 @@
 import { useRouter } from "next/router";
 import { Button } from "../../ui/button"
-import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-	DialogDescription,
-	DialogTrigger,
-} from "@/components/ui/dialog"
+
 import { api } from "@/utils/api";
 import { CircleDashed } from "lucide-react";
+import { ResponsiveDrawer } from "@/components/ui/responsive-drawer";
 
 export function RemoveOrderDialog() {
 	const { push, query } = useRouter();
@@ -17,33 +11,38 @@ export function RemoveOrderDialog() {
 		onSuccess: async () => {
 			await push("/orders");
 		}
-	})
+	});
+
+	const orderId = query.orderid as string;
 
 	return (
-		<Dialog>
-			<DialogTrigger asChild>
-				<Button className="w-full md:w-auto" variant="destructive">
-					Deletar
-				</Button>
-			</DialogTrigger>
-			<DialogContent>
-				<DialogHeader>
-					<DialogTitle>
-						Excluir
-					</DialogTitle>
-					<DialogDescription>
-						Você tem certeza que deseja excluir esta venda?
-					</DialogDescription>
-				</DialogHeader>
-				<Button
-					onClick={() => mutate({ id: query.orderid as string })}
-					variant="outline"
-					disabled={isLoading}
-				>
-					{isLoading && <CircleDashed className="w-5 h-5 animate-spin mr-2" />}
-					Excluir
-				</Button>
-			</DialogContent>
-		</Dialog>
+		<ResponsiveDrawer
+			title="Excluir Venda"
+			trigger={<Button
+				disabled={!orderId}
+				variant="destructive"
+				size="sm">
+				Deletar
+			</Button>}
+			content={
+				<div className="p-4 pt-0">
+					<p className="text-muted-foreground text-xs mb-4">
+						Esta ação não pode ser desfeita.
+					</p>
+
+					<Button
+						disabled={isLoading}
+						variant="destructive"
+						onClick={() => {
+							mutate({ id: orderId });
+						}}
+						className="mt-4 w-full md:w-auto"
+					>
+						{isLoading && <CircleDashed className="animate-spin mr-2 w-4" />}
+						Deletar
+					</Button>
+				</div>
+			}
+		/>
 	)
 }

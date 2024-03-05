@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import { CircleDashed } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Textarea } from "../ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 const notEmptyValue = (value: string) => {
 	const trimmedValue = String(value).trim();
@@ -70,138 +71,142 @@ export function AppointmentForm({
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className={cn("space-y-4 w-full", className)}>
-				<div className="w-full border rounded p-4">
-					<h2 className="text-lg text-foreground">
-						Dados do Exame
-					</h2>
-
-					<FormField
-						control={form.control}
-						name="anamnesis"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel className="text-lg mt-4">Anamnese</FormLabel>
-								<FormControl>
-									<Input placeholder="anamnese" {...field} />
-								</FormControl>
-
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<p className="mt-4 text-muted-foreground">
-						Olho Direito
-					</p>
-					<div className="w-full flex flex-row gap-2 items-center justify-center mt-2">
+				<Card>
+					<CardHeader>
+						<CardTitle>
+							Dados da Consulta
+						</CardTitle>
+					</CardHeader>
+					<CardContent>
 						<FormField
 							control={form.control}
-							name="esf_right"
+							name="anamnesis"
 							render={({ field }) => (
-								<FormItem className="w-full">
-									<FormLabel>Esf</FormLabel>
+								<FormItem>
+									<FormLabel className="text-lg mt-4">Anamnese</FormLabel>
 									<FormControl>
-										<Input placeholder="-0.00" {...field} />
+										<Input placeholder="anamnese" {...field} />
 									</FormControl>
 
 									<FormMessage />
 								</FormItem>
 							)}
 						/>
+
+						<p className="mt-4 text-muted-foreground">
+							Olho Direito
+						</p>
+						<div className="w-full flex flex-row gap-2 items-center justify-center mt-2">
+							<FormField
+								control={form.control}
+								name="esf_right"
+								render={({ field }) => (
+									<FormItem className="w-full">
+										<FormLabel>Esf</FormLabel>
+										<FormControl>
+											<Input placeholder="-0.00" {...field} />
+										</FormControl>
+
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="cil_right"
+								render={({ field }) => (
+									<FormItem className="w-full">
+										<FormLabel>Cil</FormLabel>
+										<FormControl>
+											<Input placeholder="-0.00" {...field} />
+										</FormControl>
+
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="axle_right"
+								render={({ field }) => (
+									<FormItem className="w-full">
+										<FormLabel>Eixo</FormLabel>
+										<FormControl>
+											<Input placeholder="0" {...field} />
+										</FormControl>
+
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
+						<p className="mt-4 text-muted-foreground">
+							Olho Esquerdo
+						</p>
+						<div className="w-full flex flex-row gap-2 items-center justify-center mt-2">
+							<FormField
+								control={form.control}
+								name="esf_left"
+								render={({ field }) => (
+									<FormItem className="w-full">
+										<FormLabel>Esf</FormLabel>
+										<FormControl>
+											<Input placeholder="-0.00" {...field} />
+										</FormControl>
+
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="cil_left"
+								render={({ field }) => (
+									<FormItem className="w-full">
+										<FormLabel>Cil</FormLabel>
+										<FormControl>
+											<Input placeholder="-0.00" {...field} />
+										</FormControl>
+
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="axle_left"
+								render={({ field }) => (
+									<FormItem className="w-full">
+										<FormLabel>Eixo</FormLabel>
+										<FormControl>
+											<Input placeholder="0" {...field} />
+										</FormControl>
+
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
+						<p className="mt-4 text-muted-foreground">
+							Perto
+						</p>
 						<FormField
 							control={form.control}
-							name="cil_right"
+							name="add"
 							render={({ field }) => (
-								<FormItem className="w-full">
-									<FormLabel>Cil</FormLabel>
+								<FormItem className="w-full mt-2">
+									<FormLabel>Adição</FormLabel>
 									<FormControl>
-										<Input placeholder="-0.00" {...field} />
+										<Input placeholder="+0.00" {...field} />
 									</FormControl>
 
 									<FormMessage />
 								</FormItem>
 							)}
 						/>
-						<FormField
-							control={form.control}
-							name="axle_right"
-							render={({ field }) => (
-								<FormItem className="w-full">
-									<FormLabel>Eixo</FormLabel>
-									<FormControl>
-										<Input placeholder="0" {...field} />
-									</FormControl>
+					</CardContent>
+				</Card>
 
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-					</div>
-					<p className="mt-4 text-muted-foreground">
-						Olho Esquerdo
-					</p>
-					<div className="w-full flex flex-row gap-2 items-center justify-center mt-2">
-						<FormField
-							control={form.control}
-							name="esf_left"
-							render={({ field }) => (
-								<FormItem className="w-full">
-									<FormLabel>Esf</FormLabel>
-									<FormControl>
-										<Input placeholder="-0.00" {...field} />
-									</FormControl>
-
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name="cil_left"
-							render={({ field }) => (
-								<FormItem className="w-full">
-									<FormLabel>Cil</FormLabel>
-									<FormControl>
-										<Input placeholder="-0.00" {...field} />
-									</FormControl>
-
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name="axle_left"
-							render={({ field }) => (
-								<FormItem className="w-full">
-									<FormLabel>Eixo</FormLabel>
-									<FormControl>
-										<Input placeholder="0" {...field} />
-									</FormControl>
-
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-					</div>
-					<p className="mt-4 text-muted-foreground">
-						Perto
-					</p>
-					<FormField
-						control={form.control}
-						name="add"
-						render={({ field }) => (
-							<FormItem className="w-full mt-2">
-								<FormLabel>Adição</FormLabel>
-								<FormControl>
-									<Input placeholder="+0.00" {...field} />
-								</FormControl>
-
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-				</div>
 				<div className="w-full p-4 border rounded">
 					<FormField
 						control={form.control}

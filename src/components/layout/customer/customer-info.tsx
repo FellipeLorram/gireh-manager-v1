@@ -1,6 +1,6 @@
 import { api } from "@/utils/api";
 import { formatPhoneNumber } from "@/utils/format-phone-number";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "../../ui/skeleton";
 
 
 interface Props {
@@ -14,7 +14,7 @@ export default function CustomerInfo({ id }: Props) {
 		enabled: !!id,
 	});
 
-	if (!data) return <Skeleton className="w-full h-[150px]" />	
+	if (!data) return <Skeleton className="w-full h-[150px]" />
 
 	return (
 		<div className='w-full p-2 border rounded-md'>

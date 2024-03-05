@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { api } from "@/utils/api";
 import { AppointmentForm, type appointmentFormValues } from "@/components/forms/appointment-form";
 import { CentralizedLayout } from "@/components/layout/centralized-layout";
-import CustomerInfo from "@/components/layout/customer-info";
+import CustomerInfo from "@/components/layout/customer/customer-info";
 import { useToast } from "@/components/ui/use-toast";
 
 export default function Page() {
@@ -37,10 +37,12 @@ export default function Page() {
 			<CustomerInfo
 				id={query.customerid as string}
 			/>
-			<AppointmentForm
-				onSubmit={onSubmit}
-				isLoading={isLoading}
-			/>
+			<div className="w-full mt-4">
+				<AppointmentForm
+					onSubmit={onSubmit}
+					isLoading={isLoading}
+				/>
+			</div>
 		</CentralizedLayout>
 
 	)

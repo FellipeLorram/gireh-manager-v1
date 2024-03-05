@@ -122,7 +122,7 @@ export const LaborCopy = forwardRef<HTMLDivElement, Props & {
 							<TableCell className="p-1 text-xs">{order.dnp_right}</TableCell>
 						</TableRow>
 						<TableRow>
-							<TableCell className="p-1 text-xs">OD</TableCell>
+							<TableCell className="p-1 text-xs">OE</TableCell>
 							<TableCell className="p-1 text-xs">{order.esf_left}</TableCell>
 							<TableCell className="p-1 text-xs">{order.cil_left}</TableCell>
 							<TableCell className="p-1 text-xs">{order.axle_left}</TableCell>
@@ -153,7 +153,7 @@ export const LaborCopy = forwardRef<HTMLDivElement, Props & {
 									{frame.name}
 								</TableCell>
 								<TableCell className="p-1 text-xs">
-									{frame.height}
+									{frame.height}/{frame.heightOe}
 								</TableCell>
 							</TableRow>
 						))}
