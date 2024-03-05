@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MoreVertical } from "lucide-react";
+import { ArrowUpDown, MoreVertical } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
@@ -87,8 +87,21 @@ export const OrderPagePaymentColumnDef: ColumnDef<Payments>[] = [
 export const PaymentColumnDef: ColumnDef<Payments>[] = [
 	{
 		accessorKey: 'createdAt',
-		header: 'Data',
-		cell: ({ row }) => new Date(row.original.createdAt).toLocaleDateString('pt-BR'),
+		header: ({ column }) => {
+			return (
+				<Button
+					variant="ghost"
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+				>
+					Data
+					<ArrowUpDown className="ml-2 h-4 w-4" />
+				</Button>
+			)
+		},
+		cell: ({ row }) => {
+			const date = new Date(row.original.createdAt);
+			return date.toLocaleDateString();
+		},
 	},
 	{
 		accessorKey: 'amount',
@@ -107,4 +120,14 @@ export const PaymentColumnDef: ColumnDef<Payments>[] = [
 		accessorKey: 'installments',
 		header: 'Parcelas',
 	},
+	{
+		accessorKey: 'orderId',
+		header: 'Venda',
+		cell: ({ row }) => <Link
+			href={`/orders/${row.original.orderId}`}
+			className={buttonVariants({ variant: 'outline' })}
+		>
+			Ver venda
+		</Link>
+	}
 ]

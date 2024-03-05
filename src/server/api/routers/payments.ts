@@ -169,11 +169,8 @@ export const paymentsRouter = createTRPCRouter({
 		}),
 
 	listAll: protectedProcedure
-		.input(z.object({
-			limit: z.number().optional().default(10),
-		})).query(async ({ ctx, input }) => {
+		.query(async ({ ctx }) => {
 			const payments = await ctx.db.payments.findMany({
-				take: input.limit,
 				where: {
 					orgId: ctx.session.user.orgId,
 				},
