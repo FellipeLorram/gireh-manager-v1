@@ -1,32 +1,36 @@
 import { useMemo } from "react";
 import { type OrderFormFields } from "./form-schema";
 import { type UseFormReturn } from 'react-hook-form';
-import { LensesDialog } from "./lenses-dialog";
+import { LensesDrawer } from "./lenses-drawer";
 import { DataTable } from "@/components/layout/tables/table-raw";
 import { MakeLensesColumnDef } from "@/components/layout/tables/lenses-column-def";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 interface Props {
 	form: UseFormReturn<OrderFormFields>;
 }
 
 export function Lenses({ form }: Props) {
-	const frames = form.watch('lenses');
+	const lenses = form.watch('lenses');
 	const columns = useMemo(() => MakeLensesColumnDef({ form }), [form]);
 
 	return (
-		<div className="w-full border rounded p-4 mt-4">
-			<h2 className="text-lg text-foreground mb-2">
-				Lentes
-			</h2>
+		<Card>
+			<CardHeader className='flex-row justify-between items-center'>
+				<CardTitle>
+					Lentes
+				</CardTitle>
+				<LensesDrawer form={form} />
+			</CardHeader>
 
-			<div className='w-full mb-2'>
-				<DataTable
-					columns={columns}
-					data={frames ?? []}
-				/>
-			</div>
-
-			<LensesDialog form={form} />
-		</div>
+			<CardContent>
+				<div className='w-full mb-2'>
+					<DataTable
+						columns={columns}
+						data={lenses ?? []}
+					/>
+				</div>
+			</CardContent>
+		</Card>
 	)
 }

@@ -111,9 +111,8 @@ export function CustomerForm({
 					className="w-full md:w-auto"
 					disabled={isLoading}
 					type="submit">
-					{isLoading ? <CircleDashed className="animate-spin" /> : (<>
-						{defaultValues ? 'Atualizar' : 'Cadastrar'}
-					</>)}
+					{isLoading && <CircleDashed className="animate-spin mr-2" />}
+					{defaultValues ? 'Atualizar' : 'Cadastrar'}
 				</Button>
 			</form>
 		</Form>

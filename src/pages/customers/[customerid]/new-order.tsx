@@ -44,39 +44,41 @@ export default function Page() {
   }
 
   return (
-		<CentralizedLayout>
+    <CentralizedLayout>
       <CustomerInfo
         id={query.customerid as string}
       />
-      <OrderForm
-        onSubmit={onSubmit}
-        defaultValues={{
-          esf_right: appointment?.esf_right ?? '-0.00',
-          cil_right: appointment?.cil_right ?? '-0.00',
-          axle_right: appointment?.axle_right?.toString() ?? '0',
-          esf_left: appointment?.esf_left ?? '-0.00',
-          cil_left: appointment?.cil_left ?? '-0.00',
-          axle_left: appointment?.axle_left?.toString() ?? '0',
-          add: appointment?.add ?? '+0.00',
-          dnp_right: '0',
-          dnp_left: '0',
-          frame: [],
-          lenses: [],
-          observation: '',
-          total: 0,
-        }}
-        SubmitButton={
-          <Button
-            disabled={isLoading}
-            className="w-full mt-4"
-            type="submit"
-          >
-            {isLoading ? (
-              <CircleDashed className="animate-spin" size={16} />
-            ) : "Finalizar Adicionar Pagamento"}
-          </Button>
-        }
-      />
- 		</CentralizedLayout>
+      <div className="w-full mt-4">
+        <OrderForm
+          onSubmit={onSubmit}
+          defaultValues={{
+            esf_right: appointment?.esf_right ?? '-0.00',
+            cil_right: appointment?.cil_right ?? '-0.00',
+            axle_right: appointment?.axle_right?.toString() ?? '0',
+            esf_left: appointment?.esf_left ?? '-0.00',
+            cil_left: appointment?.cil_left ?? '-0.00',
+            axle_left: appointment?.axle_left?.toString() ?? '0',
+            add: appointment?.add ?? '+0.00',
+            dnp_right: '0',
+            dnp_left: '0',
+            frame: [],
+            lenses: [],
+            observation: '',
+            total: 0,
+          }}
+          SubmitButton={
+            <Button
+              disabled={isLoading}
+              className="w-full mt-4"
+              type="submit"
+            >
+              {isLoading ? (
+                <CircleDashed className="animate-spin" size={16} />
+              ) : "Finalizar Adicionar Pagamento"}
+            </Button>
+          }
+        />
+      </div>
+    </CentralizedLayout>
   )
 }

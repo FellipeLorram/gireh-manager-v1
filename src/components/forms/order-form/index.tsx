@@ -37,7 +37,7 @@ export function OrderForm({ onSubmit, defaultValues, SubmitButton }: Props) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-4">
         <AppointmentDetails form={form} />
         <MeasuresDetails form={form} />
         <Frames form={form} />

@@ -1,7 +1,7 @@
-import { useCallback, useRef, useState } from 'react';
-import { type UseFormReturn } from 'react-hook-form';
-import { type OrderFormFields } from './form-schema';
-import { Button } from '@/components/ui/button';
+import { useCallback, useState } from "react";
+import { type UseFormReturn } from "react-hook-form";
+import { type OrderFormFields } from "./form-schema";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
 	Select,
@@ -10,80 +10,73 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select"
-import {
-	Dialog,
-	DialogTrigger,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-	DialogClose,
-} from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
+
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { ResponsiveDrawer } from "@/components/ui/responsive-drawer";
 
 interface Props {
 	form: UseFormReturn<OrderFormFields>;
 }
 
-export function LensesDialog({ form }: Props) {
-	return (
-		<Dialog>
-			<DialogTrigger asChild>
-				<Button variant="secondary" className='w-full'>
-					Adicionar
-				</Button>
-			</DialogTrigger>
-			<DialogContent>
-				<DialogHeader>
-					<DialogTitle>Lenses</DialogTitle>
-					<DialogClose />
-				</DialogHeader>
+export function LensesDrawer({ form }: Props) {
+	const [open, setOpen] = useState(false);
 
-				<Tabs defaultValue="default" className="w-full">
-					<TabsList className='w-full'>
-						<TabsTrigger className='w-full' value="default">Padrão</TabsTrigger>
-						<TabsTrigger className='w-full' value="other">Outra</TabsTrigger>
+	return (
+		<ResponsiveDrawer
+			title="Adicionar Lente"
+			open={open}
+			setOpen={setOpen}
+			trigger={<Button variant="secondary">
+				Adicionar
+			</Button>}
+			content={
+				<Tabs defaultValue="default" className="w-full p-4">
+					<TabsList className="w-full">
+						<TabsTrigger className="w-full" value="default">Padrão</TabsTrigger>
+						<TabsTrigger className="w-full" value="other">Outra</TabsTrigger>
 					</TabsList>
 
-					<DefaultTabs form={form} />
-					<OtherTabs form={form} />
+					<DefaultTabs form={form} setOpen={setOpen} />
+					<OtherTabs form={form} setOpen={setOpen} />
 				</Tabs>
-			</DialogContent>
-		</Dialog>
+			}
+		/>
 	)
 }
 
+interface TabsProps extends Props {
+	setOpen: (value: boolean) => void;
+}
 
-const DefaultTabs = ({ form }: Props) => {
-	const dialogCloseButtonRef = useRef<HTMLButtonElement>(null);
+const DefaultTabs = ({ form, setOpen }: TabsProps) => {
 	const [lensesValues, setLensesValues] = useState({
-		type: '',
-		material: '',
-		treatment: '',
-		price: '',
+		type: "",
+		material: "",
+		treatment: "",
+		price: "",
 	});
 
 	const onAddClick = useCallback(() => {
-		const isEveryFieldFilled = Object.values(lensesValues).every((value) => value !== '');
+		const isEveryFieldFilled = Object.values(lensesValues).every((value) => value !== "");
 
 		if (!isEveryFieldFilled) {
 			return;
 		}
 
-		form.setValue('lenses', [...(form.getValues().lenses ?? []), {
+		form.setValue("lenses", [...(form.getValues().lenses ?? []), {
 			name: `${lensesValues.type} ${lensesValues.material} ${lensesValues.treatment}`,
 			price: lensesValues.price,
 			id: Math.random().toString(36).slice(2, 11),
 		}]);
 
 		setLensesValues({
-			type: '',
-			material: '',
-			treatment: '',
-			price: '',
+			type: "",
+			material: "",
+			treatment: "",
+			price: "",
 		});
-
-		dialogCloseButtonRef.current?.click();
+		setOpen(false)
 	}, [form, lensesValues])
 
 	return <TabsContent value="default">
@@ -149,45 +142,40 @@ const DefaultTabs = ({ form }: Props) => {
 				onChange={(e) => setLensesValues((prev) => ({ ...prev, price: e.target.value }))}
 				className="w-full mt-2 mb-4"
 				placeholder="preço"
-				type='number'
+				type="number"
 			/>
 		</Label>
 
-		<Button onClick={onAddClick} className='w-full'>
+		<Button onClick={onAddClick} className="w-full">
 			Adicionar
 		</Button>
-
-		<DialogClose ref={dialogCloseButtonRef} />
-
 	</TabsContent>
 }
 
-const OtherTabs = ({ form }: Props) => {
-	const dialogCloseButtonRef = useRef<HTMLButtonElement>(null);
+const OtherTabs = ({ form, setOpen }: TabsProps) => {
 	const [lensesValues, setLensesValues] = useState({
-		lenses: '',
-		price: '',
+		lenses: "",
+		price: "",
 	});
 
 	const onAddClick = useCallback(() => {
-		const isEveryFieldFilled = Object.values(lensesValues).every((value) => value !== '');
+		const isEveryFieldFilled = Object.values(lensesValues).every((value) => value !== "");
 
 		if (!isEveryFieldFilled) {
 			return;
 		}
 
-		form.setValue('lenses', [...(form.getValues().lenses ?? []), {
+		form.setValue("lenses", [...(form.getValues().lenses ?? []), {
 			name: lensesValues.lenses,
 			price: lensesValues.price,
 			id: Math.random().toString(36).slice(2, 11),
 		}]);
 
 		setLensesValues({
-			lenses: '',
-			price: '',
+			lenses: "",
+			price: "",
 		});
-
-		dialogCloseButtonRef.current?.click();
+		setOpen(false)
 	}, [lensesValues, form])
 
 	return <TabsContent value="other">
@@ -208,16 +196,13 @@ const OtherTabs = ({ form }: Props) => {
 				onChange={(e) => setLensesValues((prev) => ({ ...prev, price: e.target.value }))}
 				className="w-full mt-2 mb-4"
 				placeholder="preço"
-				type='number'
+				type="number"
 			/>
 		</Label>
 
-		<Button onClick={onAddClick} className='w-full'>
+		<Button onClick={onAddClick} className="w-full">
 			Adicionar
 		</Button>
 
-		<DialogClose
-			ref={dialogCloseButtonRef}
-		/>
 	</TabsContent>
 }
