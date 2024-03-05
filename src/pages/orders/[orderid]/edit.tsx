@@ -75,39 +75,41 @@ export default function Page() {
 				// eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
 				id={order?.customerId as string}
 			/>
-			<OrderForm
-				onSubmit={onSubmit}
-				defaultValues={{
-					esf_right: order?.esf_right ?? '-0.00',
-					cil_right: order?.cil_right ?? '-0.00',
-					axle_right: order?.axle_right?.toString() ?? '0',
-					dnp_right: order?.dnp_right?.toString() ?? '0',
-					esf_left: order?.esf_left ?? '-0.00',
-					cil_left: order?.cil_left ?? '-0.00',
-					axle_left: order?.axle_left?.toString() ?? '0',
-					dnp_left: order?.dnp_left?.toString() ?? '0',
-					add: order?.add ?? '-0.00',
-					frame: frames.map(frame => ({
-						...frame,
-						heightOd: frame.height,
-						heightOe: frame.heightOe?.toString() ?? '',
-					})) ?? [],
-					lenses: lenses,
-					observation: order?.observation ?? '',
-					total: order?.total ?? 0,
-				}}
-				SubmitButton={
-					<Button
-						disabled={isLoading}
-						className="w-full mt-4"
-						type="submit"
-					>
-						{isLoading ? (
-							<CircleDashed className="animate-spin" size={16} />
-						) : "Salvar Alterações"}
-					</Button>
-				}
-			/>
+			<div className="w-full mt-4">
+				<OrderForm
+					onSubmit={onSubmit}
+					defaultValues={{
+						esf_right: order?.esf_right ?? '-0.00',
+						cil_right: order?.cil_right ?? '-0.00',
+						axle_right: order?.axle_right?.toString() ?? '0',
+						dnp_right: order?.dnp_right?.toString() ?? '0',
+						esf_left: order?.esf_left ?? '-0.00',
+						cil_left: order?.cil_left ?? '-0.00',
+						axle_left: order?.axle_left?.toString() ?? '0',
+						dnp_left: order?.dnp_left?.toString() ?? '0',
+						add: order?.add ?? '-0.00',
+						frame: frames.map(frame => ({
+							...frame,
+							heightOd: frame.height,
+							heightOe: frame.heightOe?.toString() ?? '',
+						})) ?? [],
+						lenses: lenses,
+						observation: order?.observation ?? '',
+						total: order?.total ?? 0,
+					}}
+					SubmitButton={
+						<Button
+							disabled={isLoading}
+							className="w-full mt-4 md:w-auto"
+							type="submit"
+						>
+							{isLoading ? (
+								<CircleDashed className="animate-spin" size={16} />
+							) : "Salvar Alterações"}
+						</Button>
+					}
+				/>
+			</div>
 		</CentralizedLayout>
 
 	)

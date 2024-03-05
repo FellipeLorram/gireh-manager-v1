@@ -1,11 +1,10 @@
 import Link from "next/link";
 import CustomerInfo from "@/components/layout/customer-info";
 import { useRouter } from "next/router";
-import { OrderInfo } from "@/components/layout/order-info";
+import { OrderInfo } from "@/components/layout/order/order-info";
 import { buttonVariants } from "@/components/ui/button";
-import { RemoveOrderDialog } from "@/components/layout/remove-order-dialog";
+import { RemoveOrderDialog } from "@/components/layout/order/remove-order-dialog";
 import { api } from "@/utils/api";
-import { OrderTracking } from "@/components/layout/order-tracking";
 import { CentralizedLayout } from "@/components/layout/centralized-layout";
 
 export default function Page() {
@@ -23,7 +22,6 @@ export default function Page() {
 
 			<div className="w-full mt-4 space-y-4">
 				<OrderInfo order={data} />
-				<OrderTracking id={orderid as string} />
 				<div className="border rounded p-4 flex flex-wrap gap-4 w-full">
 					<Link
 						className={buttonVariants({

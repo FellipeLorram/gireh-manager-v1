@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { ArrowUpDown, MoreVertical } from "lucide-react";
+import { ArrowUpDown, MoreVertical, PenLine, XCircle } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
 import { api } from "@/utils/api";
 import { type Payments } from "@prisma/client";
 import { type CellContext, type ColumnDef } from "@tanstack/react-table";
+import { useRouter } from "next/router";
 
 const paymentType = {
 	debit_card: 'Cartão de Débito',
@@ -16,13 +17,14 @@ const paymentType = {
 
 const Actions = ({ row }: CellContext<Payments, unknown>) => {
 	const { toast } = useToast();
-	const { payment } = api.useUtils();
+	const { order } = api.useUtils();
+	const {push} = useRouter();
 	const { mutate } = api.payment.delete.useMutation({
 		onSuccess: async () => {
 			toast({
 				title: 'Pagamento removido',
 			});
-			await payment.list.invalidate();
+			await order.get.invalidate();
 		}
 	});
 
@@ -31,23 +33,19 @@ const Actions = ({ row }: CellContext<Payments, unknown>) => {
 			<MoreVertical className="w-5 stroke-muted-foreground" />
 		</DropdownMenuTrigger>
 		<DropdownMenuContent>
-			<DropdownMenuItem asChild>
-				<Link
-					className={buttonVariants({
-						variant: 'outline',
-						className: "w-full mb-1 cursor-pointer"
-					})}
-					href={`/orders/${row.original.orderId}/payments/${row.original.id}`}>
-					Editar
-				</Link>
+			<DropdownMenuItem
+				onClick={() => push(`/orders/${row.original.orderId}/payments/${row.original.id}`)}
+				className="w-full cursor-pointer"
+			>
+				<PenLine className="w-4 h-4 mr-2 stroke-current" />
+				Editar
 			</DropdownMenuItem>
-			<DropdownMenuItem className="opacity-70" asChild>
-				<Button
-					onClick={() => mutate({ id: row.original.id })}
-					className="w-full cursor-pointer"
-					variant="destructive">
-					Remover pagamento
-				</Button>
+			<DropdownMenuItem
+				onClick={() => mutate({ id: row.original.id })}
+				className="w-full cursor-pointer"
+			>
+				<XCircle className="w-4 h-4 mr-2 stroke-red-500" />
+				Remover pagamento
 			</DropdownMenuItem>
 		</DropdownMenuContent>
 	</DropdownMenu>

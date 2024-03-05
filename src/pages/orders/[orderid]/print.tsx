@@ -18,7 +18,7 @@ export default function Page() {
 	});
 	const { data: org } = api.org.get.useQuery();
 
-	if (!order || !org) return <Skeleton className="w-full h-[350px]" />
+	if (!order || !org) return <Loading />
 
 	return (
 		<CentralizedLayout>
@@ -59,6 +59,14 @@ export default function Page() {
 					</div>
 				</div>
 			)}
+		</CentralizedLayout>
+	)
+}
+
+function Loading() {
+	return (
+		<CentralizedLayout>
+			<Skeleton className="w-full h-[350px]" />
 		</CentralizedLayout>
 	)
 }

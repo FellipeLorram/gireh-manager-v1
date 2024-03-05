@@ -3,6 +3,7 @@ import { api } from "@/utils/api";
 import { CreditForm, type CreditFormValues } from "@/components/forms/credit-form";
 import { useToast } from "@/components/ui/use-toast";
 import { CentralizedLayout } from "@/components/layout/centralized-layout";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 export default function Page() {
   const { query, push } = useRouter();
@@ -57,13 +58,20 @@ export default function Page() {
         </p>
       </div>
 
-      <div className="border rounded p-4 w-full">
-        <CreditForm
-          isLoading={isLoading}
-          onSubmit={onSubmit}
-          rest={order?.rest ?? 0}
-        />
-      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            Cadastrar Crediário
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <CreditForm
+            isLoading={isLoading}
+            onSubmit={onSubmit}
+            rest={order?.rest ?? 0}
+          />
+        </CardContent>
+      </Card>
     </CentralizedLayout>
   )
 }

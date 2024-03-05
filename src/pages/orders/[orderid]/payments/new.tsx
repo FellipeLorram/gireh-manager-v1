@@ -3,6 +3,7 @@ import { PaymentForm, type PaymentFormValues } from "@/components/forms/payment-
 import { useToast } from "@/components/ui/use-toast";
 import { api } from "@/utils/api";
 import { CentralizedLayout } from "@/components/layout/centralized-layout";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Page() {
 	const { toast } = useToast();
@@ -62,10 +63,17 @@ export default function Page() {
 					})}
 				</p>
 			</div>
-			<PaymentForm
-				onSubmit={onSubmit}
-				isLoading={isLoading}
-			/>
+			<Card>
+				<CardHeader>
+					<CardTitle>Cadastrar Pagamento</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<PaymentForm
+						onSubmit={onSubmit}
+						isLoading={isLoading}
+					/>
+				</CardContent>
+			</Card>
 		</CentralizedLayout>
 	)
 }

@@ -1,9 +1,9 @@
-import { PaymentForm, type PaymentFormValues } from "@/components/forms/payment-form";
-import { useToast } from "@/components/ui/use-toast";
-import { api } from "@/utils/api";
-import { ArrowLeftCircle } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/router";
+import { api } from "@/utils/api";
+import { useToast } from "@/components/ui/use-toast";
+import { PaymentForm, type PaymentFormValues } from "@/components/forms/payment-form";
+import { CentralizedLayout } from "@/components/layout/centralized-layout";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 export default function Page() {
 	const { toast } = useToast();
@@ -39,15 +39,8 @@ export default function Page() {
 	}
 
 	return (
-		<div className="mx-auto w-11/12 max-w-3xl min-h-screen flex flex-col items-center justify-start py-4">
-			<div className="w-full flex flex-row">
-				<Link href={`/customers/${data?.customerId}/orders/${data?.id}`}>
-					<ArrowLeftCircle className="w-8 h-8 stroke-muted-foreground hover:stroke-foreground duration-200" />
-				</Link>
-
-				<h1 className="text-xl font-bold text-center mx-auto">OS: {data?.service_order}</h1>
-			</div>
-			<div className="w-full flex justify-between flex-row p-4 border rounded mt-8">
+		<CentralizedLayout>
+			<div className="w-full flex justify-between flex-row p-4 border rounded">
 				<p>
 					Total
 				</p>
@@ -58,7 +51,7 @@ export default function Page() {
 					})}
 				</p>
 			</div>
-			<div className="w-full flex justify-between flex-row p-4 border rounded mt-4 mb-8">
+			<div className="w-full flex justify-between flex-row p-4 border rounded my-4">
 				<p>
 					Valor faltante
 				</p>
@@ -69,15 +62,22 @@ export default function Page() {
 					})}
 				</p>
 			</div>
-			<PaymentForm
-				onSubmit={onSubmit}
-				isLoading={isLoading}
-				defaultValues={{
-					amount: payment?.amount.toString() ?? '',
-					type: payment?.type as PaymentFormValues["type"],
-					installments: payment?.installments.toString() ?? '',
-				}}
-			/>
-		</div>
+			<Card>
+				<CardHeader>
+					<CardTitle>Cadastrar Pagamento</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<PaymentForm
+						onSubmit={onSubmit}
+						isLoading={isLoading}
+						defaultValues={{
+							amount: payment?.amount.toString() ?? '',
+							type: payment?.type as PaymentFormValues["type"],
+							installments: payment?.installments.toString() ?? '',
+						}}
+					/>
+				</CardContent>
+			</Card>
+		</CentralizedLayout>
 	)
 }

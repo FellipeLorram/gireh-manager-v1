@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Button } from "../ui/button"
+import { Button } from "../../ui/button"
 import {
 	Dialog,
 	DialogContent,
