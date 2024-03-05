@@ -1,9 +1,7 @@
 import { type OrderFormFields, type FrameFields } from "@/components/forms/order-form/form-schema";
-import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { type Frame } from "@prisma/client";
 import { type ColumnDef } from "@tanstack/react-table";
-import { MoreVertical } from "lucide-react";
+import { XCircle } from "lucide-react";
 import { type UseFormReturn } from "react-hook-form";
 
 export const OrderPageFrameColumnDef: ColumnDef<Frame>[] = [
@@ -29,6 +27,7 @@ export const OrderPageFrameColumnDef: ColumnDef<Frame>[] = [
 	{
 		accessorKey: 'height',
 		header: 'Altura',
+		cell: ({ row }) => row.original.height
 	},
 ]
 
@@ -64,6 +63,7 @@ export function MakeFrameColumnDef({
 		{
 			accessorKey: 'height',
 			header: 'Altura',
+			cell: ({ row }) => row.original.heightOd + '/' + row.original.heightOe
 		},
 		{
 			accessorKey: 'actions',
@@ -75,27 +75,8 @@ export function MakeFrameColumnDef({
 					form.setValue('frame', newFrames);
 				}
 
-				return (
-					<DropdownMenu>
-						<DropdownMenuTrigger
-							className='group'
-						>
-							<MoreVertical
-								className='stroke-muted-foreground group-hover:stroke-foreground duration-200'
-								size={20}
-							/>
-						</DropdownMenuTrigger>
-						<DropdownMenuContent>
-							<DropdownMenuItem
-								asChild
-							>
-								<Button className="w-full" variant="outline" onClick={handleRemove}>
-									Remover
-								</Button>
-							</DropdownMenuItem>
-						</DropdownMenuContent>
-					</DropdownMenu>
-				)
+				return <XCircle className="stroke-red-500" onClick={handleRemove} />
+					
 			}
 		}
 	]

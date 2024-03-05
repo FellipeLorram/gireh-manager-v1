@@ -3,7 +3,8 @@ import { z } from 'zod';
 export const FrameSchema = z.object({
 	name: z.string().min(3, { message: 'Nome inválido' }),
 	price: z.string().min(0, { message: 'Preço inválido' }),
-	height: z.string().optional(),
+	heightOd: z.string().optional(),
+	heightOe: z.string().optional(),
 	reference: z.string().optional(),
 	image_url: z.string().optional(),
 	supplier: z.string().optional(),

@@ -1,9 +1,7 @@
 import { type OrderFormFields, type LensesFields } from "@/components/forms/order-form/form-schema";
-import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { type Lenses } from "@prisma/client";
 import { type ColumnDef } from "@tanstack/react-table";
-import { MoreVertical } from "lucide-react";
+import { XCircle } from "lucide-react";
 import { type UseFormReturn } from "react-hook-form";
 
 interface Props {
@@ -14,7 +12,6 @@ export function MakeLensesColumnDef({
 	form,
 }: Props): ColumnDef<LensesFields>[] {
 	return [
-
 		{
 			accessorKey: 'name',
 			header: 'Lente',
@@ -33,33 +30,15 @@ export function MakeLensesColumnDef({
 			cell: ({ row }) => {
 				const handleRemove = () => {
 					const lenses = form.getValues().lenses ?? [];
-					const newLenses = lenses.filter((len) => len.id !== row.original.id);
-					form.setValue('lenses', newLenses);
+					const newlenses = lenses.filter((l) => l.id !== row.original.id);
+					form.setValue('lenses', newlenses);
 				}
 
-				return (
-					<DropdownMenu>
-						<DropdownMenuTrigger
-							className='group'
-						>
-							<MoreVertical
-								className='stroke-muted-foreground group-hover:stroke-foreground duration-200'
-								size={20}
-							/>
-						</DropdownMenuTrigger>
-						<DropdownMenuContent>
-							<DropdownMenuItem
-								asChild
-							>
-								<Button className="w-full" variant="outline" onClick={handleRemove}>
-									Remover
-								</Button>
-							</DropdownMenuItem>
-						</DropdownMenuContent>
-					</DropdownMenu>
-				)
+				return <XCircle className="stroke-red-500" onClick={handleRemove} />
+					
 			}
 		}
+
 	]
 }
 

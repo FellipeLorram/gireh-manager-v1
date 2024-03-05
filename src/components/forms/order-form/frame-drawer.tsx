@@ -25,7 +25,8 @@ export function FrameDrawer({
 			supplier: '',
 			image_url: '',
 			price: '',
-			height: '',
+			heightOd: '',
+			heightOe: '',
 		},
 	});
 
@@ -35,6 +36,7 @@ export function FrameDrawer({
 			id: Math.random().toString(36).slice(2, 11),
 		}]);
 		frameForm.reset();
+		setOpen(false);
 	}, [form, frameForm]);
 
 	return (
@@ -75,10 +77,23 @@ export function FrameDrawer({
 					/>
 					<FormField
 						control={frameForm.control}
-						name="height"
+						name="heightOd"
 						render={({ field }) => (
 							<FormItem className="w-full">
-								<FormLabel>Altura</FormLabel>
+								<FormLabel>Altura OD</FormLabel>
+								<FormControl>
+									<Input placeholder="0" {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={frameForm.control}
+						name="heightOe"
+						render={({ field }) => (
+							<FormItem className="w-full">
+								<FormLabel>Altura OE</FormLabel>
 								<FormControl>
 									<Input placeholder="0" {...field} />
 								</FormControl>

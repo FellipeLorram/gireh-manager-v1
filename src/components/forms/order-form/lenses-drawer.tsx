@@ -77,7 +77,7 @@ const DefaultTabs = ({ form, setOpen }: TabsProps) => {
 			price: "",
 		});
 		setOpen(false)
-	}, [form, lensesValues])
+	}, [form, lensesValues, setOpen])
 
 	return <TabsContent value="default">
 		<Label>
@@ -176,7 +176,7 @@ const OtherTabs = ({ form, setOpen }: TabsProps) => {
 			price: "",
 		});
 		setOpen(false)
-	}, [lensesValues, form])
+	}, [lensesValues, form, setOpen])
 
 	return <TabsContent value="other">
 		<Label>
