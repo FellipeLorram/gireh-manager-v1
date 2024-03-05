@@ -1,11 +1,11 @@
 import { OrderForm } from "@/components/forms/order-form";
 import { type OrderFormFields } from "@/components/forms/order-form/form-schema";
+import { CentralizedLayout } from "@/components/layout/centralized-layout";
 import CustomerInfo from "@/components/layout/customer-info";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { api } from "@/utils/api";
-import { ArrowLeftCircle, CircleDashed } from "lucide-react";
-import Link from "next/link";
+import { CircleDashed } from "lucide-react";
 import { useRouter } from "next/router";
 
 export default function Page() {
@@ -58,7 +58,8 @@ export default function Page() {
 			frame: data.frame?.map(frame => ({
 				...frame,
 				price: Number(frame.price),
-				height: Number(frame.height),
+				height: Number(frame.heightOd),
+				heightOe: Number(frame.heightOe),
 				id: frame.id ?? '',
 			})) ?? [],
 			lenses: data.lenses?.map(lens => ({
@@ -69,14 +70,7 @@ export default function Page() {
 	}
 
 	return (
-		<div className="mx-auto w-11/12 max-w-3xl min-h-screen flex flex-col items-center justify-start py-4 gap-4">
-			<div className="w-full flex flex-row">
-				<Link href={`/orders/${query.orderid as string}`}>
-					<ArrowLeftCircle className="w-8 h-8 stroke-muted-foreground hover:stroke-foreground duration-200" />
-				</Link>
-
-				<h1 className="text-xl font-bold text-center mx-auto">Nova Venda</h1>
-			</div>
+		<CentralizedLayout>
 			<CustomerInfo
 				// eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
 				id={order?.customerId as string}
@@ -93,7 +87,11 @@ export default function Page() {
 					axle_left: order?.axle_left?.toString() ?? '0',
 					dnp_left: order?.dnp_left?.toString() ?? '0',
 					add: order?.add ?? '-0.00',
-					frame: frames,
+					frame: frames.map(frame => ({
+						...frame,
+						heightOd: frame.height,
+						heightOe: frame.heightOe?.toString() ?? '',
+					})) ?? [],
 					lenses: lenses,
 					observation: order?.observation ?? '',
 					total: order?.total ?? 0,
@@ -110,6 +108,7 @@ export default function Page() {
 					</Button>
 				}
 			/>
-		</div>
+		</CentralizedLayout>
+
 	)
 }

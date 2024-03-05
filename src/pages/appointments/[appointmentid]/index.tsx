@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { ArrowLeftCircle } from "lucide-react";
 import CustomerInfo from "@/components/layout/customer-info";
 import { useRouter } from "next/router";
 import { api } from "@/utils/api";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { buttonVariants } from "@/components/ui/button";
+import { CentralizedLayout } from "@/components/layout/centralized-layout";
 
 export default function Page() {
 	const { appointmentid } = useRouter().query;
@@ -15,14 +15,7 @@ export default function Page() {
 	});
 
 	return (
-		<div className="mx-auto w-11/12 max-w-3xl min-h-screen flex flex-col items-center justify-start py-4 gap-4">
-			<div className="w-full flex flex-row">
-				<Link href={`/customers/${data?.customerId}`}>
-					<ArrowLeftCircle className="w-8 h-8 stroke-muted-foreground hover:stroke-foreground duration-200" />
-				</Link>
-
-				<h1 className="text-xl font-bold text-center mx-auto">Consulta</h1>
-			</div>
+		<CentralizedLayout>
 			<CustomerInfo id={data?.customerId} />
 			<div className="w-full space-y-4">
 				<div className="border rounded-md p-4 w-full">
@@ -80,6 +73,6 @@ export default function Page() {
 					Editar
 				</Link>
 			</div>
-		</div>
+		</CentralizedLayout>
 	)
 }

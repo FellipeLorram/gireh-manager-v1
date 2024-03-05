@@ -1,9 +1,8 @@
+import { useRouter } from "next/router";
 import { PaymentForm, type PaymentFormValues } from "@/components/forms/payment-form";
 import { useToast } from "@/components/ui/use-toast";
 import { api } from "@/utils/api";
-import { ArrowLeftCircle } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import { CentralizedLayout } from "@/components/layout/centralized-layout";
 
 export default function Page() {
 	const { toast } = useToast();
@@ -19,7 +18,7 @@ export default function Page() {
 				title: "Pagamento registrado",
 				description: "O pagamento foi registrado com sucesso",
 			})
-		
+
 			await push(`/orders/${data?.id}`)
 		},
 		onError: (error) => {
@@ -40,15 +39,8 @@ export default function Page() {
 	}
 
 	return (
-		<div className="mx-auto w-11/12 max-w-3xl min-h-screen flex flex-col items-center justify-start py-4">
-			<div className="w-full flex flex-row">
-				<Link href={`/orders/${data?.id}`}>
-					<ArrowLeftCircle className="w-8 h-8 stroke-muted-foreground hover:stroke-foreground duration-200" />
-				</Link>
-
-				<h1 className="text-xl font-bold text-center mx-auto">OS: {data?.service_order}</h1>
-			</div>
-			<div className="w-full flex justify-between flex-row p-4 border rounded mt-8">
+		<CentralizedLayout>
+			<div className="w-full flex justify-between flex-row p-4 border rounded">
 				<p>
 					Total
 				</p>
@@ -74,6 +66,6 @@ export default function Page() {
 				onSubmit={onSubmit}
 				isLoading={isLoading}
 			/>
-		</div>
+		</CentralizedLayout>
 	)
 }

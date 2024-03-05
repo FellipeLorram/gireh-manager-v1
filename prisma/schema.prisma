@@ -156,6 +156,7 @@ model Frame {
   name      String
   price     Float
   height    Float?
+  heightOe  Float?
   reference String?
   image_url String?
   supplier  String?

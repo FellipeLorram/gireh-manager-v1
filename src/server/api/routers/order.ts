@@ -113,7 +113,8 @@ export const OrderRouter = createTRPCRouter({
 						create: input.frame?.map((frame) => ({
 							name: frame.name,
 							price: Number(frame.price),
-							height: Number(frame.height),
+							height: Number(frame.heightOd),
+							height_oe: Number(frame.heightOe),
 							image_url: frame.image_url,
 							reference: frame.reference,
 							supplier: frame.supplier,
@@ -204,6 +205,7 @@ export const OrderRouter = createTRPCRouter({
 				id: z.string(),
 				price: z.number(),
 				height: z.number(),
+				heightOe: z.number(),
 			})),
 			lenses: z.array(LensesSchema.extend({
 				id: z.string(),
@@ -267,7 +269,8 @@ export const OrderRouter = createTRPCRouter({
 				id: frame.id,
 				name: frame.name,
 				price: Number(frame.price),
-				height: Number(frame.height),
+				height: Number(frame.heightOd),
+				heightOe: Number(frame.heightOe),
 				image_url: frame.image_url ?? null,
 				reference: frame.reference ?? null,
 				supplier: frame.supplier ?? null,
