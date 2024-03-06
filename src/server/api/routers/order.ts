@@ -76,6 +76,7 @@ export const OrderRouter = createTRPCRouter({
 			observation: z.string().optional(),
 		}))
 		.mutation(async ({ ctx, input }) => {
+			console.log('input', input)
 			const { service_order } = await ctx.db.org.findFirstOrThrow({
 				where: {
 					id: ctx.session.user.orgId,
@@ -105,16 +106,17 @@ export const OrderRouter = createTRPCRouter({
 					observation: input.observation,
 					rest: input.total,
 					customer_name: name,
-					service_order: service_order!,
+					service_order: service_order ?? 1,
 					situation: 'SEPARATING',
 					status: false,
 					running_credit: false,
+
 					Frame: {
 						create: input.frame?.map((frame) => ({
 							name: frame.name,
 							price: Number(frame.price),
 							height: Number(frame.heightOd),
-							height_oe: Number(frame.heightOe),
+							heightOe: Number(frame.heightOe),
 							image_url: frame.image_url,
 							reference: frame.reference,
 							supplier: frame.supplier,

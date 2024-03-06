@@ -75,16 +75,18 @@ export const orgRouter = createTRPCRouter({
 	getOrgUsers: protectedProcedure.input(z.object({
 		id: z.string(),
 	})).query(async ({ ctx, input }) => {
-		const org = await ctx.db.org.findFirst({
+		const users = await ctx.db.user.findMany({
 			where: {
-				id: input.id,
+				UserOrg: {
+					some: {
+						orgId: input.id,
+					},
+				},
 			},
-			include: {
-				users: true,
-			},
+			
 		});
 
-		return org?.users.filter(user => user.id !== ctx.session.user.id);
+		return users.filter(user => user.id !== ctx.session.user.id);
 	}),
 
 	create: protectedProcedure

@@ -9,8 +9,9 @@ import { useRouter } from "next/router";
 export default function Page() {
 	const { query } = useRouter();
 	const { toast } = useToast();
+	const { user, org } = api.useUtils();
 	const { data: orgs, isLoading: isLoadingListQuery } = api.org.listUserOrgs.useQuery();
-	const { data, isLoading: isQueryLoading, refetch } = api.user.get.useQuery({
+	const { data, isLoading: isQueryLoading } = api.user.get.useQuery({
 		id: query.userid as string
 	}, {
 		enabled: !!query.userid
@@ -21,7 +22,8 @@ export default function Page() {
 			toast({
 				title: 'Usuário atualizado com sucesso',
 			});
-			await refetch();
+			await user.get.invalidate();
+			await org.getOrgUsers.invalidate();
 		}
 	});
 
