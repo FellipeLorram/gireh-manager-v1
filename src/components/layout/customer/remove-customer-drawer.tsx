@@ -16,6 +16,12 @@ export function RemoveCustomerDrawer() {
 			});
 			await customer.list.invalidate();
 			await push('/customers');
+		}, onError: (error) => {
+			toast({
+				title: 'Erro ao remover cliente',
+				description: error.message,
+				variant: 'destructive',
+			});
 		}
 	});
 

@@ -5,6 +5,7 @@ import { api } from "@/utils/api";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { buttonVariants } from "@/components/ui/button";
 import { CentralizedLayout } from "@/components/layout/centralized-layout";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Page() {
 	const { appointmentid } = useRouter().query;
@@ -17,40 +18,44 @@ export default function Page() {
 	return (
 		<CentralizedLayout>
 			<CustomerInfo id={data?.customerId} />
-			<div className="w-full space-y-4">
-				<div className="border rounded-md p-4 w-full">
-					<p className='font-semibold'>Exame</p>
-					<Table>
-						<TableHeader>
-							<TableRow className="hover:bg-transparent">
-								<TableHead />
-								<TableHead>Esf</TableHead>
-								<TableHead>Cil</TableHead>
-								<TableHead>Eixo</TableHead>
-							</TableRow>
-						</TableHeader>
-						<TableBody>
-							<TableRow>
-								<TableCell>OD</TableCell>
-								<TableCell>{data?.esf_right}</TableCell>
-								<TableCell>{data?.cil_right}</TableCell>
-								<TableCell>{data?.axle_right}</TableCell>
-							</TableRow>
-							<TableRow>
-								<TableCell>OD</TableCell>
-								<TableCell>{data?.esf_left}</TableCell>
-								<TableCell>{data?.cil_left}</TableCell>
-								<TableCell>{data?.axle_left}</TableCell>
-							</TableRow>
-							<TableRow>
-								<TableCell>ADD</TableCell>
-								<TableCell />
-								<TableCell>{data?.add}</TableCell>
-								<TableCell />
-							</TableRow>
-						</TableBody>
-					</Table>
-				</div>
+			<div className="w-full space-y-4 mt-4">
+				<Card>
+					<CardHeader>
+						<CardTitle>Consulta</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<Table>
+							<TableHeader>
+								<TableRow className="hover:bg-transparent">
+									<TableHead />
+									<TableHead>Esf</TableHead>
+									<TableHead>Cil</TableHead>
+									<TableHead>Eixo</TableHead>
+								</TableRow>
+							</TableHeader>
+							<TableBody>
+								<TableRow>
+									<TableCell>OD</TableCell>
+									<TableCell>{data?.esf_right}</TableCell>
+									<TableCell>{data?.cil_right}</TableCell>
+									<TableCell>{data?.axle_right}</TableCell>
+								</TableRow>
+								<TableRow>
+									<TableCell>OD</TableCell>
+									<TableCell>{data?.esf_left}</TableCell>
+									<TableCell>{data?.cil_left}</TableCell>
+									<TableCell>{data?.axle_left}</TableCell>
+								</TableRow>
+								<TableRow>
+									<TableCell>ADD</TableCell>
+									<TableCell />
+									<TableCell>{data?.add}</TableCell>
+									<TableCell />
+								</TableRow>
+							</TableBody>
+						</Table>
+					</CardContent>
+				</Card>
 
 				<div className="border rounded-md p-4">
 					<p className='font-semibold'>Anamnese</p>
@@ -63,7 +68,7 @@ export default function Page() {
 				</div>
 			</div>
 
-			<div className="border rounded-md p-4 flex flex-wrap gap-4 w-full">
+			<div className="border rounded-md p-4 flex flex-wrap gap-4 w-full mt-4">
 				<Link
 					className={buttonVariants({
 						className: 'w-full md:w-auto',

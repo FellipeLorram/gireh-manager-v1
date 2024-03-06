@@ -141,8 +141,8 @@ model Order {
   credit_payment_days Int?
   credit_installments Int?
   credit_start_date   DateTime?
-  customer            Customer   @relation(fields: [customerId], references: [id])
-  Org                 Org        @relation(fields: [orgId], references: [id])
+  customer            Customer   @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  Org                 Org        @relation(fields: [orgId], references: [id], onDelete: Cascade)
   Frame               Frame[]
   Lenses              Lenses[]
   Payments            Payments[]
@@ -161,7 +161,7 @@ model Frame {
   image_url String?
   supplier  String?
   orderId   String?
-  Order     Order?  @relation(fields: [orderId], references: [id])
+  Order     Order?  @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   @@index([orderId])
 }
@@ -171,7 +171,7 @@ model Lenses {
   name    String
   price   Float
   orderId String?
-  Order   Order?  @relation(fields: [orderId], references: [id])
+  Order   Order?  @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   @@index([orderId])
 }
@@ -184,8 +184,8 @@ model Payments {
   createdAt    DateTime @default(now())
   orderId      String?
   orgId        String?
-  Order        Order?   @relation(fields: [orderId], references: [id])
-  Org          Org?     @relation(fields: [orgId], references: [id])
+  Order        Order?   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  Org          Org?     @relation(fields: [orgId], references: [id], onDelete: Cascade)
 
   @@index([orderId])
   @@index([orgId])
@@ -206,8 +206,8 @@ model Appointment {
   customerId   String
   customerName String
   orgId        String
-  Customer     Customer @relation(fields: [customerId], references: [id])
-  Org          Org      @relation(fields: [orgId], references: [id])
+  Customer     Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  Org          Org      @relation(fields: [orgId], references: [id], onDelete: Cascade)
 
   @@index([customerId])
   @@index([orgId])
