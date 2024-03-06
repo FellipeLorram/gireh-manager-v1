@@ -83,7 +83,7 @@ export const orgRouter = createTRPCRouter({
 					},
 				},
 			},
-			
+
 		});
 
 		return users.filter(user => user.id !== ctx.session.user.id);
@@ -112,5 +112,17 @@ export const orgRouter = createTRPCRouter({
 			});
 
 			return org;
-		})
+		}),
+
+	delete: protectedProcedure
+		.input(z.object({
+			id: z.string(),
+		}))
+		.mutation(async ({ ctx, input }) => {
+			await ctx.db.userOrg.deleteMany({
+				where: {
+					orgId: input.id,
+				},
+			});
+		}),
 });
