@@ -101,6 +101,7 @@ model Customer {
   Order       Order[]
   Appointment Appointment[]
   Phone       Phone[]
+  entryLineAt DateTime?
 
   @@unique([id, name])
   @@index([orgId])

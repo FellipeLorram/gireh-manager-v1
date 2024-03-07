@@ -29,6 +29,7 @@ export async function createCustomerUseCase({
 			address: input.address,
 			age: age,
 			inLine: input.inLine,
+			entryLineAt: input.inLine ? new Date() : null,
 			orgId: input.orgId,
 			Phone: {
 				create: input.phone?.map((phone) => ({

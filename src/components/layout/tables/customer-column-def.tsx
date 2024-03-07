@@ -1,22 +1,23 @@
+import Link from "next/link";
+import { type Customer } from "@prisma/client";
 import { type CellContext, type ColumnDef } from "@tanstack/react-table"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { useToast } from "../../ui/use-toast";
 import { api } from "@/utils/api";
-import Link from "next/link";
-import { type Customer } from "@prisma/client";
 import { Button } from "@/components/ui/button";
-import { ToastAction } from "@/components/ui/toast";
-import { useRouter } from "next/router";
 
 function CustomerColumnDefDropdownCell({ row }: CellContext<Customer, unknown>) {
 	const { id, inLine } = row.original
 	const { toast } = useToast();
-	const { mutate } = api.customer.update.useMutation({
-		onSuccess: () => {
+	const { customer } = api.useUtils();
+	const { mutate } = api.customer.appoinmentLineToggle.useMutation({
+		onSuccess: async () => {
 			toast({
 				title: 'Cliente adicionado a fila de exame',
-			})
+			});
+			await customer.listCustomersInLine.invalidate();
+			await customer.get.invalidate({ id });
 		}
 	});
 
@@ -41,7 +42,7 @@ function CustomerColumnDefDropdownCell({ row }: CellContext<Customer, unknown>) 
 				</DropdownMenuItem>
 				<DropdownMenuItem
 					onClick={() => {
-						mutate({ id, inLine: !inLine });
+						mutate({ id });
 					}}
 					className='text-sm p-2 px-3 cursor-pointer'
 				>
@@ -103,7 +104,7 @@ export const customerColumnDef: ColumnDef<Customer>[] = [
 function CustomerInLineColumnDefActionCell({ row }: CellContext<Customer, unknown>) {
 	const { customer } = api.useUtils();
 	const { toast } = useToast();
-	const { mutate } = api.customer.update.useMutation({
+	const { mutate } = api.customer.removeFromAppointmentLine.useMutation({
 		onSuccess: async () => {
 			toast({
 				title: 'Cliente removido da fila de exame',
@@ -134,7 +135,7 @@ function CustomerInLineColumnDefActionCell({ row }: CellContext<Customer, unknow
 					</Link>
 				</DropdownMenuItem>
 				<DropdownMenuItem
-					onClick={() => mutate({ id: row.original.id, inLine: false })}
+					onClick={() => mutate({ id: row.original.id })}
 					className='text-sm p-2 px-3 cursor-pointer'
 				>
 					Remover da Fila

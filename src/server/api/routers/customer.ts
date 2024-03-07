@@ -69,7 +69,7 @@ export const CustomerRouter = createTRPCRouter({
 					inLine: true,
 				},
 				orderBy: {
-					name: "asc",
+					entryLineAt: "asc",
 				},
 			});
 
@@ -97,5 +97,75 @@ export const CustomerRouter = createTRPCRouter({
 			});
 
 			return customers;
+		}),
+
+		addToAppointmentLine: protectedProcedure
+		.input(z.object({
+			id: z.string(),
+		}))
+		.mutation(async ({ ctx, input }) => {
+			await ctx.db.customer.update({
+				where: {
+					id: input.id,
+				},
+				data: {
+					inLine: true,
+					entryLineAt: new Date(),
+				},
+			});
+		}),
+
+		removeFromAppointmentLine: protectedProcedure
+		.input(z.object({
+			id: z.string(),
+		}))
+		.mutation(async ({ ctx, input }) => {
+			await ctx.db.customer.update({
+				where: {
+					id: input.id,
+				},
+				data: {
+					inLine: false,
+					entryLineAt: null,
+				},
+			});
+		}),
+
+		appoinmentLineToggle: protectedProcedure
+		.input(z.object({
+			id: z.string(),
+		}))
+		.mutation(async ({ ctx, input }) => {
+			const customer = await ctx.db.customer.findUniqueOrThrow({
+				where: {
+					id: input.id,
+				},
+			});
+
+			if (customer.inLine) {
+				await ctx.db.customer.update({
+					where: {
+						id: input.id,
+					},
+					data: {
+						inLine: false,
+						entryLineAt: null,
+					},
+				});
+			} else {
+				await ctx.db.customer.update({
+					where: {
+						id: input.id,
+					},
+					data: {
+						inLine: true,
+						entryLineAt: new Date(),
+					},
+				});
+			}
+
+			return {
+				inLine: !customer.inLine,
+			};
 		}),
 });
