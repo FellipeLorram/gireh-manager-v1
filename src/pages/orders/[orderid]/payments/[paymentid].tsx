@@ -20,7 +20,7 @@ export default function Page() {
 				description: "O pagamento foi atualizado com sucesso",
 			})
 
-			await push(`/customers/${data?.customerId}/orders/${data?.id}`)
+			await push(`/orders/${query.orderid as string}`)
 		},
 	});
 	const { data: payment } = api.payment.get.useQuery({
