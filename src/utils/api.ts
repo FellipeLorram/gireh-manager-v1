@@ -31,8 +31,7 @@ export const api = createTRPCNext<AppRouter>({
       /**
        * Links used to determine request flow from client to server.
        *
-       * @see https://trpc.io/docs/links
-       */
+      */
       links: [
         loggerLink({
           enabled: (opts) =>

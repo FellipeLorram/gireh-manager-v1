@@ -1,12 +1,13 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { ArrowUpDown, MoreVertical, PenLine, XCircle } from "lucide-react";
+import { type Payments } from "@prisma/client";
+import { type CellContext, type ColumnDef } from "@tanstack/react-table";
+
+import { api } from "@/utils/api";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
-import { api } from "@/utils/api";
-import { type Payments } from "@prisma/client";
-import { type CellContext, type ColumnDef } from "@tanstack/react-table";
-import { useRouter } from "next/router";
 
 const paymentType = {
 	debit_card: 'Cartão de Débito',
