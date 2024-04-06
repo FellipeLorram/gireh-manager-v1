@@ -27,8 +27,12 @@ export default function Page() {
     }
   });
 
-  const { data: appointment, isLoading: isAppointmentLoading } = api.appointment.get.useQuery({
-    id: query.appointmentid as string,
+  const {
+    data: appointment,
+  } = api.appointment.get.useQuery({
+    id: query.appointmentid as string
+  }, {
+    enabled: !!query.appointmentid,
   });
 
   const onSubmit = (data: OrderFormFields) => {
@@ -49,9 +53,7 @@ export default function Page() {
         id={query.customerid as string}
       />
       <div className="w-full mt-4">
-        {isAppointmentLoading ? (
-          <CircleDashed className="animate-spin" size={16} />
-        ) : (
+  
           <OrderForm
             onSubmit={onSubmit}
             defaultValues={{
@@ -81,8 +83,6 @@ export default function Page() {
               </Button>
             }
           />
-        )}
-
       </div>
     </CentralizedLayout>
   )
