@@ -7,7 +7,7 @@ import { SettingsDropdown } from "./settings-dropdown";
 
 export function Topbar() {
 	return (
-		<div className="w-full border-b pt-4">
+		<div className="w-full border-b pt-4 bg-card">
 			<div className="max-w-7xl mx-auto">
 				<div className="w-full flex items-center justify-between px-2 lg:px-0 mb-6">
 					<div className="flex-1">

@@ -9,7 +9,7 @@ export function ListCustomerUseCase({ prisma, orgId }: {
 			orgId: orgId,
 		},
 		orderBy: {
-			name: "asc",
+			createdAt: "desc",
 		},
 	});
 }

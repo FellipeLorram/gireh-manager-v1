@@ -6,12 +6,12 @@ export function DashboardLayout(props: {
 	children: React.ReactNode
 }) {
 	return (
-		<main className="w-full min-h-screen">
+		<main className="w-full min-h-screen bg-muted/40">
 			<Topbar />
 			<div className={cn("mx-auto w-11/12 max-w-7xl pt-4", props.className)}>
 				{props.children}
+				<div className="h-20"></div>
 			</div>
-			<div className="h-20"></div>
 		</main>
 	)
 }

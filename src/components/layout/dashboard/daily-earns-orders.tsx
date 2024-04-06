@@ -11,7 +11,7 @@ export function DailyEarnsOrders() {
 
 	return (
 		<div className='w-full flex flex-wrap gap-1 md:gap-2 mt-4'>
-			<div className="p-4 rounded border w-[49%] md:max-w-[14rem]">
+			<div className="p-4 rounded border w-[49%] md:max-w-[14rem] bg-card">
 				<p className="text-xs text-muted-foreground">
 					Total de Vendas
 				</p>
@@ -19,7 +19,7 @@ export function DailyEarnsOrders() {
 					{data?.numberOfOrders ?? <Skeleton className="w-10 h-6 rounded" />}
 				</p>
 			</div>
-			<div className="p-4 rounded border w-[49%] md:max-w-[14rem]">
+			<div className="p-4 rounded border w-[49%] md:max-w-[14rem] bg-card">
 				<p className="text-xs text-muted-foreground">
 					Clientes Novos
 				</p>
@@ -27,7 +27,7 @@ export function DailyEarnsOrders() {
 					{data?.newCustomers ?? <Skeleton className="w-10 h-6 rounded" />}
 				</p>
 			</div>
-			<div className="p-4 rounded border w-[49%] md:max-w-[14rem]">
+			<div className="p-4 rounded border w-[49%] md:max-w-[14rem] bg-card">
 				<p className="text-xs text-muted-foreground">
 					Consultas
 				</p>
@@ -36,7 +36,7 @@ export function DailyEarnsOrders() {
 				</p>
 			</div>
 
-			<div className="p-4 rounded border w-[49%] md:max-w-[14rem]">
+			<div className="p-4 rounded border w-[49%] md:max-w-[14rem] bg-card">
 				<p className="text-xs text-muted-foreground">
 					Total Vendas (R$)
 				</p>
@@ -45,7 +45,7 @@ export function DailyEarnsOrders() {
 				</p>
 			</div>
 
-			<div className="p-4 rounded border w-[49%] md:max-w-[14rem]">
+			<div className="p-4 rounded border w-[49%] md:max-w-[14rem] bg-card">
 				<p className="text-xs text-muted-foreground">
 					Entrada (R$)
 				</p>
@@ -54,7 +54,7 @@ export function DailyEarnsOrders() {
 				</p>
 			</div>
 
-			<div className="p-4 rounded border w-[49%] md:max-w-[14rem]">
+			<div className="p-4 rounded border w-[49%] md:max-w-[14rem] bg-card">
 				<p className="text-xs text-muted-foreground">
 					Restante (R$)
 				</p>
@@ -62,7 +62,8 @@ export function DailyEarnsOrders() {
 					{data?.moneyToEntry.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) ?? <Skeleton className="w-10 h-6 rounded" />}
 				</p>
 			</div>
-			<div className="p-4 rounded border w-[49%] md:max-w-[14rem]">
+
+			<div className="p-4 rounded border w-[49%] md:max-w-[14rem] bg-card">
 				<p className="text-xs text-muted-foreground">
 					Vendas Não Pagas
 				</p>
