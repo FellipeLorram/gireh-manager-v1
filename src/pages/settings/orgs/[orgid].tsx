@@ -8,7 +8,7 @@ export default function Page() {
 	return (
 		<DashboardLayout>
 			<SettingsLayout>
-				<div className="space-y-8">
+				<div className="space-y-8 ">
 					<OrgPreferences />
 					<OrgUsers />
 					<div className='w-full bg-red-100/10 dark:bg-red-900/10 border dark:border-red-950 border-red-200 flex items-center justify-end p-4 mt-10 rounded'>

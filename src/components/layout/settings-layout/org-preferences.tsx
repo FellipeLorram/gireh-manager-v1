@@ -31,7 +31,7 @@ export function OrgPreferences() {
 	}
 
 	return (
-		<div className="w-full border rounded">
+		<div className="w-full border rounded bg-card">
 			<div className="w-full p-4 border-b">
 				{isLoadingQuery ? (
 					<Skeleton className="w-[100px] h-[20px] rounded" />

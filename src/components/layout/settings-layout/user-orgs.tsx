@@ -6,7 +6,7 @@ export function UserOrgs() {
 	const { data, isLoading: isLoadingQuery } = api.org.listUserOrgs.useQuery();
 
 	return (
-		<div className="w-full border rounded mt-8">
+		<div className="w-full border rounded mt-8 bg-card">
 			<div className="p-4 border-b">
 				<h1 className="font-medium text-lg">Óticas</h1>
 			</div>

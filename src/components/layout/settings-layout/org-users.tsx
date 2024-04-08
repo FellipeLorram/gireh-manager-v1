@@ -14,7 +14,7 @@ export function OrgUsers() {
 	});
 
 	return (
-		<div className="w-full border rounded">
+		<div className="w-full border rounded bg-card">
 			<div className="w-full border-b p-4">
 				<h1 className="text-lg font-medium">
 					Usuários

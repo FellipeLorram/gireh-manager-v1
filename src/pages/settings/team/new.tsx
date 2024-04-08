@@ -27,7 +27,7 @@ export default function Page() {
 	return (
 		<DashboardLayout>
 			<SettingsLayout>
-				<div className="w-full border rounded">
+				<div className="w-full border rounded bg-card">
 					<div className="p-4 border-b">
 						<h1 className="text-lg font-medium">Novo usuário</h1>
 					</div>
