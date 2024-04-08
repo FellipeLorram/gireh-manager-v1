@@ -21,10 +21,10 @@ export default function CustomerActions() {
 	});
 
 	return (
-		<div className="border rounded-md p-4 flex flex-wrap gap-4 w-full mt-4">
+		<div className="border rounded-md p-4 flex flex-wrap gap-4 w-full mt-4 bg-card">
 			<Link
 				className={buttonVariants({
-					variant: 'outline',
+					variant: 'secondary',
 					className: 'w-full md:w-auto',
 				})}
 				href={`/customers/${customerid as string}/send-message?message=`}
@@ -34,7 +34,7 @@ export default function CustomerActions() {
 
 			<Button
 				disabled={isLoading}
-				variant='outline'
+				variant='secondary'
 				className='w-full md:w-auto'
 				onClick={() => mutate({ id: customerid as string })}
 			>
@@ -44,7 +44,7 @@ export default function CustomerActions() {
 
 			<Link
 				className={buttonVariants({
-					variant: 'outline',
+					variant: 'secondary',
 					className: 'w-full md:w-auto',
 				})}
 				href={`/customers/${customerid as string}/edit`}

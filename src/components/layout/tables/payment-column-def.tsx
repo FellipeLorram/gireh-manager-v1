@@ -19,7 +19,7 @@ const paymentType = {
 const Actions = ({ row }: CellContext<Payments, unknown>) => {
 	const { toast } = useToast();
 	const { order } = api.useUtils();
-	const {push} = useRouter();
+	const { push } = useRouter();
 	const { mutate } = api.payment.delete.useMutation({
 		onSuccess: async () => {
 			toast({
@@ -124,7 +124,11 @@ export const PaymentColumnDef: ColumnDef<Payments>[] = [
 		header: 'Venda',
 		cell: ({ row }) => <Link
 			href={`/orders/${row.original.orderId}`}
-			className={buttonVariants({ variant: 'outline' })}
+			className={buttonVariants({
+				variant: 'secondary',
+				size: 'sm',
+				className: 'w-32 text-sm'
+			})}
 		>
 			Ver venda
 		</Link>

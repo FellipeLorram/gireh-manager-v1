@@ -58,7 +58,7 @@ export default function Page() {
   return (
     <DashboardLayout>
       <SettingsLayout>
-        <div className="border rounded">
+        <div className="border rounded bg-card">
           <div className="p-4 border-b">
             <h1 className="text-lg font-medium">Suas Informações</h1>
           </div>

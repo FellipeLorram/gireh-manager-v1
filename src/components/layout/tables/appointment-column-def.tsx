@@ -19,7 +19,7 @@ export const customerPageAppointmentColumnDef: ColumnDef<Appointment>[] = [
 		header: '',
 		cell: ({ row }) => <Link
 			className={buttonVariants({
-				variant: 'outline',
+				variant: 'secondary',
 			})}
 			href={`/appointments/${row.original.id}`}
 		>

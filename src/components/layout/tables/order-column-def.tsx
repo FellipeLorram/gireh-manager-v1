@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { type Order } from "@prisma/client";
 import { type ColumnDef } from "@tanstack/react-table";
@@ -217,9 +218,9 @@ export const dailyOrderColumnDef: ColumnDef<Order>[] = [
 		},
 		cell: ({ row }) => {
 			return row.original.status ? (
-				<p className="text-green-500">Pago</p>
+				<Badge variant="outline" className="border-green-500 bg-green-900/10 text-green-600">Pago</Badge>
 			) : (
-				<p className="text-red-500">Não pago</p>
+				<Badge variant="outline" className="border-red-500 text-red-500 bg-red-900/10">Não pago</Badge>
 			);
 		},
 	},

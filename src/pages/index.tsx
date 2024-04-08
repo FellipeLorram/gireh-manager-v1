@@ -60,11 +60,11 @@ export default function Page() {
 
 			<div className="w-full flex flex-col md:flex-row gap-4 md:gap-2 mt-4">
 				<DailyOrders />
-				<DailyAppointments />
+				<DailyPayments />
 			</div>
 
 			<div className='mt-4'>
-				<DailyPayments />
+				<DailyAppointments />
 			</div>
 		</DashboardLayout>
 	)

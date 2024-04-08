@@ -33,7 +33,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <ThemeProvider
           attribute="class" enableSystem defaultTheme="system"
         >
-          <main className={`${inter.variable} font-sans`} >
+          <main className={`${inter.variable} min-h-screen font-sans bg-muted/40`} >
             <AuthProvider>
               <Component {...pageProps} />
               <Toaster />

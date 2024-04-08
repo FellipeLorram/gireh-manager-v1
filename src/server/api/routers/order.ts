@@ -16,6 +16,9 @@ export const OrderRouter = createTRPCRouter({
 			where: {
 				orgId: ctx.session.user.orgId,
 			},
+			orderBy: {
+				createdAt: 'desc',
+			},
 		});
 
 		return orders;

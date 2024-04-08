@@ -41,7 +41,7 @@ export default function Page() {
 
 	return (
 		<CentralizedLayout>
-			<div className="w-full flex justify-between flex-row p-4 border rounded">
+			<div className="w-full bg-card flex justify-between flex-row p-4 border rounded">
 				<p>
 					Total
 				</p>
@@ -52,7 +52,7 @@ export default function Page() {
 					})}
 				</p>
 			</div>
-			<div className="w-full flex justify-between flex-row p-4 border rounded mt-4 mb-8">
+			<div className="w-full bg-card flex justify-between flex-row p-4 border rounded mt-4 mb-8">
 				<p>
 					Valor faltante
 				</p>

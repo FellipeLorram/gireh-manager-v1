@@ -21,10 +21,10 @@ export default function Page() {
 
 			<div className="w-full mt-4 space-y-4">
 				<OrderInfo order={data} />
-				<div className="border rounded p-4 flex flex-wrap gap-4 w-full">
+				<div className="border rounded p-4 flex flex-wrap gap-4 w-full bg-card">
 					<Link
 						className={buttonVariants({
-							variant: 'outline',
+							variant: 'secondary',
 							className: 'w-full md:w-auto',
 						})}
 						href={`/orders/${orderid as string}/print`}
@@ -34,7 +34,7 @@ export default function Page() {
 
 					<Link
 						className={buttonVariants({
-							variant: 'outline',
+							variant: 'secondary',
 							className: 'w-full md:w-auto',
 						})}
 						href={`/customers/${data?.customerId}/send-message?message=Oi%2C+boa+tarde%21+Seus+%C3%B3culos+ficaram+prontos%2C+j%C3%A1+pode+vir+buscar.+Funcionamos+at%C3%A9+as+20%3A00h.`}

@@ -57,18 +57,18 @@ export default function Page() {
 					</CardContent>
 				</Card>
 
-				<div className="border rounded-md p-4">
+				<div className="border rounded-md p-4 bg-card">
 					<p className='font-semibold'>Anamnese</p>
 					<p className='mt-2'>{data?.anamnesis}</p>
 				</div>
 
-				<div className="border rounded-md p-4">
+				<div className="border rounded-md p-4 bg-card">
 					<p className='font-semibold'>Observações</p>
 					<p className='mt-2'>{data?.observation}</p>
 				</div>
 			</div>
 
-			<div className="border rounded-md p-4 flex flex-wrap gap-4 w-full mt-4">
+			<div className="border rounded-md p-4 flex flex-wrap gap-4 w-full mt-4 bg-card">
 				<Link
 					className={buttonVariants({
 						className: 'w-full md:w-auto',

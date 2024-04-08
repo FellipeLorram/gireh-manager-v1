@@ -17,7 +17,7 @@ export default function CustomerInfo({ id }: Props) {
 	if (!data) return <Skeleton className="w-full h-[150px]" />
 
 	return (
-		<div className='w-full p-2 border rounded-md'>
+		<div className='w-full p-2 border rounded-md bg-card'>
 			<div className="w-full py-2 px-1 border-b flex flex-row justify-between items-center">
 				<p className="text-muted-foreground">Nome:</p>
 				<p>{data?.name}</p>

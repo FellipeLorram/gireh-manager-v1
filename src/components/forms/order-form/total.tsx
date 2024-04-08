@@ -31,7 +31,7 @@ export function Total({ form }: Props) {
 	}) ?? 'R$ 0,00';
 
 	return (
-		<div className="w-ful">
+		<div className="w-full">
 			<Card>
 				<CardHeader className='flex-row justify-between items-center'>
 					<CardTitle>
@@ -64,7 +64,7 @@ export function Total({ form }: Props) {
 				</CardContent>
 			</Card>
 
-			<div className={`w-full p-4 border rounded mt-4 flex justify-between items-center ${form.formState.errors.total?.message && 'border-red-500'}`}>
+			<div className={`w-full bg-card p-4 border rounded mt-4 flex justify-between items-center ${form.formState.errors.total?.message && 'border-red-500'}`}>
 				<CardTitle>
 					Total
 				</CardTitle>
