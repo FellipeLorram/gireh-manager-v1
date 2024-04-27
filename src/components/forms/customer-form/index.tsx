@@ -31,7 +31,7 @@ export function CustomerForm({
 		defaultValues: defaultValues ?? {
 			name: '',
 			phone: [{
-				number: '',
+				number: '219',
 			}],
 			address: '',
 			inLine: false,

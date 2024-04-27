@@ -10,7 +10,7 @@ import { ResponsiveDrawer } from '@/components/ui/responsive-drawer';
 
 
 interface Props {
-	form: UseFormReturn<OrderFormFields>;
+	form: UseFormReturn<OrderFormFields>
 }
 
 export function FrameDrawer({
