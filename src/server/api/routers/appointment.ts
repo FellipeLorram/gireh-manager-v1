@@ -1,13 +1,15 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { ListAppointmentsUseCase } from "@/server/use-cases/appointments/list-appointments";
+import { ListCustomerAppointmentsUseCase } from "@/server/use-cases/appointments/list-customer-appointments";
+import { ListAppointmentsByRangeUseCase } from "@/server/use-cases/appointments/list-appointments-by-range";
 
 export const appointmentRouter = createTRPCRouter({
 	list: protectedProcedure
-		.query(({ ctx }) => {
-			const appointments = ctx.db.appointment.findMany({
-				where: {
-					orgId: ctx.session.user.orgId,
-				},
+		.query(async ({ ctx }) => {
+			const appointments = await ListAppointmentsUseCase({
+				prisma: ctx.db,
+				orgId: ctx.session.user.orgId,
 			});
 
 			return appointments;
@@ -17,12 +19,11 @@ export const appointmentRouter = createTRPCRouter({
 		.input(z.object({
 			customerId: z.string(),
 		})).query(async ({ ctx, input }) => {
-			const appointments = await ctx.db.appointment.findMany({
-				where: {
-					orgId: ctx.session.user.orgId,
-					customerId: input.customerId,
-				},
-			});
+			const appointments = await ListCustomerAppointmentsUseCase({
+				customerId: input.customerId,
+				orgId: ctx.session.user.orgId,
+				prisma: ctx.db,
+			})
 
 			return appointments;
 		}),
@@ -32,14 +33,11 @@ export const appointmentRouter = createTRPCRouter({
 			startDate: z.string().or(z.date()),
 			endDate: z.string().or(z.date()),
 		})).query(async ({ ctx, input }) => {
-			const appointments = await ctx.db.appointment.findMany({
-				where: {
-					orgId: ctx.session.user.orgId,
-					createdAt: {
-						gte: new Date(input.startDate),
-						lte: new Date(input.endDate),
-					},
-				},
+			const appointments = await ListAppointmentsByRangeUseCase({
+				prisma: ctx.db,
+				orgId: ctx.session.user.orgId,
+				startDate: input.startDate,
+				endDate: input.endDate,
 			});
 
 			return appointments;

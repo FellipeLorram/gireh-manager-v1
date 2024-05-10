@@ -6,7 +6,6 @@ import { AppointmentColumnDef } from "../tables/appointment-column-def";
 
 export function AppointmentsTable() {
 	const { data } = api.appointment.list.useQuery();
-
 	
 	return (
 		<Card className="w-full">

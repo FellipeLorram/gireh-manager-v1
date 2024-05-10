@@ -7,7 +7,7 @@ describe('Create Customer Use Case', () => {
 			name: 'John Doe',
 			phone: [{ number: '1234567890' }],
 			address: '123 Main St',
-			inLine: true,
+			inLine: false,
 			birthDate: '2000-01-01',
 			orgId: 'org1',
 		});
@@ -22,6 +22,7 @@ describe('Create Customer Use Case', () => {
 				age: new Date().getFullYear() - new Date('2000-01-01').getFullYear(),
 				inLine: input.inLine,
 				orgId: input.orgId,
+				entryLineAt: input.inLine ? new Date() : null,
 				Phone: {
 					create: input.phone?.map((phone) => ({
 						number: phone.number,

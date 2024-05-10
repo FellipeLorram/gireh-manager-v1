@@ -8,15 +8,15 @@ describe('UpdateCustomerUseCase', () => {
 			name: 'customer-name',
 			orgId: 'org-id',
 			address: 'customer-address',
+			birthDate: '2000-01-01',
 			inLine: false,
-			Phones: [{
+			phone: [{
 				id: 'phone-id',
 				number: 'phone-number',
 			}],
 		};
 
 		const createdAt = new Date();
-		const birthDate = new Date('2000-01-01');
 		const age = new Date().getFullYear() - new Date('2000-01-01').getFullYear();
 
 		prismaMock.customer.update.mockResolvedValue({
@@ -25,9 +25,10 @@ describe('UpdateCustomerUseCase', () => {
 			createdAt,
 			address: 'customer-address',
 			inLine: false,
-			birthDate,
+			birthDate: new Date('2000-01-01'),
 			age,
 			orgId: 'org-id',
+			entryLineAt: null,
 		});
 
 		const result = await UpdateCustomerUseCase({
@@ -41,7 +42,8 @@ describe('UpdateCustomerUseCase', () => {
 			createdAt, 
 			address: 'customer-address',
 			inLine: false,
-			birthDate,
+			birthDate: new Date('2000-01-01'),
+			entryLineAt: null,
 			age,
 			orgId: 'org-id',
 		});
@@ -54,18 +56,18 @@ describe('UpdateCustomerUseCase', () => {
 				name: input.name,
 				address: input.address,
 				inLine: input.inLine,
-				age,
-				birthDate, 
+				age: new Date().getFullYear() - new Date('2000-01-01').getFullYear(),
+				birthDate: new Date(input.birthDate),
 				Phone: {
-					upsert: input.Phones?.map((phone) => ({
+					upsert: input.phone.map((p) => ({
 						where: {
-							id: phone.id,
+							id: p.id,
 						},
 						create: {
-							number: phone.number,
+							number: p.number,
 						},
 						update: {
-							number: phone.number,
+							number: p.number,
 						},
 					})),
 				},
@@ -75,7 +77,7 @@ describe('UpdateCustomerUseCase', () => {
 		expect(prismaMock.phone.deleteMany).toHaveBeenCalledWith({
 			where: {
 				id: {
-					notIn: input.Phones?.map((phone) => phone.id),
+					notIn: input.phone.map((p) => p.id),
 				},
 				customerId: input.id,
 			},

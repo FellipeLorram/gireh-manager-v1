@@ -18,7 +18,7 @@ describe('ListCustomerUseCase', () => {
 				orgId,
 			},
 			orderBy: {
-				name: 'asc',
+				createdAt: 'desc',
 			},
 		});
 	});
