@@ -10,12 +10,12 @@ export default function Page() {
 	const { toast } = useToast();
 	const { push } = useRouter();
 	const { mutate, isLoading } = api.customer.create.useMutation({
-		onSuccess: async ({ inLine }) => {
+		onSuccess: async ({ inLine, id }) => {
 			toast({
 				description: 'Cliente cadastrado com sucesso',
 			});
 			if (inLine) await push('/appointments')
-			else await push('/')
+			else await push(`/customers/${id}`)
 		},
 		onError: (error) => {
 			toast({
