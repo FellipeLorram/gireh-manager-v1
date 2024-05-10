@@ -1,8 +1,10 @@
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { type Order } from "@prisma/client";
 import { type ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
+import { id } from "date-fns/locale";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
 
 type Situation = 'SEPARATING' | 'WAITING_LENSES' | 'WAITING_FRAME' | 'ASSEMBLING' | 'READY' | 'DELIVERED';
@@ -146,10 +148,37 @@ export const OrderColumnDef: ColumnDef<Order>[] = [
 		cell: ({ row }) => {
 			return row.original.total.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
 		},
+	},
+	{
+		accessorKey: 'actions',
+		header: '',
+		cell: ({ row }) => {
+			return <DropdownMenu>
+				<DropdownMenuTrigger
+					className='group'
+				>
+					<MoreHorizontal
+						className='stroke-muted-foreground group-hover:stroke-foreground duration-200'
+						size={20}
+					/>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent>
+					<DropdownMenuItem
+						asChild
+						className='text-sm p-2 px-3 cursor-pointer'
+					>
+						<Link href={`/customers/${row.original.customerId}//send-message?message=Oi%2C+boa+tarde%21+Seus+%C3%B3culos+ficaram+prontos%2C+j%C3%A1+pode+vir+buscar.+Funcionamos+at%C3%A9+as+20%3A00h.`}>
+							Enviar mensagem
+						</Link>
+					</DropdownMenuItem>
+				</DropdownMenuContent>
+			</DropdownMenu>
+
+		},
 	}
 ];
 
-export const dashboardPageOrderByStatusColumnDef :ColumnDef<Order>[] = [
+export const dashboardPageOrderByStatusColumnDef: ColumnDef<Order>[] = [
 	{
 		accessorKey: 'createdAt',
 		header: ({ column }) => {
@@ -177,7 +206,7 @@ export const dashboardPageOrderByStatusColumnDef :ColumnDef<Order>[] = [
 		header: "Situação",
 		cell: ({ row }) => situationMap[row.original.situation as Situation],
 	}
-] 
+]
 
 export const dailyOrderColumnDef: ColumnDef<Order>[] = [
 	{
@@ -186,11 +215,11 @@ export const dailyOrderColumnDef: ColumnDef<Order>[] = [
 		cell: ({ row }) => {
 			const date = new Date(row.original.createdAt);
 			const today = new Date();
-			
+
 			if (date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear()) {
 				return 'Hoje';
 			}
-			
+
 			return date.toLocaleDateString();
 		},
 	},
