@@ -3,7 +3,6 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { type Order } from "@prisma/client";
 import { type ColumnDef } from "@tanstack/react-table";
-import { id } from "date-fns/locale";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
 
