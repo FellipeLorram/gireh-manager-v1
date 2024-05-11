@@ -137,4 +137,20 @@ export const appointmentRouter = createTRPCRouter({
 
 			return appointment;
 		}),
+
+		getLastCustomerAppointment: protectedProcedure
+		.input(z.object({
+			customerId: z.string(),
+		})).query(async ({ ctx, input }) => {
+			const appointment = await ctx.db.appointment.findFirst({
+				where: {
+					customerId: input.customerId,
+				},
+				orderBy: {
+					createdAt: 'desc',
+				},
+			});
+
+			return appointment;
+		}),
 });

@@ -147,8 +147,8 @@ function CustomerInLineColumnDefActionCell({ row }: CellContext<Customer, unknow
 
 export const customerInLineColumnDef: ColumnDef<Customer>[] = [
 	{
-		id: "name",
-		accessorKey: "name",
+		id: "createdAt",
+		accessorKey: "createdAt",
 		header: "Posição",
 		cell: ({ row }) => row.index + 1,
 	},

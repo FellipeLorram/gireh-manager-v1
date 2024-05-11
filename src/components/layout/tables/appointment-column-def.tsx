@@ -64,6 +64,7 @@ function DropdownCell({ row }: CellContext<Appointment, unknown>) {
 
 export const AppointmentColumnDef: ColumnDef<Appointment>[] = [
 	{
+		id: 'createdAt',
 		accessorKey: "createdAt",
 		header: ({ column }) => {
 			return (
@@ -82,6 +83,7 @@ export const AppointmentColumnDef: ColumnDef<Appointment>[] = [
 		}
 	},
 	{
+		id: 'customerName',
 		accessorKey: 'customerName',
 		header: ({ column }) => {
 			return (
@@ -97,6 +99,7 @@ export const AppointmentColumnDef: ColumnDef<Appointment>[] = [
 		cell: ({ row }) => <Link href={`/appointments/${row.original.id}`}>{row.original.customerName}</Link>,
 	},
 	{
+		id: 'actions',
 		accessorKey: 'actions',
 		header: '',
 		cell: DropdownCell,
