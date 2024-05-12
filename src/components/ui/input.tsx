@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils"
+import { cn } from "@/utils/cn"
 import { forwardRef } from "react";
 import InputMask, { type Props as InputMaskProps } from 'react-input-mask';
 

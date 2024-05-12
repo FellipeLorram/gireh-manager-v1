@@ -3,7 +3,7 @@ import { Check, ChevronsUpDown } from "lucide-react"
 import { api } from "@/utils/api";
 import { useSession } from "next-auth/react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/utils/cn"
 import { Button } from "@/components/ui/button"
 import {
 	Command,
@@ -54,10 +54,10 @@ export function SelectOrg() {
 								value={_org.name}
 								onSelect={async (currentValue) => {
 									setOpen(false)
-									
-									if(_org.id === org?.id) return
+
+									if (_org.id === org?.id) return
 									setValue(currentValue);
-									
+
 									await update({ orgId: _org.id });
 								}}
 							>

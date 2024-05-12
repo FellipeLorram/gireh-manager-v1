@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { type OrgFormSchema, orgFormSchema } from "./schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { CircleDashed } from "lucide-react";

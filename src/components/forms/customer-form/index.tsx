@@ -2,7 +2,7 @@ import { customerFormSchema, type CustomerFormSchema } from "./schema";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod"
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 import { Input } from "@/components/ui/input";
 import { AgeField } from "./age-field";
 import { PhoneFields } from "./phone-fields";
