@@ -12,6 +12,9 @@ import { UpdateCustomerUseCase, updateCustomerInput } from "@/server/use-cases/c
 import { addCutomerToAppointmentLine } from "@/server/use-cases/customer/add-customer-to-appointment-line";
 import { removeCustomerFromAppointmentLine } from "@/server/use-cases/customer/remove-customer-from-appointment-line";
 import { toggleCustomerFromAppointmentLine } from "@/server/use-cases/customer/toggle-customer-from-appointment-line";
+import { DeleteCustomerUseCase } from "@/server/use-cases/customer/delete-customer";
+import { ListCustomerInAppointmentLineUseCase } from "@/server/use-cases/customer/list-customers-in-appointment-line";
+import { SearchCustomerByNameUseCase } from "@/server/use-cases/customer/search-customer-by-name";
 
 export const CustomerRouter = createTRPCRouter({
 	create: protectedProcedure
@@ -57,23 +60,19 @@ export const CustomerRouter = createTRPCRouter({
 			id: z.string(),
 		}))
 		.mutation(async ({ ctx, input }) => {
-			await ctx.db.customer.delete({
-				where: {
+			await DeleteCustomerUseCase({
+				prisma: ctx.db,
+				input: {
 					id: input.id,
 				},
 			});
 		}),
 
 	listCustomersInLine: protectedProcedure
-		.query(({ ctx }) => {
-			const customers = ctx.db.customer.findMany({
-				where: {
-					orgId: ctx.session.user.orgId,
-					inLine: true,
-				},
-				orderBy: {
-					entryLineAt: "asc",
-				},
+		.query(async ({ ctx }) => {
+			const customers = await ListCustomerInAppointmentLineUseCase({
+				prisma: ctx.db,
+				orgId: ctx.session.user.orgId,
 			});
 
 			return customers;
@@ -82,21 +81,11 @@ export const CustomerRouter = createTRPCRouter({
 	searchByName: protectedProcedure
 		.input(z.object({
 			name: z.string(),
-		})).query(({ ctx, input }) => {
-			const customers = ctx.db.customer.findMany({
-				where: {
-					orgId: ctx.session.user.orgId,
-					name: {
-						startsWith: input.name,
-					},
-				},
-				take: 2,
-				orderBy: {
-					name: "asc",
-				},
-				include: {
-					Phone: true,
-				}
+		})).query(async ({ ctx, input }) => {
+			const customers = await SearchCustomerByNameUseCase({
+				prisma: ctx.db,
+				orgId: ctx.session.user.orgId,
+				name: input.name,
 			});
 
 			return customers;
