@@ -1,7 +1,7 @@
 import { prismaMock } from '../../test/assets/singleton';
 import { removeCustomerFromAppointmentLine, removeCustomerFromAppointmentLineInput } from './remove-customer-from-appointment-line';
 
-describe('Remove Customer to Appointment Line Use Case', () => {
+describe('RemoveCustomerFromAppointmentLineUseCase', () => {
 	it('Should be able to remove a customer from the appointment Line', async () => {
 		const input = removeCustomerFromAppointmentLineInput.parse({
 			customerId: 'customer1',

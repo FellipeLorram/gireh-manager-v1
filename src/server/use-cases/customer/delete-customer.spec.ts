@@ -10,7 +10,7 @@ describe('DeleteCustomerUseCase', () => {
 			},
 		});
 
-		expect(prismaMock.customer.findUnique).toHaveBeenCalledWith({
+		expect(prismaMock.customer.delete).toHaveBeenCalledWith({
 			where: {
 				id: '1',
 			},
