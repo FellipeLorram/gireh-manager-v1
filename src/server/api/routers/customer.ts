@@ -11,6 +11,7 @@ import { ListCustomerUseCase } from "@/server/use-cases/customer/list-customers"
 import { UpdateCustomerUseCase, updateCustomerInput } from "@/server/use-cases/customer/update-customer";
 import { addCutomerToAppointmentLine } from "@/server/use-cases/customer/add-customer-to-appointment-line";
 import { removeCustomerFromAppointmentLine } from "@/server/use-cases/customer/remove-customer-from-appointment-line";
+import { toggleCustomerFromAppointmentLine } from "@/server/use-cases/customer/toggle-customer-from-appointment-line";
 
 export const CustomerRouter = createTRPCRouter({
 	create: protectedProcedure
@@ -101,7 +102,7 @@ export const CustomerRouter = createTRPCRouter({
 			return customers;
 		}),
 
-		addToAppointmentLine: protectedProcedure
+	addToAppointmentLine: protectedProcedure
 		.input(z.object({
 			id: z.string(),
 		}))
@@ -114,7 +115,7 @@ export const CustomerRouter = createTRPCRouter({
 			})
 		}),
 
-		removeFromAppointmentLine: protectedProcedure
+	removeFromAppointmentLine: protectedProcedure
 		.input(z.object({
 			id: z.string(),
 		}))
@@ -127,41 +128,18 @@ export const CustomerRouter = createTRPCRouter({
 			})
 		}),
 
-		appoinmentLineToggle: protectedProcedure
+	appoinmentLineToggle: protectedProcedure
 		.input(z.object({
 			id: z.string(),
 		}))
 		.mutation(async ({ ctx, input }) => {
-			const customer = await ctx.db.customer.findUniqueOrThrow({
-				where: {
-					id: input.id,
+			const inLine = await toggleCustomerFromAppointmentLine({
+				prisma: ctx.db,
+				input: {
+					customerId: input.id,
 				},
 			});
 
-			if (customer.inLine) {
-				await ctx.db.customer.update({
-					where: {
-						id: input.id,
-					},
-					data: {
-						inLine: false,
-						entryLineAt: null,
-					},
-				});
-			} else {
-				await ctx.db.customer.update({
-					where: {
-						id: input.id,
-					},
-					data: {
-						inLine: true,
-						entryLineAt: new Date(),
-					},
-				});
-			}
-
-			return {
-				inLine: !customer.inLine,
-			};
-		}),
+			return inLine;
+		})
 });
