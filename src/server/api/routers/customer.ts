@@ -9,6 +9,8 @@ import { createCustomerInput, createCustomerUseCase } from "@/server/use-cases/c
 import { getCustomerInput, GetCustomerUseCase } from "@/server/use-cases/customer/get-customer";
 import { ListCustomerUseCase } from "@/server/use-cases/customer/list-customers";
 import { UpdateCustomerUseCase, updateCustomerInput } from "@/server/use-cases/customer/update-customer";
+import { addCutomerToAppointmentLine } from "@/server/use-cases/customer/add-customer-to-appointment-line";
+import { removeCustomerFromAppointmentLine } from "@/server/use-cases/customer/remove-customer-from-appointment-line";
 
 export const CustomerRouter = createTRPCRouter({
 	create: protectedProcedure
@@ -104,15 +106,12 @@ export const CustomerRouter = createTRPCRouter({
 			id: z.string(),
 		}))
 		.mutation(async ({ ctx, input }) => {
-			await ctx.db.customer.update({
-				where: {
-					id: input.id,
+			await addCutomerToAppointmentLine({
+				prisma: ctx.db,
+				input: {
+					customerId: input.id,
 				},
-				data: {
-					inLine: true,
-					entryLineAt: new Date(),
-				},
-			});
+			})
 		}),
 
 		removeFromAppointmentLine: protectedProcedure
@@ -120,15 +119,12 @@ export const CustomerRouter = createTRPCRouter({
 			id: z.string(),
 		}))
 		.mutation(async ({ ctx, input }) => {
-			await ctx.db.customer.update({
-				where: {
-					id: input.id,
+			await removeCustomerFromAppointmentLine({
+				prisma: ctx.db,
+				input: {
+					customerId: input.id,
 				},
-				data: {
-					inLine: false,
-					entryLineAt: null,
-				},
-			});
+			})
 		}),
 
 		appoinmentLineToggle: protectedProcedure
